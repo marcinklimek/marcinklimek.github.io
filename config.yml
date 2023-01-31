@@ -152,17 +152,24 @@ markup:
     noClasses: false
 
 privacy:
+    disqus:
+        disable: true
+    googleAnalytics:
+        disable: true  
+        anonymizeIP: true
+        respectDoNotTrack: true
+        useSessionStorage: false
     vimeo:
         disabled: false
         simple: true
 
     twitter:
-        disabled: false
+        disabled: true
         enableDNT: true
         simple: true
 
     instagram:
-        disabled: false
+        disabled: true
         simple: true
 
     youtube:
