@@ -1,7 +1,7 @@
 baseURL: "https://klimek.link" # if your site is in 'https', then make sure your base url isn't written using 'http' otherwise your sitemap would contain http (as opposeed to https) URLs. This would affect Google indexing of your URLs.
 title: Side Effects
 paginate: 5
-theme: hugo-PaperMod
+theme: PaperModX
 
 defaultContentLanguage: en
 
@@ -16,7 +16,7 @@ pygmentsUseClasses: true
 
 minify:
     disableXML: true
-    # minifyOutput: true
+    minifyOutput: true
 
 languages:
     en:
@@ -45,7 +45,8 @@ languages:
                   weight: 10
                 - name: Discord
                   url: https://discord.gg/SGtgWjg7
-
+                  params:
+                    external: true
 outputs:
     home:
         - HTML
@@ -69,6 +70,10 @@ params:
     ShowCodeCopyButtons: true
     ShowRssButtonInSectionTermList: true
     ShowToc: false
+    TocOpen: true
+    TocSide: "right"
+    EnableInstantClick: true
+    EnableImageZoom: true
     # comments: false
     images: ["papermod-cover.png"]
 
@@ -138,16 +143,13 @@ params:
     #     keys: ["title", "permalink", "summary", "content"]
 
 markup:
-    goldmark:
-        renderer:
-            unsafe: true
-    highlight:
-        noClasses: false
-        # anchorLineNos: true
-        # codeFences: true
-        # guessSyntax: true
-        lineNos: true
-        style: monokai
+  goldmark:
+    renderer:
+      unsafe: true
+  highlight:
+    style: dracula
+    lineNos: false
+    noClasses: false
 
 privacy:
     vimeo:

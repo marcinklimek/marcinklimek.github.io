@@ -1,0 +1,138 @@
+.nav {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    max-width: calc(var(--nav-width) + var(--gap) * 2);
+    margin-inline-start: auto;
+    margin-inline-end: auto;
+    line-height: var(--header-height);
+}
+.nav ul {
+    margin: 0;
+    padding: 0;
+}
+
+.logo a {
+    display: block;
+}
+
+.logo,
+#menu {
+    display: flex;
+    margin: auto var(--gap);
+}
+
+.logo {
+    flex-wrap: inherit;
+}
+
+.logo a {
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.logo a img,
+.logo a svg {
+    display: inline;
+    vertical-align: middle;
+    pointer-events: none;
+    transform: translate(0, -10%);
+    border-radius: 6px;
+    margin-inline-end: 8px;
+    image-rendering: -webkit-optimize-contrast;
+}
+
+#theme-toggle svg {
+    height: 18px;
+}
+
+button#theme-toggle {
+    font-size: 26px;
+    margin: auto 4px;
+}
+
+body.dark #moon {
+    vertical-align: middle;
+    display: none;
+}
+
+body:not(.dark) #sun {
+    display: none;
+}
+
+#menu {
+    list-style: none;
+    word-break: keep-all;
+    overflow-x: auto;
+    white-space: nowrap;
+}
+
+#menu li + li {
+    margin-inline-start: var(--gap);
+}
+
+#menu a {
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--secondary);
+    display: inline-block;
+    line-height: 1.5em;
+}
+#menu a:hover {
+    color: var(--primary);
+}
+
+#menu a.active:hover {
+    color: var(--signature);
+}
+#menu .active {
+    color: var(--signature);
+    box-shadow: 0 2px 0 var(--signature);
+}
+
+#menu .external-link {
+    position: relative;
+}
+#menu .external-link svg {
+    width: 13px;
+    height: auto;
+    position: relative;
+    top: 1px;
+    margin-left: 3px;
+}
+
+.lang-switch li,
+.lang-switch ul,
+.logo-switches {
+    display: inline-flex;
+    margin: auto 4px;
+}
+
+.lang-switch {
+    display: flex;
+    flex-wrap: inherit;
+}
+
+.lang-switch a {
+    margin: auto 3px;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.logo-switches {
+    flex-wrap: inherit;
+}
+
+#cookie-notice {font-size: larger; padding: 0.5rem 1rem; display: none;
+text-align: center; position: fixed; bottom: 0; left: 20px; padding-top: 40px;
+padding-bottom: 40px; width: 100%; background: rgb(70, 70, 70);
+color: rgba(255,255,255,0.8);}
+
+#cookie-notice a {font-weight: 600; display: inline-flex; cursor: pointer; margin-left: 0.5rem;}
+#cookie-notice-accept {color:rgb(86, 228, 58)}
+#cookie-notice-deny {color:rgb(243, 34, 34)}
+@media (max-width: 767px) {
+    #cookie-notice span {display: block; padding-top: 3px; margin-bottom: 1rem;}
+    #cookie-notice a {position: relative; bottom: 4px;}
+    #cookie-notice {left: 0px;}
+}
