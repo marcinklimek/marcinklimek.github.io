@@ -19,13 +19,11 @@ menu:
     url: /about/subpage2/
     weight: 10
 ---
-Polska wersja poniżej [PL]
-
 ## [EN]
 
 ## Who am I?
 
-I am the owner of the website: https://klimek.link/blog. It is purely personal in nature. Mainly it&#8217;s a collection of links to something I&#8217;m interested in.
+I am the owner of the website: https://klimek.link/. It is purely personal in nature. Mainly it&#8217;s a collection of links to something I&#8217;m interested in.
 
 ## What personal information do I collect and why I don&#8217;t collect it?
 
@@ -92,7 +90,7 @@ Since visitor data is not collected, a breach of privacy can only involve the si
 
 ## Kim jestem?
 
-Jestem właścicielem strony: https://klimek.link/blog. Ma ona charakter czysto prywatny. Głownie to zbiór linków do czegoś, co mnie zainteresowało.
+Jestem właścicielem strony: https://klimek.link/. Ma ona charakter czysto prywatny. Głownie to zbiór linków do czegoś, co mnie zainteresowało.
 
 ## Jakie dane osobiste zbieram i dlaczego ich nie zbieram?
 
