@@ -4,6 +4,12 @@ date: 2023-04-24T17:13:33+02:00
 draft: false
 ---
 
+``` {=html}
+<style>
+body { min-width: 80% !important; }
+</style>
+```
+
 Treści programowe
 =================
 
@@ -292,7 +298,7 @@ float_loop:
     int 0x80
 ```
 
-Aby skompilować i uruchomić program, można użyć narzędzi NASM i LD:
+Aby skompilować i uruchomić program, można użyć narzędzi NASM i LD lub fasm
 
 ```
 fastasm itd.
@@ -430,15 +436,15 @@ W praktyce, wybór między typami danych zależy od wymagań dotyczących precyz
 
 ## Eksperyment z optymalizacją kodu.
 
-a. Napisz prosty program, który wykonuje operacje matematyczne na liczbach stało- i zmiennoprzecinkowych.
-b. Skompiluj i uruchom program z różnymi poziomami optymalizacji (np. -O0, -O1, -O2, -O3).
-c. Porównaj czas wykonania programu dla różnych poziomów optymalizacji i zastanów się, jak optymalizacja wpływa na wydajność operacji stało- i zmiennoprzecinkowych.
+1. Napisz prosty program, który wykonuje operacje matematyczne na liczbach stało- i zmiennoprzecinkowych.
+2. Skompiluj i uruchom program z różnymi poziomami optymalizacji (np. -O0, -O1, -O2, -O3).
+3. Porównaj czas wykonania programu dla różnych poziomów optymalizacji i zastanów się, jak optymalizacja wpływa na wydajność operacji stało- i zmiennoprzecinkowych.
 
 ## Wprowadzenie do instrukcji SIMD.
 
-a. Zapoznaj się z instrukcjami SIMD (Single Instruction, Multiple Data) dostępnymi dla Twojego procesora (np. SSE, AVX).
-b. Napisz program, który wykonuje operacje matematyczne na wektorach liczb stało- i zmiennoprzecinkowych, wykorzystując instrukcje SIMD.
-c. Porównaj czas wykonania operacji wektorowych z użyciem SIMD do czasu wykonania operacji
+1. Zapoznaj się z instrukcjami SIMD (Single Instruction, Multiple Data) dostępnymi dla Twojego procesora (np. SSE, AVX).
+2. Napisz program, który wykonuje operacje matematyczne na wektorach liczb stało- i zmiennoprzecinkowych, wykorzystując instrukcje SIMD.
+3. Porównaj czas wykonania operacji wektorowych z użyciem SIMD do czasu wykonania operacji
 
 Aby użyć instrukcji SIMD w C++, możemy wykorzystać bibliotekę `immintrin.h`, która obsługuje instrukcje SSE, SSE2, SSE3, SSSE3, SSE4.1, SSE4.2, AVX, AVX2 i AVX-512.
 
@@ -808,24 +814,23 @@ Hazardy to sytuacje, w których potok rozkazowy napotyka konflikty lub zależno�
 1. Hazardy strukturalne: Występują, gdy różne rozkazy próbują jednocześnie korzystać z tego samego zasobu procesora, takiego jak jednostka wykonawcza, pamięć czy rejestry. Hazardy strukturalne mogą prowadzić do opóźnień lub konieczności oczekiwania przez niektóre rozkazy na dostęp do zasobów.
 
    Sposoby minimalizowania hazardów strukturalnych:
-   a. Wprowadzenie dodatkowych zasobów: Zwiększenie liczby jednostek wykonawczych, pamięci czy rejestrów może zmniejszyć ryzyko wystąpienia konfliktów.
-   b. Replikacja zasobów: Duplicowanie zasobów pozwala na równoczesne korzystanie z nich przez różne rozkazy.
-   c. Wykorzystanie buforów i kolejkowania: Buforowanie i kolejkowanie operacji może pomóc w zarządzaniu dostępem do zasobów i zmniejszyć opóźnienia.
+   1. Wprowadzenie dodatkowych zasobów: Zwiększenie liczby jednostek wykonawczych, pamięci czy rejestrów może zmniejszyć ryzyko wystąpienia konfliktów.
+   2. Replikacja zasobów: Duplicowanie zasobów pozwala na równoczesne korzystanie z nich przez różne rozkazy.
+   3. Wykorzystanie buforów i kolejkowania: Buforowanie i kolejkowanie operacji może pomóc w zarządzaniu dostępem do zasobów i zmniejszyć opóźnienia.
 
 2. Hazardy danych: Występują, gdy jeden rozkaz jest zależny od wyniku innego rozkazu, który jeszcze nie został zakończony. Hazardy danych mogą prowadzić do nieprawidłowych wyników, jeśli nie zostaną odpowiednio obsłużone.
 
    Sposoby minimalizowania hazardów danych:
-   a. Przesunięcie potoku (stalling): Wstrzymywanie wykonywania zależnego rozkazu aż do momentu, gdy wynik potrzebny dla tego rozkazu będzie dostępny.
-   b. Przekształcanie potoku (forwarding): Przekazanie wyniku zależnego rozkazu bezpośrednio do kolejnego rozkazu, bez konieczności zapisywania wyniku w rejestrze.
-   c. Przeplanowanie rozkazów: Kompilator lub procesor może próbować zmienić kolejność rozkazów, aby zmniejszyć zależności i poprawić wydajność potoku rozkazowego.
+   1. Przesunięcie potoku (stalling): Wstrzymywanie wykonywania zależnego rozkazu aż do momentu, gdy wynik potrzebny dla tego rozkazu będzie dostępny.
+   2. Przekształcanie potoku (forwarding): Przekazanie wyniku zależnego rozkazu bezpośrednio do kolejnego rozkazu, bez konieczności zapisywania wyniku w rejestrze.
+   3. Przeplanowanie rozkazów: Kompilator lub procesor może próbować zmienić kolejność rozkazów, aby zmniejszyć zależności i poprawić wydajność potoku rozkazowego.
 
 3. Hazardy kontroli: Występują, gdy kolejność wykonywania rozkazów ulega zmianie z powodu instrukcji warunkowych, takich jak skoki czy instrukcje warunkowe. Hazardy kontroli mogą prowadzić do niepotrzebnego wypełnienia potoku rozkazów i straty wydajności.
 
    Sposoby minimalizowania hazardów kontroli:
-   a. Przewidywanie rozgałęzień (branch prediction): Procesor próbuje przewidywać, czy dane rozgałęzienie zostanie wykonane, i wstępnie ładuje odpowiednie rozkazy do potoku rozkazowego.
-   b. Opóźnianie rozgałęzienia (branch delay slot): Procesor pozwala na wykonanie jednego lub kilku rozkazów po instrukcji rozgałęzienia, zanim rzeczywista zmiana przepływu sterowania zostanie wprowadzona. Kompilator może umieścić niezależne rozkazy w tych opóźnionych miejscach, aby zmniejszyć straty wydajności spowodowane hazardami kontroli.
-
-   c. Wykonanie spekulatywne (speculative execution): Procesor wykonuje obie ścieżki po rozgałęzieniu warunkowym, jednocześnie śledząc poprawność wyników. Gdy warunek rozgałęzienia zostanie ostatecznie wyznaczony, procesor odrzuca wyniki niewłaściwej ścieżki i kontynuuje wykonanie poprawnej ścieżki.
+   1. Przewidywanie rozgałęzień (branch prediction): Procesor próbuje przewidywać, czy dane rozgałęzienie zostanie wykonane, i wstępnie ładuje odpowiednie rozkazy do potoku rozkazowego.
+   2. Opóźnianie rozgałęzienia (branch delay slot): Procesor pozwala na wykonanie jednego lub kilku rozkazów po instrukcji rozgałęzienia, zanim rzeczywista zmiana przepływu sterowania zostanie wprowadzona. Kompilator może umieścić niezależne rozkazy w tych opóźnionych miejscach, aby zmniejszyć straty wydajności spowodowane hazardami kontroli.
+   3. Wykonanie spekulatywne (speculative execution): Procesor wykonuje obie ścieżki po rozgałęzieniu warunkowym, jednocześnie śledząc poprawność wyników. Gdy warunek rozgałęzienia zostanie ostatecznie wyznaczony, procesor odrzuca wyniki niewłaściwej ścieżki i kontynuuje wykonanie poprawnej ścieżki.
 
    Interesująca podatność związana z SE (side-channel) - [Spectre](https://en.wikipedia.org/wiki/Spectre_(security_vulnerability))
 
@@ -934,7 +939,7 @@ W funkcji `main`, tworzymy tablicę `secret_data` z tajnymi danymi i tablicę `o
 Należy pamiętać, że powyższy przykład jest uproszczony i może nie działać na wszystkich konfiguracjach sprzętowych. Ponadto, współczesne systemy operacyjne i procesory stosują różne techniki łagodzenia podatności Spectre, które mogą wpłynąć na skuteczność tego ataku.
 
 
-   d. Przetwarzanie wielowątkowe (multithreading): Procesor może przełączać się między różnymi wątkami wykonawczymi, gdy napotyka hazardy kontroli. Pozwala to na utrzymanie potoku rozkazowego aktywnym i wydajnym, nawet gdy jeden wątek oczekuje na wynik rozgałęzienia.
+   4. Przetwarzanie wielowątkowe (multithreading): Procesor może przełączać się między różnymi wątkami wykonawczymi, gdy napotyka hazardy kontroli. Pozwala to na utrzymanie potoku rozkazowego aktywnym i wydajnym, nawet gdy jeden wątek oczekuje na wynik rozgałęzienia.
 
 W praktyce zaawansowane mikroarchitektury procesorów stosują różne techniki, aby zarządzać hazardami potoku rozkazowego i zwiększać wydajność procesora. Optymalizacja wykorzystania potoku rozkazowego, zarządzanie hazardami oraz przyspieszenie wykonywania programów są kluczowe dla osiągnięcia wysokiej wydajności w nowoczesnych układach scalonych.
 
@@ -951,8 +956,8 @@ Rozkaz 3: SUB R7, R8, R9
 ```
 
 Wszystkie trzy rozkazy wymagają dostępu do ALU. W celu zapobieżenia hazardom strukturalnym, procesor może:
-   a. Wprowadzić dodatkowe moduły ALU, aby umożliwić równoczesne wykonywanie różnych operacji.
-   b. Zastosować buforowanie i kolejkowanie operacji, aby zarządzać dostępem do ALU i zmniejszyć opóźnienia.
+   1. Wprowadzić dodatkowe moduły ALU, aby umożliwić równoczesne wykonywanie różnych operacji.
+   2. Zastosować buforowanie i kolejkowanie operacji, aby zarządzać dostępem do ALU i zmniejszyć opóźnienia.
 
 2. Hazard danych:
 Załóżmy, że mamy następujący ciąg rozkazów:
@@ -964,8 +969,8 @@ Rozkaz 3: MUL R6, R4, R7
 ```
 
 Wynik rozkazu 1 (ADD) jest używany jako wejście dla rozkazu 2 (SUB), a wynik rozkazu 2 jest używany jako wejście dla rozkazu 3 (MUL). W celu zarządzania hazardami danych, procesor może:
-   a. Wstrzymać wykonywanie rozkazu 2 (stalling), aż do momentu, gdy wynik rozkazu 1 będzie dostępny.
-   b. Zastosować przekształcanie potoku (forwarding), przekazując wynik rozkazu 1 bezpośrednio do rozkazu 2, bez konieczności zapisywania wyniku w rejestrze.
+   1. Wstrzymać wykonywanie rozkazu 2 (stalling), aż do momentu, gdy wynik rozkazu 1 będzie dostępny.
+   2. Zastosować przekształcanie potoku (forwarding), przekazując wynik rozkazu 1 bezpośrednio do rozkazu 2, bez konieczności zapisywania wyniku w rejestrze.
 
 3. Hazard kontroli:
 Załóżmy, że mamy następujący ciąg rozkazów z instrukcją warunkowego skoku:
@@ -978,8 +983,8 @@ label:    MUL R6, R7, R8
 ```
 
 W przypadku hazardu kontroli spowodowanego przez instrukcję warunkowego skoku (JNE), procesor może:
-   a. Zastosować przewidywanie rozgałęzień (branch prediction), próbując przewidzieć, czy skok zostanie wykonany, i wstępnie ładując odpowiednie rozkazy do potoku rozkazowego.
-   b. Wykorzystać opóźnienie rozgałęzienia (branch delay slot), umieszczając jeden lub więcej niezależnych rozkazów po instrukcji skoku, które zostaną wykonane przed wprowadzeniem zmiany przepły
+   1. Zastosować przewidywanie rozgałęzień (branch prediction), próbując przewidzieć, czy skok zostanie wykonany, i wstępnie ładując odpowiednie rozkazy do potoku rozkazowego.
+   2. Wykorzystać opóźnienie rozgałęzienia (branch delay slot), umieszczając jeden lub więcej niezależnych rozkazów po instrukcji skoku, które zostaną wykonane przed wprowadzeniem zmiany przepły
 
 ## Zadanie z symulacją: symulator potoku rozkazowego dla prostego procesora, uwzględniając hazardy.
 
@@ -1391,9 +1396,9 @@ W powyższym kodzie symulatora prostego procesora uwzględniono opóźnienie w p
 1. Dodano zmienną `self.stall_count` do przechowywania liczby cykli opóźnienia potoku (stalls) oraz zmienną `self.branch_prediction_always_taken` do określenia polityki przewidywania skoków.
 
 2. Zastąpiono funkcję `run()` funkcją `handle_branch_hazard()`, która teraz obsługuje cały proces wykonywania instrukcji, w tym hazard kontroli. Funkcja ta:
-    a. Sprawdza, czy występują opóźnienia w potoku (stalls) i zmniejsza ich liczbę, jeśli tak.
-    b. Pobiera, dekoduje i wykonuje instrukcje.
-    c. Obsługuje hazard kontroli dla instrukcji `beq`, sprawdzając politykę przewidywania skoków, a następnie wprowadza opóźnienie w potoku (stall), jeśli przewidywanie było błędne.
+    1. Sprawdza, czy występują opóźnienia w potoku (stalls) i zmniejsza ich liczbę, jeśli tak.
+    2. Pobiera, dekoduje i wykonuje instrukcje.
+    3. Obsługuje hazard kontroli dla instrukcji `beq`, sprawdzając politykę przewidywania skoków, a następnie wprowadza opóźnienie w potoku (stall), jeśli przewidywanie było błędne.
 
 3. Zmodyfikowano funkcję `run()`, która teraz korzysta z funkcji `handle_branch_hazard()` do iteracyjnego wykonywania instrukcji. Funkcja `run()` kończy działanie, gdy licznik programu (PC) przekroczy długość pamięci, a liczba opóźnień w potoku wyniesie 0.
 
@@ -1717,6 +1722,8 @@ Podsumowując, w przypadku obliczania wartości silni dla dużego zestawu liczb,
 
 # Komunikacja z pamięcią - alokacja i odczyt pamięci
 
+ref:
+- [What Every Programmer Should Know About Memory](https://akkadia.org/drepper/cpumemory.pdf)
 Celem tego ćwiczenia jest napisanie prostego programu w języku C, który alokuje blok pamięci, zapisuje wartości do tego bloku i odczytuje wartości z tego bloku.
 
 ```c
@@ -1805,6 +1812,8 @@ W praktyce, optymalizacja dostępu do pamięci może prowadzić do znacznego prz
 
 Poniżej znajduje się prosty symulator procesora z pamięcią cache w Pythonie, który ilustruje różnice w czasie dostępu do pamięci sekwencyjnego i losowego.
 
+ref:
+- [Memory part 2: CPU caches](https://lwn.net/Articles/252125/)
 ```python
 import random
 import time
@@ -1876,95 +1885,267 @@ Zmiana parametrów symulatora (rozmiar pamięci, rozmiar cache, liczba iteracji)
 
 Bardziej zaawansowana wersja symulatora:
 
-Oto przykład prostego symulatora pamięci podręcznej (cache) typu direct-mapped w języku C++, który ilustruje cache hit, cache miss, mapowanie całej pamięci na linie cache, prefetch, wpisy cache oraz tagi:
+Oto przykład prostego symulatora pamięci podręcznej (cache) typu direct-mapped
 
 ```cpp
 #include <iostream>
 #include <vector>
-#include <cstdint>
-#include <iomanip>
-#include <cmath>
+#include <cstdlib>
+#include <ctime>
 
-class DirectMappedCache {
+class CacheEntry {
 public:
-    DirectMappedCache(size_t cache_size, size_t line_size)
-        : line_size(line_size), lines(cache_size / line_size) {
-        // Inicjalizacja cache
-        for (auto &line : lines) {
-            line.valid = false;
-            line.tag = 0;
-            line.data.resize(line_size);
-        }
-    }
+    int tag;
+    bool valid;
+    CacheEntry() : tag(-1), valid(false) {}
+};
 
-    // Symulacja odczytu z cache
-    uint8_t read(uint32_t address) {
-        size_t index = (address / line_size) % lines.size();
-        uint32_t tag = address / (line_size * lines.size());
-        size_t offset = address % line_size;
-
-        CacheLine &line = lines[index];
-
-        // Cache hit
-        if (line.valid && line.tag == tag) {
-            return line.data[offset];
-        }
-
-        // Cache miss
-        line.valid = true;
-        line.tag = tag;
-
-        // Prefetch
-        for (size_t i = 0; i < line_size; ++i) {
-            line.data[i] = read_from_memory(address - offset + i);
-        }
-
-        return line.data[offset];
-    }
-
+class Cache {
 private:
-    struct CacheLine {
-        bool valid;
-        uint32_t tag;
-        std::vector<uint8_t> data;
-    };
+    int cacheSize;
+    int blockSize;
+    int numCacheLines;
+    int mainMemoryAccessTime;
+    std::vector<CacheEntry> cacheEntries;
+    int cacheHit;
+    int cacheMiss;
 
-    size_t line_size;
-    std::vector<CacheLine> lines;
+    void prefetch(int address) {
+        int nextAddress = address + blockSize;
+        int index = (nextAddress / blockSize) % numCacheLines;
+        int tag = nextAddress / blockSize / numCacheLines;
 
-    // Symulacja odczytu z pamięci głównej
-    uint8_t read_from_memory(uint32_t address) {
-        // Przykład: zwracamy wartość z pamięci głównej jako wartość adresu modulo 256
-        return static_cast<uint8_t>(address % 256);
+        cacheEntries[index].tag = tag;
+        cacheEntries[index].valid = true;
+    }
+
+public:
+    Cache(int cacheSize, int blockSize, int mainMemoryAccessTime)
+        : cacheSize(cacheSize), blockSize(blockSize), mainMemoryAccessTime(mainMemoryAccessTime) {
+        numCacheLines = cacheSize / blockSize;
+        cacheEntries.resize(numCacheLines);
+        cacheHit = 0;
+        cacheMiss = 0;
+    }
+
+    bool access(int address) {
+        int index = (address / blockSize) % numCacheLines;
+        int tag = address / blockSize / numCacheLines;
+
+        if (cacheEntries[index].valid && cacheEntries[index].tag == tag) {
+            cacheHit++;
+            return true; // Cache hit
+        } else {
+            cacheMiss++;
+            cacheEntries[index].tag = tag;
+            cacheEntries[index].valid = true;
+
+            //prefetch,
+            //cacheEntries[index].data = read_line_from_main_memory(address)
+
+            return false; // Cache miss
+        }
+    }
+
+    void printStats() {
+        std::cout << "Cache hits: " << cacheHit << std::endl;
+        std::cout << "Cache misses: " << cacheMiss << std::endl;
+        std::cout << "Hit ratio: " << (double)cacheHit / (cacheHit + cacheMiss) << std::endl;
+        std::cout << "Average access time: "
+                  << (cacheHit + cacheMiss * mainMemoryAccessTime) / (double)(cacheHit + cacheMiss)
+                  << " cycles" << std::endl;
     }
 };
 
 int main() {
-    size_t cache_size = 1024; // 1 KiB
-    size_t line_size = 64; // 64 B
+    srand(time(NULL));
+    int cacheSize = 1024;         // 1KB cache
+    int blockSize = 32;           // 32B block size
+    int mainMemoryAccessTime = 50; // 50 cycles
+    Cache cache(cacheSize, blockSize, mainMemoryAccessTime);
 
-    DirectMappedCache cache(cache_size, line_size);
+    int numAccesses = 10000;
+    int memorySize = 4096; // 4KB main memory
 
-    std::vector<uint32_t> addresses = {0, 64, 128, 192, 256, 320, 384, 448, 512};
-
-    for (const auto &address : addresses) {
-        uint8_t value = cache.read(address);
-        std::cout << "Reading from address 0x" << std::hex << address
-                  << " (cache line 0x" << (address / line_size) % (cache_size / line_size)
-                  << ", tag 0x" << (address / (line_size * (cache_size / line_size)))
-                  << "): 0x" << std::hex << static_cast<int>(value) << std::endl;
+    // Sequential access
+    for (int i = 0; i < numAccesses; i++) {
+        cache.access(i % memorySize);
     }
+
+    std::cout << "Sequential access:" << std::endl;
+    cache.printStats();
+
+    // Reset the cache for the random test
+    cache = Cache(cacheSize, blockSize, mainMemoryAccessTime);
+
+    // Random access
+    for (int i = 0; i < numAccesses; i++) {
+        cache.access(rand() % memorySize);
+    }
+
+    std::cout << "Random access:" << std::endl;
+    cache.printStats();
 
     return 0;
 }
 ```
 
-W powyższym przykładzie, klasa `DirectMappedCache` implementuje prostą pamięć podręczną direct-mapped. Metoda `read` jest odpowiedzialna za symulowanie odczytu z pamięci podręcznej, sprawdzając czy wystąpił cache hit, a w przypadku cache miss, wczytując dane z pamięci głównej (symulowane przez funkcję `read_from_memory`) i wykonując prefetch. Każda linia pamięci podręcznej (cache) ma trzy główne komponenty: flagę "valid", która wskazuje, czy linia zawiera poprawne dane; tag, który identyfikuje unikalną grupę adresów; oraz dane, które są rzeczywistymi danymi przechowywanymi w linii cache.
+Ten program przeprowadza dwa testy: dostęp sekwencyjny oraz dostęp losowy. Każdy z testów wykonuje 10000 dostępów do pamięci. Po wykonaniu każdego testu, program wyświetla stat
 
-W funkcji `main`, tworzymy instancję `DirectMappedCache` o określonym rozmiarze cache i linii. Następnie, używamy wektora `addresses` do przechowywania przykładowych adresów, z których będziemy odczytywać dane. Dla każdego z tych adresów, wywołujemy metodę `read`, a następnie wyświetlamy informacje o wyniku odczytu, włączając numer linii cache i tag. Na podstawie tych wyników, można zobaczyć, które odczyty powodują cache hit, a które cache miss.
 
-Warto zauważyć, że ten przykład jest uproszczony i służy głównie do celów edukacyjnych. W rzeczywistych systemach, pamięć podręczna i jej interakcja z pamięcią główną są znacznie bardziej skomplikowane, a różne parametry, takie jak polityka zastępowania, mogą wpłynąć na wydajność cache.
+Nieco ciekawsza implementacja:
 
+
+```cpp
+#include <iostream>
+#include <vector>
+#include <cstdlib>
+#include <ctime>
+#include <deque>
+
+class CacheEntry {
+public:
+    int tag;
+    bool valid;
+    CacheEntry() : tag(-1), valid(false) {}
+};
+
+class Cache {
+private:
+    int cacheSize;
+    int blockSize;
+    int numCacheLines;
+    int mainMemoryAccessTime;
+    std::vector<CacheEntry> cacheEntries;
+    std::deque<CacheEntry> prefetchBuffer;
+    int prefetchDistance;
+    int cacheHit;
+    int cacheMiss;
+
+    void prefetch(int address) {
+        for (int i = 1; i <= prefetchDistance; i++) {
+            int nextAddress = address + i * blockSize;
+            int tag = nextAddress / blockSize / numCacheLines;
+            CacheEntry entry;
+            entry.tag = tag;
+            entry.valid = true;
+            prefetchBuffer.push_back(entry);
+        }
+    }
+
+    bool checkPrefetchBuffer(int tag) {
+        for (auto it = prefetchBuffer.begin(); it != prefetchBuffer.end(); it++) {
+            if (it->valid && it->tag == tag) {
+                prefetchBuffer.erase(it);
+                return true;
+            }
+        }
+        return false;
+    }
+
+public:
+    Cache(int cacheSize, int blockSize, int mainMemoryAccessTime, int prefetchDistance)
+        : cacheSize(cacheSize),
+          blockSize(blockSize),
+          mainMemoryAccessTime(mainMemoryAccessTime),
+          prefetchDistance(prefetchDistance) {
+        numCacheLines = cacheSize / blockSize;
+        cacheEntries.resize(numCacheLines);
+        cacheHit = 0;
+        cacheMiss = 0;
+    }
+
+    bool access(int address, bool prefetchEnabled = false) {
+        int index = (address / blockSize) % numCacheLines;
+        int tag = address / blockSize / numCacheLines;
+
+        if (prefetchEnabled && checkPrefetchBuffer(tag)) {
+            cacheHit++;
+            return true; // Cache hit from prefetch buffer
+        }
+
+        if (cacheEntries[index].valid && cacheEntries[index].tag == tag) {
+            cacheHit++;
+            return true; // Cache hit
+        } else {
+            cacheMiss++;
+            cacheEntries[index].tag = tag;
+            cacheEntries[index].valid = true;
+
+            if (prefetchEnabled) {
+                prefetch(address);
+            }
+
+            return false; // Cache miss
+        }
+    }
+
+    void printStats() {
+        std::cout << "Cache hits: " << cacheHit << std::endl;
+        std::cout << "Cache misses: " << cacheMiss << std::endl;
+        std::cout << "Hit ratio: " << (double)cacheHit / (cacheHit + cacheMiss) << std::endl;
+        std::cout << "Average access time: "
+                  << (cacheHit + cacheMiss * mainMemoryAccessTime) / (double)(cacheHit + cacheMiss)
+                  << " cycles" << std::endl;
+    }
+};
+
+int main() {
+	srand(time(NULL));
+
+    int cacheSize = 1024;          // 1KB cache
+    int blockSize = 32;            // 32B block size
+    int mainMemoryAccessTime = 50; // 50 cycles
+    int prefetchDistance = 4;      // prefetch distance of 4 blocks
+    Cache cache(cacheSize, blockSize, mainMemoryAccessTime, prefetchDistance);
+
+    int numAccesses = 10000;
+    int memorySize = 4096; // 4KB main memory
+
+    // Sequential access without prefetching
+    for (int i = 0; i < numAccesses; i++) {
+        cache.access(i % memorySize);
+    }
+
+    std::cout << "Sequential access without prefetching:" << std::endl;
+    cache.printStats();
+
+    // Reset the cache for the next test
+    cache = Cache(cacheSize, blockSize, mainMemoryAccessTime, prefetchDistance);
+
+    // Sequential access with prefetching
+    for (int i = 0; i < numAccesses; i++) {
+        cache.access(i % memorySize, true);
+    }
+
+    std::cout << "Sequential access with prefetching:" << std::endl;
+    cache.printStats();
+
+    // Reset the cache for the next test
+    cache = Cache(cacheSize, blockSize, mainMemoryAccessTime, prefetchDistance);
+
+    // Random access without prefetching
+    for (int i = 0; i < numAccesses; i++) {
+        cache.access(rand() % memorySize);
+    }
+
+    std::cout << "Random access without prefetching:" << std::endl;
+    cache.printStats();
+
+    // Reset the cache for the next test
+    cache = Cache(cacheSize, blockSize, mainMemoryAccessTime, prefetchDistance);
+
+    // Random access with prefetching
+    for (int i = 0; i < numAccesses; i++) {
+        cache.access(rand() % memorySize, true);
+    }
+
+    std::cout << "Random access with prefetching:" << std::endl;
+    cache.printStats();
+
+    return 0;
+}
+```
 
 
 Ćwiczenie 3: Obsługa przerwań - prosty timer
