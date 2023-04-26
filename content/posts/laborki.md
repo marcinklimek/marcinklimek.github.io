@@ -306,6 +306,9 @@ fastasm itd.
 
 Należy pamiętać, że ten program nie wypisuje wyników na ekran, ale przechowuje je w zarezerwowanych zmiennych `int_duration` i `float_duration`. Aby wyświetlić wyniki, można dodać kod odpowiedzialny za wypisanie wartości na ekran, korzystając z systemu wywołań (syscalls) lub użyć debuggera, aby przejrzeć wartości tych zmiennych
 
+ref:
+ - [x64dbg](https://x64dbg.com/)
+
 ## Analiza wpływu precyzji zmiennoprzecinkowej na czas wykonywania operacji.
 
 a. Utwórz program, który wykonuje operacje matematyczne na liczbach zmiennoprzecinkowych o różnych precyzjach (float, double, long double).
@@ -523,7 +526,11 @@ Wyniki mogą się różnić w zależności od sprzętu i kompilatora, ale zazwyc
 
 W praktyce, wykorzystanie SIMD może prowadzić do znacznego przyspieszenia obliczeń wektorowych, szczególnie w zastosowaniach, takich jak grafika komputerowa, analiza danych czy przetwarzanie sygnałów. Jednak warto pamiętać, że nie wszystkie operacje mogą być przyspieszone przy użyciu SIMD, a także, że optymalizacja przy użyciu SIMD może zwiększyć złożoność kodu i utrudnić jego utrzymanie.
 
-https://x64dbg.com/
+
+ref:
+- [Native code performance on modern CPUs](https://www.cppstories.com/2014/04/presentation-native-code-performance-on-modern-cpus/)
+
+
 
 
 # Analiza cyklu rozkazowego:
@@ -1469,6 +1476,7 @@ Po wielokrotnym uruchomieniu programu liczba reorderingów może być różna. P
 
 Ref: 
 - [Memory Reordering Caught in the Act](https://preshing.com/20120515/memory-reordering-caught-in-the-act/)
+- [The Purpose of memory_order_consume in C++11](https://preshing.com/20140709/the-purpose-of-memory_order_consume-in-cpp11/)
 
 # Porównanie jedno- i wielordzeniowych procesorów:
 ## Różnice między jedno- i wielordzeniowymi procesorami
@@ -1545,6 +1553,11 @@ int main() {
 W powyższym przykładzie używamy biblioteki `<thread>` w języku C++ do tworzenia dwóch wątków, które wykonują funkcje `add()` i `sub()` równocześnie na wielordzeniowym procesorze. Dzięki temu można równocześnie obliczyć sumę i różnicę dwóch liczb, co pokazuje zaletę wielordzeniowego procesora w porównaniu do jednordzeniowego procesora.
 
 Jednordzeniowe procesory są prostsze, ale mniej wydajne, szczególnie w przypadku zadań wielowątkowych. Wielordzeniowe procesory oferują wyższą wydajność dla zadań wielowątkowych, ale wymagają bardziej zaawansowanego zarządzania równoczesnością i synchronizacją w kodzie programu. Wybór pomiędzy nimi zależy od konkretnych wymagań i ograniczeń projektu.
+
+> **_UWAGA:_**  Dodać tutaj problem wyścigu (race condition)
+
+ref:
+- [Make Your Program Slower With Threads](https://brooker.co.za/blog/2014/12/06/random.html)
 
 ## Hyper-threading
 Hyper-threading to technologia opracowana przez firmę Intel, która pozwala na wykonywanie dwóch lub więcej wątków na jednym rdzeniu procesora, zwiększając wydajność procesora w zadaniach wielowątkowych. Technologia ta polega na tym, że jeden rdzeń procesora posiada dwa lub więcej zestawów rejestrów, które są niezależne dla każdego wątku. Dzięki temu rdzeń może wykonywać wiele wątków równocześnie, wykorzystując jednocześnie swoje zasoby sprzętowe.
@@ -1811,7 +1824,7 @@ W praktyce, optymalizacja dostępu do pamięci może prowadzić do znacznego prz
 
 
 
-Poniżej znajduje się prosty symulator procesora z pamięcią cache w Pythonie, który ilustruje różnice w czasie dostępu do pamięci sekwencyjnego i losowego.
+Poniżej znajduje się prosty symulator procesora z pamięcią cache w Pythonie, który ilustruje różnice w czasie dostępu do pamięci sekwencyjnie i losowo.
 
 ref:
 - [Memory part 2: CPU caches](https://lwn.net/Articles/252125/)
@@ -1990,8 +2003,6 @@ int main() {
     return 0;
 }
 ```
-
-Ten program przeprowadza dwa testy: dostęp sekwencyjny oraz dostęp losowy. Każdy z testów wykonuje 10000 dostępów do pamięci. Po wykonaniu każdego testu, program wyświetla stat
 
 
 Nieco ciekawsza implementacja:
