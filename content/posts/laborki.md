@@ -984,7 +984,7 @@ label:    MUL R6, R7, R8
 
 W przypadku hazardu kontroli spowodowanego przez instrukcję warunkowego skoku (JNE), procesor może:
    1. Zastosować przewidywanie rozgałęzień (branch prediction), próbując przewidzieć, czy skok zostanie wykonany, i wstępnie ładując odpowiednie rozkazy do potoku rozkazowego.
-   2. Wykorzystać opóźnienie rozgałęzienia (branch delay slot), umieszczając jeden lub więcej niezależnych rozkazów po instrukcji skoku, które zostaną wykonane przed wprowadzeniem zmiany przepły
+   2. Wykorzystać opóźnienie rozgałęzienia (branch delay slot), umieszczając jeden lub więcej niezależnych rozkazów po instrukcji skoku, które zostaną wykonane przed rzeczywistym skokiem
 
 ## Zadanie z symulacją: symulator potoku rozkazowego dla prostego procesora, uwzględniając hazardy.
 
@@ -1391,8 +1391,9 @@ for i, value in enumerate(processor.registers):
     print(f"${i}: {value}")
 ```
 
-W powyższym kodzie symulatora prostego procesora uwzględniono opóźnienie w potoku (stall) oraz prostą technikę przewidywania skoków (branch prediction). Wprowadzono następujące zmiany:
+W powyższym kodzie symulatora prostego procesora uwzględniono opóźnienie w potoku (stall) oraz prostą technikę przewidywania skoków (branch prediction). 
 
+<!-- 
 1. Dodano zmienną `self.stall_count` do przechowywania liczby cykli opóźnienia potoku (stalls) oraz zmienną `self.branch_prediction_always_taken` do określenia polityki przewidywania skoków.
 
 2. Zastąpiono funkcję `run()` funkcją `handle_branch_hazard()`, która teraz obsługuje cały proces wykonywania instrukcji, w tym hazard kontroli. Funkcja ta:
@@ -1402,7 +1403,7 @@ W powyższym kodzie symulatora prostego procesora uwzględniono opóźnienie w p
 
 3. Zmodyfikowano funkcję `run()`, która teraz korzysta z funkcji `handle_branch_hazard()` do iteracyjnego wykonywania instrukcji. Funkcja `run()` kończy działanie, gdy licznik programu (PC) przekroczy długość pamięci, a liczba opóźnień w potoku wyniesie 0.
 
-W wyniku tych zmian, zmodyfikowany symulator uwzględnia opóźnienia w potoku (stalls) oraz przewidywanie skoków (branch prediction). Warto zauważyć, że w rzeczywistych procesorach przewidywanie skoków może być znacznie bardziej zaawansowane, z użyciem dynamicznych technik, takich jak bufor przewidywania skoków (branch target buffer) czy tablica historii skoków (branch history table). W uproszczonym symulatorze używamy prostej, statycznej polityki przewidywania "zawsze wykonuj skok" dla celów demonstracyjnych.
+W wyniku tych zmian, zmodyfikowany symulator uwzględnia opóźnienia w potoku (stalls) oraz przewidywanie skoków (branch prediction). Warto zauważyć, że w rzeczywistych procesorach przewidywanie skoków może być znacznie bardziej zaawansowane, z użyciem dynamicznych technik, takich jak bufor przewidywania skoków (branch target buffer) czy tablica historii skoków (branch history table). W uproszczonym symulatorze używamy prostej, statycznej polityki przewidywania "zawsze wykonuj skok" dla celów demonstracyjnych. -->
 
 # instruction reordering
 
