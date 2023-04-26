@@ -73,7 +73,7 @@ Aby uniknąć problemów związanych z architekturą procesora i organizacją sy
 > - [WSL](https://learn.microsoft.com/en-gb/windows/wsl/install-manual#step-2---check-requirements-for-running-wsl-2) !!
 > - VirtualBox
 > - [Mingw-w64](https://www.mingw-w64.org/)
-
+> - [The microarchitecture of Intel, AMD, and VIA CPUs](https://agner.org/optimize/microarchitecture.pdf)
 
 # Reprezentacja liczb
 
@@ -132,6 +132,26 @@ Wybór kolejności bajtów jest często wynikiem decyzji projektowych, które mi
 > - [Jak to jest z tym little-endian](https://blog.fabrykowski.pl/little-endian.html)
 
 # Wykonywania operacji stało- i zmiennoprzecinkowych:
+
+FPU (Floating Point Unit) to podzespoły procesora odpowiedzialne za wykonywanie operacji arytmetycznych na liczbach zmiennoprzecinkowych. Liczba jednostek FPU może się różnić w zależności od architektury i modelu procesora. Oto kilka przykładów:
+
+1. Intel Core i7-8700K (8. generacja Core)
+- 6 rdzeni, każdy z jednostką FPU, więc łącznie 6 jednostek FPU.
+
+2. AMD Ryzen 7 3700X (3. generacja Ryzen)
+- 8 rdzeni, każdy z jednostką FPU, więc łącznie 8 jednostek FPU.
+
+3. Apple M1 (ARM-based)
+- 8 rdzeni CPU (4 wysokiej wydajności i 4 energooszczędne), każdy z jednostką FPU, więc łącznie 8 jednostek FPU.
+
+4. IBM POWER9
+- 12 lub 24 rdzenie, w zależności od konfiguracji. Każdy rdzeń ma jedną jednostkę FPU, więc łącznie 12 lub 24 jednostki FPU.
+
+5. NVIDIA A100 (GPU)
+- W przypadku GPU, jednostki FPU są zintegrowane z procesorami strumieniowymi (CUDA cores). NVIDIA A100 posiada 6912 rdzeni CUDA, więc można uznać, że ma 6912 jednostek FPU.
+
+Warto zauważyć, że w przypadku GPU, jednostki FPU mogą być wykorzystywane do obliczeń równoległych, ale zwykle nie są one traktowane jako oddzielne jednostki, tak jak w przypadku CPU.
+
 
 ## Porównanie czasu wykonywania
 
@@ -1738,6 +1758,24 @@ Podsumowując, w przypadku obliczania wartości silni dla dużego zestawu liczb,
 
 > Ref:
 > - [What Every Programmer Should Know About Memory](https://akkadia.org/drepper/cpumemory.pdf)
+
+## Nomenklatura
+
+Level 1 data cache - 48 kB, 12 way, 64 sets, 64 B line size, latency 5, per core
+
+1. 48 kB: The size of the L1 data cache is 48 kilobytes. This is the total amount of data that can be stored in the cache. Smaller caches are faster but can store less data, while larger caches can store more data but may be slower.
+
+2. 12 way: This refers to the cache's associativity, which determines how cache lines can be mapped to cache sets. In a 12-way associative cache, each cache set can hold 12 different cache lines. Higher associativity can reduce the likelihood of cache conflicts (when multiple cache lines map to the same cache set), but may increase access latency.
+
+3. 64 sets: The cache is divided into 64 sets. Each set can store multiple cache lines, as determined by the cache's associativity (in this case, 12-way).
+
+4. 64 B line size: The size of each cache line is 64 bytes. When data is fetched from the main memory, it is brought into the cache in blocks called cache lines. A larger cache line size can improve spatial locality (the likelihood that nearby memory locations will be accessed), but may also result in more unused data being fetched.
+
+5. Latency 5: The cache latency is 5 clock cycles. This is the time it takes for the processor to access data stored in the L1 cache. 
+
+6. Per core: This specification is for an L1 data cache that is dedicated to each core in a multicore processor. Each core has its own L1 data cache, which can help improve performance by reducing contention for cache resources between cores.
+
+## Ćwiczenie
 
 Celem tego ćwiczenia jest napisanie prostego programu w języku C, który alokuje blok pamięci, zapisuje wartości do tego bloku i odczytuje wartości z tego bloku.
 
