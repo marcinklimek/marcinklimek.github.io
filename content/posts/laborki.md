@@ -131,16 +131,18 @@ Wybór kolejności bajtów jest często wynikiem decyzji projektowych, które mi
 > Ref:
 > - [Jak to jest z tym little-endian](https://blog.fabrykowski.pl/little-endian.html)
 
-# Ćwiczenia związane z analizą szybkości wykonywania operacji stało- i zmiennoprzecinkowych w C++:
+# Wykonywania operacji stało- i zmiennoprzecinkowych:
 
-## Porównanie czasu wykonywania dodawania, odejmowania, mnożenia i dzielenia dla liczby stałoprzecinkowej (int) i zmiennoprzecinkowej (float, double).
+## Porównanie czasu wykonywania
 
-a. Utwórz program, który generuje losowe liczby int oraz float (lub double) i wykonuje podstawowe operacje matematyczne.
-b. Zmierz czas wykonania każdej operacji za pomocą biblioteki <chrono>.
-c. Wyświetl wyniki w formie tabeli, porównując czas wykonania operacji dla liczby stało- i zmiennoprzecinkowej.
+Porównanie czasu wykonywania dodawania, odejmowania, mnożenia i dzielenia dla liczby stałoprzecinkowej (int) i zmiennoprzecinkowej (float, double).
+
+1. Utwórz program, który generuje losowe liczby int oraz float (lub double) i wykonuje podstawowe operacje matematyczne.
+2. Zmierz czas wykonania każdej operacji za pomocą biblioteki <chrono>.
+3. Wyświetl wyniki w formie tabeli, porównując czas wykonania operacji dla liczby stało- i zmiennoprzecinkowej.
 
 
-Oto program realizujący opisane zadanie:
+Program realizujący opisane zadanie:
 
 ```cpp
 #include <iostream>
@@ -321,9 +323,9 @@ Należy pamiętać, że ten program nie wypisuje wyników na ekran, ale przechow
 
 ## Analiza wpływu precyzji zmiennoprzecinkowej na czas wykonywania operacji.
 
-a. Utwórz program, który wykonuje operacje matematyczne na liczbach zmiennoprzecinkowych o różnych precyzjach (float, double, long double).
-b. Zmierz czas wykonania każdej operacji dla różnych precyzji.
-c. Porównaj wyniki i zastanów się nad wpływem precyzji na czas wykonania operacji.
+1. Utwórz program, który wykonuje operacje matematyczne na liczbach zmiennoprzecinkowych o różnych precyzjach (float, double, long double).
+2. Zmierz czas wykonania każdej operacji dla różnych precyzji.
+3. Porównaj wyniki i zastanów się nad wpływem precyzji na czas wykonania operacji.
 
 ```cpp
 #include <iostream>
@@ -932,8 +934,9 @@ W funkcji `main`, tworzymy tablicę `secret_data` z tajnymi danymi i tablicę `o
 
 Należy pamiętać, że powyższy przykład jest uproszczony i może nie działać na wszystkich konfiguracjach sprzętowych. Ponadto, współczesne systemy operacyjne i procesory stosują różne techniki łagodzenia podatności Spectre, które mogą wpłynąć na skuteczność tego ataku.
 
+Dodatkowo:
 
-   4. Przetwarzanie wielowątkowe (multithreading): Procesor może przełączać się między różnymi wątkami wykonawczymi, gdy napotyka hazardy kontroli. Pozwala to na utrzymanie potoku rozkazowego aktywnym i wydajnym, nawet gdy jeden wątek oczekuje na wynik rozgałęzienia.
+**Przetwarzanie wielowątkowe (multithreading)**: Procesor może przełączać się między różnymi wątkami wykonawczymi, gdy napotyka hazardy kontroli. Pozwala to na utrzymanie potoku rozkazowego aktywnym i wydajnym, nawet gdy jeden wątek oczekuje na wynik rozgałęzienia.
 
 W praktyce zaawansowane mikroarchitektury procesorów stosują różne techniki, aby zarządzać hazardami potoku rozkazowego i zwiększać wydajność procesora. Optymalizacja wykorzystania potoku rozkazowego, zarządzanie hazardami oraz przyspieszenie wykonywania programów są kluczowe dla osiągnięcia wysokiej wydajności w nowoczesnych procesorach.
 
