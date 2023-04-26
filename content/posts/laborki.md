@@ -68,11 +68,11 @@ Aby uniknąć problemów związanych z architekturą procesora i organizacją sy
 
 
 > Ref:
-> [Measuring Jitter and Latency](http://www.cs.ru.nl/lab/xenomai/exercises_xenomai2.4/ex10/Exercise-10.html)
-> [logic gate simulator](https://academo.org/demos/logic-gate-simulator/)
-> [WSL](https://learn.microsoft.com/en-gb/windows/wsl/install-manual#step-2---check-requirements-for-running-wsl-2) !!
-> VirtualBox
-> [Mingw-w64](https://www.mingw-w64.org/)
+> - [Measuring Jitter and Latency](http://www.cs.ru.nl/lab/xenomai/exercises_xenomai2.4/ex10/Exercise-10.html)
+> - [logic gate simulator](https://academo.org/demos/logic-gate-simulator/)
+> - [WSL](https://learn.microsoft.com/en-gb/windows/wsl/install-manual#step-2---check-requirements-for-running-wsl-2) !!
+> - VirtualBox
+> - [Mingw-w64](https://www.mingw-w64.org/)
 
 
 # Reprezentacja liczb
@@ -81,9 +81,9 @@ Aby uniknąć problemów związanych z architekturą procesora i organizacją sy
 
 
 > Ref: 
-> [http://www.cburch.com/books/float/](http://www.cburch.com/books/float/)
-> [Float Toy](http://evanw.github.io/float-toy/)
-> [What Every Computer Scientist Should Know About Floating-Point Arithmetic](https://docs.oracle.com/cd/E19957-01/800-7895/800-7895.pdf) 
+> - [http://www.cburch.com/books/float/](http://www.cburch.com/books/float/)
+> - [Float Toy](http://evanw.github.io/float-toy/)
+> - [What Every Computer Scientist Should Know About Floating-Point Arithmetic](https://docs.oracle.com/cd/E19957-01/800-7895/800-7895.pdf) 
 
 # Kolejność bajtów
 Przykład reprezentacji liczby 32-bitowej (4-bajtowej) w różnych kolejnościach bajtów:
@@ -129,7 +129,7 @@ Różne procesory używają różnych kolejności bajtów:
 Wybór kolejności bajtów jest często wynikiem decyzji projektowych, które miały na celu ułatwienie lub optymalizację wykonywania określonych operacji. Little-endian jest popularne ze względu na prostotę dodawania i odejmowania liczb o zmiennej długości oraz łatwiejszą obsługę liczb o mniejszej precyzji w reprezentacji o większej precyzji. Big-endian jest częściej stosowany w systemach, które muszą współpracować z sieciami komputerowymi, gdzie bajty są przesyłane od najbardziej znaczącego do najmniej znaczącego, co ułatwia interpretację wartości przesyłanych danych.
 
 > Ref:
-> [Jak to jest z tym little-endian](https://blog.fabrykowski.pl/little-endian.html)
+> - [Jak to jest z tym little-endian](https://blog.fabrykowski.pl/little-endian.html)
 
 # Wykonywania operacji stało- i zmiennoprzecinkowych:
 
@@ -319,7 +319,7 @@ fastasm itd.
 Należy pamiętać, że ten program nie wypisuje wyników na ekran, ale przechowuje je w zarezerwowanych zmiennych `int_duration` i `float_duration`. Aby wyświetlić wyniki, można dodać kod odpowiedzialny za wypisanie wartości na ekran, korzystając z systemu wywołań (syscalls) lub użyć debuggera, aby przejrzeć wartości tych zmiennych
 
 > Ref:
-> [x64dbg](https://x64dbg.com/)
+> - [x64dbg](https://x64dbg.com/)
 
 ## Analiza wpływu precyzji zmiennoprzecinkowej na czas wykonywania operacji.
 
@@ -540,7 +540,7 @@ W praktyce, wykorzystanie SIMD może prowadzić do znacznego przyspieszenia obli
 
 
 > Ref:
-> [Native code performance on modern CPUs](https://www.cppstories.com/2014/04/presentation-native-code-performance-on-modern-cpus/)
+> - [Native code performance on modern CPUs](https://www.cppstories.com/2014/04/presentation-native-code-performance-on-modern-cpus/)
 
 
 
@@ -821,7 +821,7 @@ Istnieją trzy główne rodzaje hazardów:
 3. Hazardy kontroli: Występują, gdy kolejność wykonywania rozkazów ulega zmianie z powodu instrukcji warunkowych, takich jak skoki czy instrukcje warunkowe. Hazardy kontroli mogą prowadzić do niepotrzebnego wypełnienia potoku rozkazów i straty wydajności.
 
 > Ref:
-> [Branch prediction examples](https://www.youtube.com/watch?v=aujUQ274bEE)
+> - [Branch prediction examples](https://www.youtube.com/watch?v=aujUQ274bEE)
 
    Sposoby minimalizowania hazardów kontroli:
    1. Przewidywanie rozgałęzień (branch prediction): Procesor próbuje przewidywać, czy dane rozgałęzienie zostanie wykonane, i wstępnie ładuje odpowiednie rozkazy do potoku rozkazowego.
@@ -1475,8 +1475,8 @@ Jeśli procesor przestawi kolejność instrukcji w taki sposób, że odczyt `y` 
 Po wielokrotnym uruchomieniu programu liczba reorderingów może być różna. Procesor x86 ma silną kolejność pamięci, więc reordering instrukcji może być rzadko spotykany. Przetestuj ten program na różnych konfiguracjach sprzętowych, aby zobaczyć, jak efekty reorderingu instrukcji różnią się w zależności od sprzętu.
 
 > Ref: 
-> [Memory Reordering Caught in the Act](https://preshing.com/20120515/memory-reordering-caught-in-the-act/)
-> [The Purpose of memory_order_consume in C++11](https://preshing.com/20140709/the-purpose-of-memory_order_consume-in-cpp11/)
+> - [Memory Reordering Caught in the Act](https://preshing.com/20120515/memory-reordering-caught-in-the-act/)
+> - [The Purpose of memory_order_consume in C++11](https://preshing.com/20140709/the-purpose-of-memory_order_consume-in-cpp11/)
 
 # Porównanie jedno- i wielordzeniowych procesorów:
 ## Różnice  
@@ -1557,7 +1557,7 @@ Jednordzeniowe procesory są prostsze, ale mniej wydajne, szczególnie w przypad
 > **_UWAGA:_** Problem wyścigu (race condition)
 
 > Ref:
-> [Make Your Program Slower With Threads](https://brooker.co.za/blog/2014/12/06/random.html)
+> - [Make Your Program Slower With Threads](https://brooker.co.za/blog/2014/12/06/random.html)
 
 ## Hyper-threading
 
@@ -1737,7 +1737,7 @@ Podsumowując, w przypadku obliczania wartości silni dla dużego zestawu liczb,
 # Komunikacja z pamięcią - alokacja i odczyt pamięci
 
 > Ref:
-> [What Every Programmer Should Know About Memory](https://akkadia.org/drepper/cpumemory.pdf)
+> - [What Every Programmer Should Know About Memory](https://akkadia.org/drepper/cpumemory.pdf)
 
 Celem tego ćwiczenia jest napisanie prostego programu w języku C, który alokuje blok pamięci, zapisuje wartości do tego bloku i odczytuje wartości z tego bloku.
 
@@ -1827,7 +1827,7 @@ W praktyce, optymalizacja dostępu do pamięci może prowadzić do znacznego prz
 Poniżej znajduje się prosty symulator procesora z pamięcią cache w Pythonie, który ilustruje różnice w czasie dostępu do pamięci sekwencyjnie i losowo.
 
 > Ref:
-> [Memory part 2: CPU caches](https://lwn.net/Articles/252125/)
+> - [Memory part 2: CPU caches](https://lwn.net/Articles/252125/)
 
 ```python
 import random
