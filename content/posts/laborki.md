@@ -70,7 +70,14 @@ Aby uniknąć problemów związanych z architekturą procesora i organizacją sy
 > Ref:
 > - [Measuring Jitter and Latency](http://www.cs.ru.nl/lab/xenomai/exercises_xenomai2.4/ex10/Exercise-10.html)
 > - [logic gate simulator](https://academo.org/demos/logic-gate-simulator/)
+> - [WSL](https://learn.microsoft.com/en-gb/windows/wsl/install-manual#step-2---check-requirements-for-running-wsl-2) !!
+> - VirtualBox
+> - [Mingw-w64](https://www.mingw-w64.org/)
+
+
 # Reprezentacja liczb
+
+> Dodać ćwiczenia związane z różną reprezentacją liczb
 
 
 > Ref: 
@@ -365,11 +372,11 @@ Ten program w C++ analizuje wpływ precyzji zmiennoprzecinkowej na czas wykonani
 
 Po skompilowaniu i uruchomieniu programu, na konsoli zostaną wyświetlone wyniki czasu wykonania operacji dla różnych precyzji. Należy przeanalizować wyniki i zastanowić się nad wpływem precyzji na czas wykonania operacji.
 
-## Praktyczne zastosowanie: obliczanie czasu wykonywania operacji na macierzach stało- i zmiennoprzecinkowych.
+## Obliczanie czasu wykonywania operacji na macierzach stało- i zmiennoprzecinkowych.
 
-a. Napisz program, który mnoży dwie macierze o ustalonych rozmiarach, używając typów stałoprzecinkowych (int) oraz zmiennoprzecinkowych (float, double).
-b. Zmierz czas wykonania mnożenia macierzy dla różnych rozmiarów macierzy.
-c. Porównaj wyniki i omów znaczenie różnic w czasie wykonania dla różnych typów danych.
+1. Napisz program, który mnoży dwie macierze o ustalonych rozmiarach, używając typów stałoprzecinkowych (int) oraz zmiennoprzecinkowych (float, double).
+2. Zmierz czas wykonania mnożenia macierzy dla różnych rozmiarów macierzy.
+3. Porównaj wyniki i omów znaczenie różnic w czasie wykonania dla różnych typów danych.
 
 ```cpp
 #include <iostream>
@@ -431,7 +438,7 @@ int main() {
 }
 ```
 
-Ten program w C++ oblicza czas wykonania mnożenia macierzy stało- i zmiennoprzecinkowych. Program mnoży dwie macierze o ustalonych rozmiarach, używając typów stałoprzecinkowych (`int`) oraz zmiennoprzecinkowych (`float`, `double`). Następnie, mierzy czas wykonania mnożenia macierzy dla różnych rozmiarów macierzy (100x100, 500x500, 1000x1000) i porównuje wyniki dla różnych typów danych.
+Program mnoży dwie macierze o ustalonych rozmiarach, używając typów stałoprzecinkowych (`int`) oraz zmiennoprzecinkowych (`float`, `double`). Następnie, mierzy czas wykonania mnożenia macierzy dla różnych rozmiarów macierzy (100x100, 500x500, 1000x1000) i porównuje wyniki dla różnych typów danych.
 
 Po skompilowaniu i uruchomieniu programu, na konsoli zostaną wyświetlone wyniki czasu wykonania mnożenia macierzy dla różnych rozmiarów macierzy i typów danych. Porównaj wyniki i omów znaczenie różnic w czasie wykonania dla różnych typów danych.
 
