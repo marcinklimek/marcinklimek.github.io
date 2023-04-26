@@ -9,6 +9,9 @@ categories:
 format: link
 
 ---
-<p dir="ltr">
-  <a href="http://www.cs.ru.nl/lab/xenomai/exercises/ex10/Exercise-10.html"><a href="http://www.cs.ru.nl/lab/xenomai/exercises/ex10/Exercise-10.html" >http://www.cs.ru.nl/lab/xenomai/exercises/ex10/Exercise-10.html</a></a>
-</p>
+
+Introduction
+
+In real-time programming one usually has to guarantee that certain deadlines are always met. Hence, predictability of timing is crucial. In this exercise we investigate a few aspects of predictability by measuring scheduling jitter and interrupt latency.
+
+[Measuring Jitter and Latency](http://www.cs.ru.nl/lab/xenomai/exercises_xenomai2.4/ex10/Exercise-10.html)

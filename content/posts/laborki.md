@@ -67,13 +67,16 @@ Aby uniknąć tych problemów i zapewnić poprawne działanie programu, ważne j
 Aby uniknąć problemów związanych z architekturą procesora i organizacją systemu komputerowego, ważne jest, aby programować z uwzględnieniem tych zagadnień. Dobrym podejściem jest też korzystanie z bibliotek i narzędzi, które już zostały zoptymalizowane pod kątem różnych architektur i systemów.
 
 
+> Ref:
+> - [Measuring Jitter and Latency](http://www.cs.ru.nl/lab/xenomai/exercises_xenomai2.4/ex10/Exercise-10.html)
+> - [logic gate simulator](https://academo.org/demos/logic-gate-simulator/)
 # Reprezentacja liczb
 
 
-ref: 
-- [http://www.cburch.com/books/float/](http://www.cburch.com/books/float/)
-- [Float Toy](http://evanw.github.io/float-toy/)
-- [What Every Computer Scientist Should Know About Floating-Point Arithmetic](https://docs.oracle.com/cd/E19957-01/800-7895/800-7895.pdf) 
+> Ref: 
+> - [http://www.cburch.com/books/float/](http://www.cburch.com/books/float/)
+> - [Float Toy](http://evanw.github.io/float-toy/)
+> - [What Every Computer Scientist Should Know About Floating-Point Arithmetic](https://docs.oracle.com/cd/E19957-01/800-7895/800-7895.pdf) 
 
 # Kolejność bajtów
 Przykład reprezentacji liczby 32-bitowej (4-bajtowej) w różnych kolejnościach bajtów:
@@ -118,8 +121,8 @@ Różne procesory używają różnych kolejności bajtów:
 
 Wybór kolejności bajtów jest często wynikiem decyzji projektowych, które miały na celu ułatwienie lub optymalizację wykonywania określonych operacji. Little-endian jest popularne ze względu na prostotę dodawania i odejmowania liczb o zmiennej długości oraz łatwiejszą obsługę liczb o mniejszej precyzji w reprezentacji o większej precyzji. Big-endian jest częściej stosowany w systemach, które muszą współpracować z sieciami komputerowymi, gdzie bajty są przesyłane od najbardziej znaczącego do najmniej znaczącego, co ułatwia interpretację wartości przesyłanych danych.
 
-ref:
-- [Jak to jest z tym little-endian](https://blog.fabrykowski.pl/little-endian.html)
+> Ref:
+> - [Jak to jest z tym little-endian](https://blog.fabrykowski.pl/little-endian.html)
 
 # Ćwiczenia związane z analizą szybkości wykonywania operacji stało- i zmiennoprzecinkowych w C++:
 
@@ -306,8 +309,8 @@ fastasm itd.
 
 Należy pamiętać, że ten program nie wypisuje wyników na ekran, ale przechowuje je w zarezerwowanych zmiennych `int_duration` i `float_duration`. Aby wyświetlić wyniki, można dodać kod odpowiedzialny za wypisanie wartości na ekran, korzystając z systemu wywołań (syscalls) lub użyć debuggera, aby przejrzeć wartości tych zmiennych
 
-ref:
- - [x64dbg](https://x64dbg.com/)
+> Ref:
+> - [x64dbg](https://x64dbg.com/)
 
 ## Analiza wpływu precyzji zmiennoprzecinkowej na czas wykonywania operacji.
 
@@ -527,9 +530,8 @@ Wyniki mogą się różnić w zależności od sprzętu i kompilatora, ale zazwyc
 W praktyce, wykorzystanie SIMD może prowadzić do znacznego przyspieszenia obliczeń wektorowych, szczególnie w zastosowaniach, takich jak grafika komputerowa, analiza danych czy przetwarzanie sygnałów. Jednak warto pamiętać, że nie wszystkie operacje mogą być przyspieszone przy użyciu SIMD, a także, że optymalizacja przy użyciu SIMD może zwiększyć złożoność kodu i utrudnić jego utrzymanie.
 
 
-ref:
-- [Native code performance on modern CPUs](https://www.cppstories.com/2014/04/presentation-native-code-performance-on-modern-cpus/)
-
+> Ref:
+> - [Native code performance on modern CPUs](https://www.cppstories.com/2014/04/presentation-native-code-performance-on-modern-cpus/)
 
 
 
@@ -769,13 +771,13 @@ int main() {
 
 Potok rozkazowy (ang. instruction pipeline) to technika wykorzystywana w mikroarchitekturze procesorów, mająca na celu zwiększenie przepustowości i wydajności przez równoczesne wykonywanie kilku rozkazów w różnych etapach ich przetwarzania. Potok rozkazowy dzieli cykl rozkazowy na kilka etapów, z których każdy może być przetwarzany równocześnie przez różne jednostki wykonawcze procesora. Dzięki temu, zamiast czekać na zakończenie jednego rozkazu, procesor może przetwarzać kolejne rozkazy, zwiększając przepustowość i efektywnie przyspieszając wykonywanie programu.
 
-Cele potoku rozkazowego:
+### Cele potoku rozkazowego:
 
 1. Zwiększenie przepustowości: Potok rozkazowy pozwala na równoczesne przetwarzanie kilku rozkazów w różnych etapach cyklu rozkazowego, co zwiększa przepustowość procesora i pozwala na szybsze wykonanie programu.
 
 2. Równoległe wykonanie rozkazów: Potok rozkazowy pozwala na równoczesne wykonywanie różnych operacji w różnych jednostkach wykonawczych procesora, co oznacza, że procesor może jednocześnie wykonywać operacje na różnych danych, zwiększając wydajność obliczeń.
 
-Przykład potoku rozkazowego:
+### Przykład potoku rozkazowego
 
 Załóżmy, że mamy prosty procesor z czterema etapami cyklu rozkazowego: pobieranie (IF - Instruction Fetch), dekodowanie (ID - Instruction Decode), wykonanie (EX - Execute) i zapis wyniku (WB - Write Back). Potok rozkazowy dla tego procesora będzie miał cztery etapy, które można wykonać równocześnie dla różnych rozkazów.
 
@@ -788,35 +790,9 @@ Załóżmy, że mamy prosty procesor z czterema etapami cyklu rozkazowego: pobie
 
 Jak widać na powyższym przykładzie, potok rozkazowy pozwala na równoczesne przetwarzanie kilku rozkazów w różnych etapach cyklu rozkazowego. W momencie, gdy pierwszy rozkaz jest w fazie wykonania (EX), drugi rozkaz jest w fazie dekodowania (ID), a trzeci rozkaz jest pobierany (IF). Dzięki temu procesor może jednocześnie pracować nad różnymi rozkazami, zwiększając swoją przepustowość i wydajność.
 
-Jednakże, potok rozkazowy wprowadza również pewne wyzwania, takie jak zarządzanie hazardami (ang. hazards). Hazardy to sytuacje, w których wynik jednego rozkazu jest potrzebny przez następny rozkaz, a potok rozkazowy musi zarządzać tymi zależnościami, aby uniknąć błędów. Istnieją trzy główne rodzaje hazardów:
+Jednakże, potok rozkazowy wprowadza również pewne wyzwania, takie jak zarządzanie hazardami (ang. hazards). Hazardy to sytuacje, w których wynik jednego rozkazu jest potrzebny przez następny rozkaz, a potok rozkazowy musi zarządzać tymi zależnościami, aby uniknąć konflikty lub zależności. 
 
-1. Hazardy strukturalne: Występują, gdy różne rozkazy próbują jednocześnie korzystać z tego samego zasobu procesora, takiego jak jednostka wykonawcza lub pamięć. Hazardy strukturalne można rozwiązać poprzez wprowadzenie dodatkowych zasobów lub buforów.
-
-2. Hazardy danych: Występują, gdy jeden rozkaz jest zależny od wyniku innego rozkazu, który jeszcze nie został zakończony. Hazardy danych można rozwiązać za pomocą różnych technik, takich jak przesunięcie potoku (ang. pipeline stalling), przekształcanie potoku (ang. pipeline forwarding) lub przetwarzanie niezależnych rozkazów w międzyczasie.
-
-3. Hazardy kontroli: Występują, gdy kolejność wykonywania rozkazów ulega zmianie z powodu instrukcji warunkowych, takich jak skoki czy instrukcje warunkowe. Hazardy kontroli można rozwiązać poprzez przewidywanie rozgałęzień (ang. branch prediction) lub opóźnianie rozgałęzienia (ang. branch delay slot).
-
-ref:
-- [Branch prediction examples](https://www.youtube.com/watch?v=aujUQ274bEE)
-
-Przykład potoku rozkazowego z uwzględnieniem hazardu danych:
-
-Załóżmy, że mamy następujące rozkazy, które mają być wykonane przez procesor z potokiem rozkazowym:
-
-```
-  Rozkaz 1: ADD R1, R2, R3
-  Rozkaz 2: SUB R4, R1, R5
-  Rozkaz 3: MUL R6, R4, R7
-```
-
-W tym przypadku, wynik rozkazu 1 (ADD) jest używany jako wejście dla rozkazu 2 (SUB). Jeśli potok rozkazowy nie zarządza tym hazardem danych, wartość R1 może nie być jeszcze zaktualizowana, gdy rozkaz 2 jest wykonywany. Aby rozwiązać ten problem, procesor może zastosować technikę przesunięcia potoku (stalling), wstrzymując wykonywanie rozkazu 2 aż do momentu, gdy wynik rozkazu 1 będzie dostępny. Alternatywnie, procesor może zastosować technikę przekształcania potoku (forwarding), przekazując wynik rozkazu 1 bezpośrednio do rozkazu 2, bez konieczności zapisywania wyniku w rejestrze.
-
-W praktyce, zaawansowane mikroarchitektury procesorów stosują różne techniki, aby zarządzać hazardami potoku rozkazowego i zwiększać wydajność procesora, takie jak przewidywanie rozgałęzień, optymalizacja wykonywania potoku czy wykorzystanie wielowątkowości.
-
-
-## Różne typy hazardów (strukturalne, danych i sterowania) oraz przykładowe sposoby ich minimalizacji.
-
-Hazardy to sytuacje, w których potok rozkazowy napotyka konflikty lub zależności, które mogą wpłynąć na prawidłowe wykonywanie rozkazów. Istnieją trzy główne rodzaje hazardów: strukturalne, danych i sterowania.
+Istnieją trzy główne rodzaje hazardów:
 
 1. Hazardy strukturalne: Występują, gdy różne rozkazy próbują jednocześnie korzystać z tego samego zasobu procesora, takiego jak jednostka wykonawcza, pamięć czy rejestry. Hazardy strukturalne mogą prowadzić do opóźnień lub konieczności oczekiwania przez niektóre rozkazy na dostęp do zasobów.
 
@@ -832,7 +808,11 @@ Hazardy to sytuacje, w których potok rozkazowy napotyka konflikty lub zależno�
    2. Przekształcanie potoku (forwarding): Przekazanie wyniku zależnego rozkazu bezpośrednio do kolejnego rozkazu, bez konieczności zapisywania wyniku w rejestrze.
    3. Przeplanowanie rozkazów: Kompilator lub procesor może próbować zmienić kolejność rozkazów, aby zmniejszyć zależności i poprawić wydajność potoku rozkazowego.
 
+
 3. Hazardy kontroli: Występują, gdy kolejność wykonywania rozkazów ulega zmianie z powodu instrukcji warunkowych, takich jak skoki czy instrukcje warunkowe. Hazardy kontroli mogą prowadzić do niepotrzebnego wypełnienia potoku rozkazów i straty wydajności.
+
+> Ref:
+> - [Branch prediction examples](https://www.youtube.com/watch?v=aujUQ274bEE)
 
    Sposoby minimalizowania hazardów kontroli:
    1. Przewidywanie rozgałęzień (branch prediction): Procesor próbuje przewidywać, czy dane rozgałęzienie zostanie wykonane, i wstępnie ładuje odpowiednie rozkazy do potoku rozkazowego.
@@ -948,10 +928,11 @@ Należy pamiętać, że powyższy przykład jest uproszczony i może nie działa
 
    4. Przetwarzanie wielowątkowe (multithreading): Procesor może przełączać się między różnymi wątkami wykonawczymi, gdy napotyka hazardy kontroli. Pozwala to na utrzymanie potoku rozkazowego aktywnym i wydajnym, nawet gdy jeden wątek oczekuje na wynik rozgałęzienia.
 
-W praktyce zaawansowane mikroarchitektury procesorów stosują różne techniki, aby zarządzać hazardami potoku rozkazowego i zwiększać wydajność procesora. Optymalizacja wykorzystania potoku rozkazowego, zarządzanie hazardami oraz przyspieszenie wykonywania programów są kluczowe dla osiągnięcia wysokiej wydajności w nowoczesnych układach scalonych.
+W praktyce zaawansowane mikroarchitektury procesorów stosują różne techniki, aby zarządzać hazardami potoku rozkazowego i zwiększać wydajność procesora. Optymalizacja wykorzystania potoku rozkazowego, zarządzanie hazardami oraz przyspieszenie wykonywania programów są kluczowe dla osiągnięcia wysokiej wydajności w nowoczesnych procesorach.
 
 
-Poniżej znajdują się trzy przykłady sytuacji, w których występują różne rodzaje hazardów, wraz z opisem, jak można im zapobiec:
+## Przykładowe sposoby minimalizacji hazardów
+
 
 1. Hazard strukturalny:
 Załóżmy, że mamy procesor z jednym modułem ALU (Arithmetic Logic Unit) i poniższymi rozkazami do wykonania:
@@ -993,7 +974,12 @@ W przypadku hazardu kontroli spowodowanego przez instrukcję warunkowego skoku (
    1. Zastosować przewidywanie rozgałęzień (branch prediction), próbując przewidzieć, czy skok zostanie wykonany, i wstępnie ładując odpowiednie rozkazy do potoku rozkazowego.
    2. Wykorzystać opóźnienie rozgałęzienia (branch delay slot), umieszczając jeden lub więcej niezależnych rozkazów po instrukcji skoku, które zostaną wykonane przed rzeczywistym skokiem
 
+
+W praktyce, zaawansowane mikroarchitektury procesorów stosują różne techniki, aby zarządzać hazardami potoku rozkazowego i zwiększać wydajność procesora, takie jak przewidywanie rozgałęzień, optymalizacja wykonywania potoku czy wykorzystanie wielowątkowości.
+
 ## Zadanie z symulacją: symulator potoku rozkazowego dla prostego procesora, uwzględniając hazardy.
+
+### Pierwszy
 
 Zakładając, że mamy prosty procesor z potokiem rozkazowego o 5 etapach (IF - pobieranie rozkazu, ID - dekodowanie, EX - wykonanie, MEM - dostęp do pamięci, WB - zapis wyniku), przedstawiam prosty symulator potoku rozkazowego uwzględniający hazardy danych.
 
@@ -1096,10 +1082,13 @@ int main() {
 
 Powyższy symulator wykonuje sekwencję rozkazów (program) na prostym procesorze. Wprowadza wstrzymanie (stalling) potoku, gdy wykryje hazard danych, co pozwala na zaktualizowanie wartości rejestru przed przekazaniem go do kolejnego rozkazu. Symulator wyświetla etap potoku dla każdego rozkazu oraz numer cyklu. Po zakończeniu symulacji wyświetlane są końcowe wartości rejestrów procesora.
 
+### Drugi
 
-Poniżej Znajduje się przykładowy symulator prostego procesora z uwzględnieniem hazardu kontroli (branch hazard). Procesor ten ma prosty potok rozkazów o pięciu etapach: pobieranie rozkazu (IF), dekodowanie (ID), wykonanie (EX), dostęp do pamięci (MEM) i zapis wyniku (WB).
+Symulator prostego procesora z uwzględnieniem hazardu kontroli (branch hazard). Procesor ten ma prosty potok rozkazów o pięciu etapach: pobieranie rozkazu (IF), dekodowanie (ID), wykonanie (EX), dostęp do pamięci (MEM) i zapis wyniku (WB).
 
 Zakładamy, że procesor obsługuje jedynie trzy rozkazy: dodawanie, odejmowanie i skok warunkowy (z wykorzystaniem instrukcji warunkowej "beq"). Dla uproszczenia, przyjmujemy, że skok warunkowy wykonywany jest tylko, gdy pierwszy argument jest równy zeru.
+
+#### wersja C++
 
 ``` C++
 #include <iostream>
@@ -1160,8 +1149,7 @@ void simulatePipeline() {
                         std::cout << "IF: " << inst.op << " " << inst.rd << ", " << inst.rs << ", " << inst.rt << std::endl;
                         break;
                     case 1: // ID - dekodowanie
-                        std::cout << "ID: " << inst.op << " " << inst.rd << ", " << inst
-  rs << ", " << inst.rt << std::endl;
+                        std::cout << "ID: " << inst.op << " " << inst.rd << ", " << inst.rs << ", " << inst.rt << std::endl;
                     // Wstrzymujemy potok, jeśli występuje hazard kontroli
                     if (i < num_instructions - 1 && inst.is_branch && is_branch_taken) {
                         std::cout << "Stalling due to branch hazard" << std::endl;
@@ -1215,6 +1203,8 @@ return 0;
 ```
 
 Symulator wykonuje sekwencję rozkazów na prostym procesorze z potokiem rozkazowym. Wprowadza wstrzymanie (stalling) potoku, gdy wykryje hazard kontroli (branch hazard), co pozwala na zaktualizowanie wartości PC przed pobraniem kolejnego rozkazu. Symulator wyświetla etap potoku dla każdego rozkazu oraz numer cyklu. Po zakończeniu symulacji wyświetlane są końcowe wartości rejestrów procesora.
+
+#### wersja Python
 
 ``` python
 class SimpleProcessor:
@@ -1317,7 +1307,7 @@ W funkcji `decode()`, instrukcja jest przekazywana jako argument, a następnie w
 Dekodowanie instrukcji pozwala na łatwe odczytanie danych niezbędnych do wykonania operacji przez etap EX (Execute) potoku przetwarzania.
 
 
-Wersja z branch prediction:
+### Wersja z branch prediction:
 
 ``` python
 class SimpleProcessor:
@@ -1412,7 +1402,7 @@ W powyższym kodzie symulatora prostego procesora uwzględniono opóźnienie w p
 
 W wyniku tych zmian, zmodyfikowany symulator uwzględnia opóźnienia w potoku (stalls) oraz przewidywanie skoków (branch prediction). Warto zauważyć, że w rzeczywistych procesorach przewidywanie skoków może być znacznie bardziej zaawansowane, z użyciem dynamicznych technik, takich jak bufor przewidywania skoków (branch target buffer) czy tablica historii skoków (branch history table). W uproszczonym symulatorze używamy prostej, statycznej polityki przewidywania "zawsze wykonuj skok" dla celów demonstracyjnych. -->
 
-# instruction reordering
+# Instruction reordering
 
 Uwaga: Warto zauważyć, że efekty takie jak reordering instrukcji są zależne od architektury procesora, a w przypadku niektórych implementacji może być trudno uzyskać te efekty w sposób powtarzalny.
 
@@ -1479,7 +1469,7 @@ Ref:
 - [The Purpose of memory_order_consume in C++11](https://preshing.com/20140709/the-purpose-of-memory_order_consume-in-cpp11/)
 
 # Porównanie jedno- i wielordzeniowych procesorów:
-## Różnice między jedno- i wielordzeniowymi procesorami
+## Różnice  
 
 Jednordzeniowe i wielordzeniowe procesory to dwa różne typy układów scalonych stosowanych w komputerach. Definicje, zalety i wady każdego z nich.
 
@@ -1554,12 +1544,13 @@ W powyższym przykładzie używamy biblioteki `<thread>` w języku C++ do tworze
 
 Jednordzeniowe procesory są prostsze, ale mniej wydajne, szczególnie w przypadku zadań wielowątkowych. Wielordzeniowe procesory oferują wyższą wydajność dla zadań wielowątkowych, ale wymagają bardziej zaawansowanego zarządzania równoczesnością i synchronizacją w kodzie programu. Wybór pomiędzy nimi zależy od konkretnych wymagań i ograniczeń projektu.
 
-> **_UWAGA:_**  Dodać tutaj problem wyścigu (race condition)
+> **_UWAGA:_** Problem wyścigu (race condition)
 
 ref:
 - [Make Your Program Slower With Threads](https://brooker.co.za/blog/2014/12/06/random.html)
 
 ## Hyper-threading
+
 Hyper-threading to technologia opracowana przez firmę Intel, która pozwala na wykonywanie dwóch lub więcej wątków na jednym rdzeniu procesora, zwiększając wydajność procesora w zadaniach wielowątkowych. Technologia ta polega na tym, że jeden rdzeń procesora posiada dwa lub więcej zestawów rejestrów, które są niezależne dla każdego wątku. Dzięki temu rdzeń może wykonywać wiele wątków równocześnie, wykorzystując jednocześnie swoje zasoby sprzętowe.
 
 W uproszczonym procesorze z technologią Hyper-threading można uwzględnić następujące elementy:
@@ -1710,7 +1701,6 @@ Podsumowując, w przypadku obliczania wartości silni dla dużego zestawu liczb,
 
 - Omów wyzwania związane z programowaniem wielowątkowym, takie jak synchronizacja, wyścigi (race conditions) i blokady (deadlocks)
 
-
 - Studium przypadku:
 	- Rzeczywisty procesor, na przykład Intel Core i7 lub AMD Ryzen - analiza jego architektury, cyklu rozkazowego i potoku rozkazowego.
 	- Zadanie z optymalizacją: Sposoby optymalizacji potoku rozkazowego dla wybranego procesora, uwzględniając możliwe hazardy.
@@ -1726,8 +1716,8 @@ Podsumowując, w przypadku obliczania wartości silni dla dużego zestawu liczb,
 	- Uruchomienie prostego programu na symulatorze i analiza wyników w kontekście cyklu rozkazowego i potoku rozkazowego.
 	- Zadanie z eksploracją: Eksperymentowanie z różnymi konfiguracjami potoku rozkazowego, takimi jak liczba etapów, buforów czy też rozwiązania hazardów, aby zobaczyć, jak wpłyną na wydajność.
 
-	ref:
-		- [Installing gem5 simulator on Windows WSL2](https://gist.github.com/rajesh-s/bd123ca1e65b95eb38220cd944670e3a)
+	> Ref:
+	>	- [Installing gem5 simulator on Windows WSL2](https://gist.github.com/rajesh-s/bd123ca1e65b95eb38220cd944670e3a)
 
 - Analiza wydajności i skalowania:
 	- Analiza wydajności programów na różnych konfiguracjach procesorów, takich jak jedno- i wielordzeniowe, a także o ocena wpływu potoku rozkazowego na wyniki.
@@ -1736,8 +1726,9 @@ Podsumowując, w przypadku obliczania wartości silni dla dużego zestawu liczb,
 
 # Komunikacja z pamięcią - alokacja i odczyt pamięci
 
-ref:
+> Ref:
 - [What Every Programmer Should Know About Memory](https://akkadia.org/drepper/cpumemory.pdf)
+
 Celem tego ćwiczenia jest napisanie prostego programu w języku C, który alokuje blok pamięci, zapisuje wartości do tego bloku i odczytuje wartości z tego bloku.
 
 ```c
@@ -1823,11 +1814,11 @@ Po skompilowaniu i uruchomieniu programu, na konsoli zostaną wyświetlone wynik
 W praktyce, optymalizacja dostępu do pamięci może prowadzić do znacznego przyspieszenia obliczeń, zwłaszcza w przypadku algorytmów o dużym zapotrzebowaniu na pamięć. Optymalizacja może obejmować zarówno wybór odpowiedniego sposobu dostępu do pamięci, jak i projektowanie algorytmów z uwzględnieniem ograniczeń pamięci cache.
 
 
-
 Poniżej znajduje się prosty symulator procesora z pamięcią cache w Pythonie, który ilustruje różnice w czasie dostępu do pamięci sekwencyjnie i losowo.
 
-ref:
-- [Memory part 2: CPU caches](https://lwn.net/Articles/252125/)
+> Ref:
+> - [Memory part 2: CPU caches](https://lwn.net/Articles/252125/)
+
 ```python
 import random
 import time
@@ -1897,9 +1888,9 @@ Uruchomienie tego symulatora pokaże, że sekwencyjny dostęp do pamięci jest s
 Zmiana parametrów symulatora (rozmiar pamięci, rozmiar cache, liczba iteracji) w celu zrozumienia, jak wpływają na wyniki.
 
 
-Bardziej zaawansowana wersja symulatora:
+**Bardziej zaawansowana wersja symulatora** 
 
-Oto przykład prostego symulatora pamięci podręcznej (cache) typu direct-mapped
+Symulator pamięci podręcznej (cache) typu direct-mapped
 
 ```cpp
 #include <iostream>
@@ -2005,7 +1996,7 @@ int main() {
 ```
 
 
-Nieco ciekawsza implementacja:
+**Nieco ciekawsza implementacja**
 
 
 ```cpp
