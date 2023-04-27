@@ -75,10 +75,286 @@ Aby uniknąć problemów związanych z architekturą procesora i organizacją sy
 > - [Mingw-w64](https://www.mingw-w64.org/)
 > - [The microarchitecture of Intel, AMD, and VIA CPUs](https://agner.org/optimize/microarchitecture.pdf)
 
+> - Architektura systoliczna - np. Edge TPU
+> - [Google Coral Edge TPU explained in depth](https://qengineering.eu/google-corals-tpu-explained.html)
+> - Cell (PS3) - PowerPC (PPE) + 7 x „Synergistic Processing Elements” (SPEs) [PlayStation 3](https://pl.wikipedia.org/wiki/PlayStation_3)
+> - [Hardware for Deep Learning](https://blog.inten.to/hardware-for-deep-learning-current-state-and-trends-51c01ebbb6dc)
+> - [Unlocking the Secrets of GPU Architecture](https://tp4348.medium.com/multithreaded-programs-on-gpu-7ae4dfbb19d3)
+> - [A CPU is a compiler](https://lobste.rs/s/okcml7/cpu_is_compiler)
+
 # Reprezentacja liczb
 
-> Dodać ćwiczenia związane z różną reprezentacją liczb
+### System dziesiętny
 
+Liczba 13910 jest zapisana w systemie dziesiętnym, co oznacza, że każda pozycja odpowiada potędze liczby 10. System pozycyjny to sposób zapisu liczb, w którym wartość liczby zależy od wartości cyfr i ich pozycji. W systemie wagowym wartość liczby jest sumą iloczynów cyfr i wag pozycji, gdzie wagi pozycji są potęgami podstawy systemu.
+
+Liczba 13910 z rozbiciem na wagi poszczególnych pozycji:
+
+    1 * 10^4 + 
+    3 * 10^3 + 
+    9 * 10^2 + 
+    1 * 10^1 + 
+    0 * 10^0 =
+    
+    10000 + 3000 + 900 + 10 + 0 = 13910
+
+### System binarny
+
+Konwersja liczby 13910 na zapis binarny:
+
+    13910 : 2 = 6955 (reszta: 0)
+    6955  : 2 = 3477 (reszta: 1)
+    3477  : 2 = 1738 (reszta: 1)
+    1738  : 2 = 869  (reszta: 0)
+    869   : 2 = 434  (reszta: 1)
+    434   : 2 = 217  (reszta: 0)
+    217   : 2 = 108  (reszta: 1)
+    108   : 2 = 54   (reszta: 0)
+    54    : 2 = 27   (reszta: 0)
+    27    : 2 = 13   (reszta: 1)
+    13    : 2 = 6    (reszta: 1)
+    6     : 2 = 3    (reszta: 0)
+    3     : 2 = 1    (reszta: 1)
+    1     : 2 = 0    (reszta: 1)
+    
+    Liczba binarna: 11 0110 0101 0110
+
+> Naturalny kod binarny to sposób zapisu liczb, w którym wartość liczby jest sumą iloczynów cyfr i wag pozycji, gdzie wagi pozycji są potęgami liczby 2.
+
+Liczba 1011 0101 z rozbiciem na wagi poszczególnych pozycji:
+   
+    1 * 2^7 + 
+    0 * 2^6 + 
+    1 * 2^5 + 
+    1 * 2^4 + 
+    0 * 2^3 + 
+    1 * 2^2 + 
+    0 * 2^1 + 
+    1 * 2^0 = 
+
+    128 + 32 + 16 + 4 + 1 = 181
+
+
+### System szesnastkowy
+
+|   |      |   |      |
+|---|------|---|------|
+| 0 | 0000 | 8 | 1000 |  
+| 1 | 0001 | 9 | 1001 |  
+| 2 | 0010 | A | 1010 |  
+| 3 | 0011 | B | 1011 |  
+| 4 | 0100 | C | 1100 |  
+| 5 | 0101 | D | 1101 |  
+| 6 | 0110 | E | 1110 |  
+| 7 | 0111 | F | 1111 | 
+
+Aby przekonwertować liczbę binarną 1011011100101101 na szesnastkowy, można ją podzielić na grupy po 4 bity i przypisać im wartości szesnastkowe:
+
+    1011 0111 0010 1101
+       B    7    2    D
+
+Liczba szesnastkowa: B72D
+
+
+### Przechowywanie danych w komputerach
+
+Dane w komputerze są przechowywane w postaci binarnej, czyli za pomocą bitów (0 i 1). System binarny został wybrany ze względu na prostotę realizacji elektronicznej (wysokie i niskie napięcie) oraz łatwość przetwarzania informacji.
+
+Rejestr to mały obszar pamięci w procesorze, używany do przechowywania wartości, które są obecnie przetwarzane. Słowo to ciąg bitów, który odpowiada długości rejestru lub jednostki przetwarzania danych.
+
+Załóżmy, że mamy rejestr 8-bitowy. Aby zapisać wartość 13910 (10001011) w rejestrze, wystarczy ustawić bity na odpowiednie wartości:
+10001011
+
+Ile bitów jest potrzebnych na zapisanie liczby 139, 255, 269, 513?
+139: 8 bitów (10001011)
+255: 8 bitów (11111111)
+269: 9 bitów (100001101)
+513: 10 bitów (1000000001)
+
+Liczba potrzebnych bitów do zapisania każdej z tych liczb zależy od ich wartości w postaci binarnej. Aby określić minimalną ilość bitów potrzebną do zapisania danej liczby, można zastosować funkcję logarytmu dwójkowego (lub log2), a następnie zaokrąglić wynik w górę do najbliższej liczby całkowitej.
+
+### Nadmiar i niedomiar
+
+1. Dodawanie:
+A = 127 (01111111)
+B = 4 (00000100)
+A + B = 131 (10000011)
+
+2. Dodawanie:
+A = 139 (10001011)
+B = 147 (10010011)
+A + B = 286 (1_00010010) - efekt nadmiaru, wynik nie mieści się w 8-bitowym rejestrze.
+
+W obu przypadkach wyniki zawierają 8 bitów. W drugim przypadku mamy do czynienia z nadmiarem, co oznacza, że wynik przekracza maksymalną wartość, która może być przechowywana w 8-bitowym rejestrze (255).
+
+3. Odejmowanie:
+A = 115 (01110011)
+B = 5 (00000101)
+C = A - B = 110 (01101110)
+
+4. Odejmowanie:
+A = 129 (10000001)
+B = 167 (10100111)
+C = A - B = -38 (11011010) - efekt niedomiaru, ponieważ wynik jest liczbą ujemną.
+
+### Liczby ujemne
+Aby zapisać liczbę -2 w 8-bitowym rejestrze, używamy kodu U2 (Uzupełnienie do 2):
+-2 = 11111110
+
+Dla liczby 10110101:
+- Jako liczba dodatnia: 1 * 2^7 + 0 * 2^6 + 1 * 2^5 + 1 * 2^4 + 0 * 2^3 + 1 * 2^2 + 0 * 2^1 + 1 * 2^0 = 128 + 32 + 16 + 4 + 1 = 181
+- Jako liczba ujemna (w kodzie U2): 01001011 - 1 = 01001010, co daje: 64 + 8 + 2 = 74, więc liczba to -74.
+
+Interpretacja liczby zależy od kontekstu. W przypadku liczb ujemnych często stosowany jest kod U2.
+
+#### Kod U2
+
+Uzupełnienie do 2, to metoda reprezentacji liczb całkowitych, zarówno dodatnich, jak i ujemnych, w systemie binarnym. W kodzie U2 liczby dodatnie są reprezentowane tak samo jak w naturalnym kodzie binarnym, natomiast liczby ujemne są reprezentowane jako dopełnienie do 2 liczby bezwzględnej.
+
+Obliczanie reprezentację liczby ujemnej w kodzie U2:
+1. Przekształć wartość bezwzględną liczby ujemnej na postać binarną.
+2. Odwróć bity (zmień 0 na 1 i 1 na 0).
+3. Dodaj 1 do wyniku.
+
+Przykłady:
+
+1. Przykład dla liczby -3:
+   1. Wartość bezwzględna: 3 (w binarnym: 0011)
+   2. Odwrócenie bitów: 1100
+   3. Dodanie 1: 1100 + 1 = 1101
+
+   Kod U2 dla liczby -3: 1101
+
+2. Przykład dla liczby -7:
+   1. Wartość bezwzględna: 7 (w binarnym: 0111)
+   2. Odwrócenie bitów: 1000
+   3. Dodanie 1: 1000 + 1 = 1001
+
+   Kod U2 dla liczby -7: 1001
+
+Kod U2 jest często stosowany w komputerach, ponieważ pozwala na wykonywanie operacji dodawania i odejmowania przy użyciu tego samego sprzętu, niezależnie od znaku liczb.
+
+### Liczby rzeczywiste
+11 i 5/16 = 11.3125
+
+Liczba 11 w postaci binarnej to 1011.
+5/16 jako ułamek binarny to 0.0101 (1 * (1/2)^3 + 0 * (1/2)^4 + 1 * (1/2)^5)
+
+Liczba 11 i 5/16 w postaci binarnej to: 1011.0101
+
+Potrzebujemy 8 bitów na zapisanie tej liczby. Można zapisać ją w rejestrze jako liczba stałoprzecinkowa (zakładając, że przecinek jest zawsze pomiędzy bitami 3 i 4) lub używając notacji zmiennoprzecinkowej, która pozwala na zapisanie liczby z określoną precyzją i zakresem.
+
+
+#### Zamiana na postać binarną
+
+Aby przekształcić liczbę dziesiętną 10.75 na liczbę binarną, należy przekształcić osobno jej część całkowitą i część ułamkową.
+
+1. Konwersja części całkowitej:
+   Liczba całkowita: 10
+   Postępujemy według metody dzielenia przez 2:
+   10 / 2 = 5, reszta: 0
+   5 / 2 = 2, reszta: 1
+   2 / 2 = 1, reszta: 0
+   1 / 2 = 0, reszta: 1
+
+   Czytamy reszty od dołu do góry: 1010
+
+2. Konwersja części ułamkowej:
+   Liczba ułamkowa: 0.75
+   Postępujemy według metody mnożenia przez 2:
+   0.75 * 2 = 1.5 (zapisujemy cyfrę 1)
+   0.5 * 2 = 1.0 (zapisujemy cyfrę 1)
+   
+   Czytamy cyfry od lewej do prawej: 11
+
+Teraz, aby uzyskać postać binarną liczby 10.75, łączymy część całkowitą (1010) i część ułamkową (11) za pomocą przecinka binarnego: 1010.11
+
+Stąd wynika, że liczba dziesiętna 10.75 jest równa liczbie binarnej 1010.11.
+
+> Uwaga
+> Podczas konwersji liczby ułamkowej dziesiętnej na liczbę binarną za pomocą metody mnożenia przez 2, należy zakończyć mnożenie w jednym z następujących przypadków:
+> 
+> 1. Gdy wartość ułamkowa po mnożeniu wynosi dokładnie 0. Wtedy wszystkie kolejne mnożenia również będą dawały 0, a kolejne cyfry binarne po przecinku będą się składały wyłącznie z zer. W takiej sytuacji nie > ma potrzeby kontynuować obliczeń.
+> 
+> 2. Gdy osiągniesz żądaną precyzję. W praktyce, liczby binarne używane w komputerach mają ograniczoną precyzję (np. w przypadku liczb zmiennoprzecinkowych w standardzie IEEE 754). W związku z tym możemy > zakończyć mnożenie po osiągnięciu określonej liczby cyfr binarnych po przecinku.
+> 
+> 3. Gdy zauważysz cykliczne powtarzanie się wzoru cyfr. W niektórych przypadkach, liczby ułamkowe dziesiętne mają nieskończoną reprezentację binarną, która powtarza się cyklicznie. Kiedy zauważysz taki wzór, > możesz zakończyć mnożenie i zaokrąglić wynik do żądanej precyzji.
+> 
+> Należy pamiętać, że niektóre liczby ułamkowe dziesiętne mają nieskończoną reprezentację binarną, która nie wykazuje cyklicznego powtarzania się wzoru. W takich przypadkach, można zakończyć mnożenie, gdy > osiągnięta zostanie żądana precyzja, biorąc pod uwagę ograniczenia sprzętowe lub wymagania dotyczące zaokrąglenia.
+
+#### Przykłady
+
+1. Liczba dziesiętna 0.5:
+   0.5 * 2 = 1.0 (zapisujemy cyfrę 1)
+   Binarnie: 0.1
+
+2. Liczba dziesiętna 0.25:
+   0.25 * 2 = 0.5 (zapisujemy cyfrę 0)
+   0.5 * 2 = 1.0 (zapisujemy cyfrę 1)
+   Binarnie: 0.01
+
+3. Liczba dziesiętna 0.625:
+   0.625 * 2 = 1.25 (zapisujemy cyfrę 1)
+   0.25 * 2 = 0.5 (zapisujemy cyfrę 0)
+   0.5 * 2 = 1.0 (zapisujemy cyfrę 1)
+   Binarnie: 0.101
+
+4. Liczba dziesiętna 0.375:
+   0.375 * 2 = 0.75 (zapisujemy cyfrę 0)
+   0.75 * 2 = 1.5 (zapisujemy cyfrę 1)
+   0.5 * 2 = 1.0 (zapisujemy cyfrę 1)
+   Binarnie: 0.011
+
+Warto zauważyć, że niektóre liczby ułamkowe w systemie dziesiętnym nie mają dokładnej reprezentacji w systemie binarnym. Na przykład:
+
+5. Liczba dziesiętna 0.1:
+   0.1 * 2 = 0.2 (zapisujemy cyfrę 0)
+   0.2 * 2 = 0.4 (zapisujemy cyfrę 0)
+   0.4 * 2 = 0.8 (zapisujemy cyfrę 0)
+   0.8 * 2 = 1.6 (zapisujemy cyfrę 1)
+   0.6 * 2 = 1.2 (zapisujemy cyfrę 1)
+   0.2 * 2 = 0.4 (zapisujemy cyfrę 0)
+   ...
+   Binarnie: 0.0001100110011... (cyfry się powtarzają)
+
+W takich przypadkach reprezentacja binarna będzie nieskończoną liczbą cyfr po przecinku i musi zostać zaokrąglona, aby zmieścić się w określonym formacie, takim jak standard IEEE 754.
+
+#### Notacja zmiennoprzecinkowa
+
+W komputerach najczęściej stosowaną notacją zmiennoprzecinkową jest standard IEEE 754. Standard ten definiuje formaty reprezentacji liczb zmiennoprzecinkowych, takie jak pojedyncza precyzja (32 bity) i podwójna precyzja (64 bity). Standard IEEE 754 pozwala na zapisanie liczb z określoną precyzją, zakresem i specjalnymi wartościami (takimi jak nieskończoność i NaN). Na niektórych platformach dostępny jest typ half-float (NVidia CUDA) o połowicznej precyzji (16 bitów)
+
+Reprezentacja liczby zmiennoprzecinkowej w standardzie IEEE 754 składa się z trzech części:
+1. Znak (Sign) - jeden bit, który reprezentuje znak liczby (0 - dodatnia, 1 - ujemna).
+2. Wykładnik (Exponent) - ciąg bitów reprezentujący wykładnik liczby, przesunięty o wartość stałą (bias). Dla formatu pojedynczej precyzji przesunięcie wynosi 127, a dla podwójnej precyzji wynosi 1023.
+3. Mantysa (Significand) - ciąg bitów reprezentujący wartość liczby znormalizowanej, ale bez pierwszego bitu (1), który jest zawsze niejawny (chyba że liczba jest denormalizowana).
+
+Tworzenie reprezentacji binarnej liczby zmiennoprzecinkowej w standardzie IEEE 754:
+
+1. Określ znak liczby (0 dla dodatniej, 1 dla ujemnej).
+2. Zamienić część dziesiętną oraz ułamkową na postać binarną.
+2. Przekształć liczbę na postać znormalizowaną w notacji naukowej (1.x * 2^n).
+3. Oblicz wykładnik, dodając przesunięcie (bias) do n (wykładnik notacji naukowej).
+4. Przekształć mantysę na postać binarną, pomijając pierwszy bit (1).
+5. Złożyć reprezentację z części znakowej, wykładnika i mantysy.
+
+Przykład:
+
+Chcemy zapisać liczbę 10.75 jako liczbę zmiennoprzecinkową w standardzie IEEE 754 (pojedyncza precyzja).
+
+1. Liczba jest dodatnia, więc znak to 0.
+2. Postać binarną: 10.75 = 1010.11
+2. Postać znormalizowana: 1.01011 * 2^3
+3. Wykładnik: 3 + 127 (bias) = 130, w postaci binarnej: 10000010
+4. Mantysa (bez pierwszego bitu): 0101100... (w sumie 23 bity)
+5. Składamy reprezentację: 0 10000010 01011000000000000000000
+
+Reprezentacja liczby 10.75 w standardzie IEEE 754 (pojedyncza precyzja) to:
+
+
+    32  31  30  29  28  27  26  25  24  23  22  21  20  19  18  17  16  15  14  13  12  11  10  9   8   7   6   5   4   3   2   1
+    0   1   0   0   0   0   0   1   0   0   1   0   1   1   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+
+    1 * 2^3 * 1.34375 = 10.75
 
 > Ref: 
 > - [http://www.cburch.com/books/float/](http://www.cburch.com/books/float/)
@@ -86,6 +362,7 @@ Aby uniknąć problemów związanych z architekturą procesora i organizacją sy
 > - [What Every Computer Scientist Should Know About Floating-Point Arithmetic](https://docs.oracle.com/cd/E19957-01/800-7895/800-7895.pdf) 
 
 # Kolejność bajtów
+
 Przykład reprezentacji liczby 32-bitowej (4-bajtowej) w różnych kolejnościach bajtów:
 
 Wartość: 0x12345678
