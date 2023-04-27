@@ -1,9 +1,9 @@
 :root {
     --gap: 24px;
     --content-gap: 20px;
-    --nav-width: 960px;
-    --main-width: 720px;
-    --post-width: 720px;
+    --nav-width: 1000px;
+    --main-width: 1000px;
+    --post-width: 1000px;
     --header-height: 60px;
     --footer-height: 80px;
     --radius: 8px;

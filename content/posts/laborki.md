@@ -2,6 +2,7 @@
 title: "Lab"
 date: 2023-04-24T17:13:33+02:00
 draft: false
+ShowToc: true
 ---
 
 ``` {=html}
@@ -162,50 +163,82 @@ Dane w komputerze są przechowywane w postaci binarnej, czyli za pomocą bitów 
 
 Rejestr to mały obszar pamięci w procesorze, używany do przechowywania wartości, które są obecnie przetwarzane. Słowo to ciąg bitów, który odpowiada długości rejestru lub jednostki przetwarzania danych.
 
-Załóżmy, że mamy rejestr 8-bitowy. Aby zapisać wartość 13910 (10001011) w rejestrze, wystarczy ustawić bity na odpowiednie wartości:
+Załóżmy, że mamy rejestr 8-bitowy. Aby zapisać wartość 139 (10001011) w rejestrze, wystarczy ustawić bity na odpowiednie wartości:
 10001011
 
 Ile bitów jest potrzebnych na zapisanie liczby 139, 255, 269, 513?
-139: 8 bitów (10001011)
-255: 8 bitów (11111111)
-269: 9 bitów (100001101)
-513: 10 bitów (1000000001)
+
+    139: 8 bitów (10001011)
+    255: 8 bitów (11111111)
+    269: 9 bitów (100001101)
+    513: 10 bitów (1000000001)
 
 Liczba potrzebnych bitów do zapisania każdej z tych liczb zależy od ich wartości w postaci binarnej. Aby określić minimalną ilość bitów potrzebną do zapisania danej liczby, można zastosować funkcję logarytmu dwójkowego (lub log2), a następnie zaokrąglić wynik w górę do najbliższej liczby całkowitej.
+
+```python
+math.ceil( math.log2(269) )
+```
 
 ### Nadmiar i niedomiar
 
 1. Dodawanie:
-A = 127 (01111111)
-B = 4 (00000100)
-A + B = 131 (10000011)
+
+        A = 127 (01111111)
+        B = 4 (00000100)
+        A + B = 131 (10000011)
 
 2. Dodawanie:
-A = 139 (10001011)
-B = 147 (10010011)
-A + B = 286 (1_00010010) - efekt nadmiaru, wynik nie mieści się w 8-bitowym rejestrze.
 
-W obu przypadkach wyniki zawierają 8 bitów. W drugim przypadku mamy do czynienia z nadmiarem, co oznacza, że wynik przekracza maksymalną wartość, która może być przechowywana w 8-bitowym rejestrze (255).
+        A = 139 (10001011)
+        B = 147 (10010011)
+        A + B = 286 (1 00010010) 
+        efekt nadmiaru, wynik nie mieści się w 8-bitowym rejestrze.
+
+W drugim przypadku mamy do czynienia z nadmiarem, co oznacza, że wynik przekracza maksymalną wartość, która może być przechowywana w 8-bitowym rejestrze (255).
 
 3. Odejmowanie:
-A = 115 (01110011)
-B = 5 (00000101)
-C = A - B = 110 (01101110)
+
+        A = 115 (01110011)
+        B = 5 (00000101)
+        C = A - B = 110 (01101110)
 
 4. Odejmowanie:
-A = 129 (10000001)
-B = 167 (10100111)
-C = A - B = -38 (11011010) - efekt niedomiaru, ponieważ wynik jest liczbą ujemną.
+
+        A = 129 (10000001)
+        B = 167 (10100111)
+        C = A - B = -38 (11011010)
+        efekt niedomiaru, ponieważ wynik jest liczbą ujemną.
 
 ### Liczby ujemne
+
 Aby zapisać liczbę -2 w 8-bitowym rejestrze, używamy kodu U2 (Uzupełnienie do 2):
--2 = 11111110
 
-Dla liczby 10110101:
-- Jako liczba dodatnia: 1 * 2^7 + 0 * 2^6 + 1 * 2^5 + 1 * 2^4 + 0 * 2^3 + 1 * 2^2 + 0 * 2^1 + 1 * 2^0 = 128 + 32 + 16 + 4 + 1 = 181
-- Jako liczba ujemna (w kodzie U2): 01001011 - 1 = 01001010, co daje: 64 + 8 + 2 = 74, więc liczba to -74.
+    -2 = 11111110
 
-Interpretacja liczby zależy od kontekstu. W przypadku liczb ujemnych często stosowany jest kod U2.
+Przykład dla liczby 10110101:
+           
+1. Jako liczba dodatnia: 
+
+        1 * 2^7 + 
+        0 * 2^6 + 
+        1 * 2^5 + 
+        1 * 2^4 + 
+        0 * 2^3 + 
+        1 * 2^2 + 
+        0 * 2^1 + 
+        1 * 2^0 = 
+
+        128 + 32 + 16 + 4 + 1 = 181
+
+2. Jako liczba ujemna (w kodzie U2): 
+
+       ~1011 0101 + 1 = 
+        0100 1010 + 1 = 0100 1011
+
+        co daje: 64 + 8 + 2 + 1 = 75, 
+        więc liczba to -75.
+
+> Interpretacja liczby zależy od kontekstu. W przypadku liczb ujemnych często stosowany jest kod U2.
 
 #### Kod U2
 
@@ -219,26 +252,39 @@ Obliczanie reprezentację liczby ujemnej w kodzie U2:
 Przykłady:
 
 1. Przykład dla liczby -3:
-   1. Wartość bezwzględna: 3 (w binarnym: 0011)
-   2. Odwrócenie bitów: 1100
-   3. Dodanie 1: 1100 + 1 = 1101
 
-   Kod U2 dla liczby -3: 1101
+       1. Wartość bezwzględna: 3 (w binarnym: 0000 0011)
+       2. Odwrócenie bitów: 1111 1100
+       3. Dodanie 1: 1111 1100 + 1 = 1111 1101
+
+       Kod U2 dla liczby -3: 1111 1101
 
 2. Przykład dla liczby -7:
-   1. Wartość bezwzględna: 7 (w binarnym: 0111)
-   2. Odwrócenie bitów: 1000
-   3. Dodanie 1: 1000 + 1 = 1001
 
-   Kod U2 dla liczby -7: 1001
+       1. Wartość bezwzględna: 7 (w binarnym: 0000 0111)
+       2. Odwrócenie bitów: 1111 1000
+       3. Dodanie 1: 1111 1000 + 1 = 1111 1001
 
-Kod U2 jest często stosowany w komputerach, ponieważ pozwala na wykonywanie operacji dodawania i odejmowania przy użyciu tego samego sprzętu, niezależnie od znaku liczb.
+       Kod U2 dla liczby -7: 1111 1001
+
+> Kod U2 jest często stosowany w komputerach, ponieważ pozwala na wykonywanie operacji dodawania i odejmowania przy użyciu tego samego sprzętu, niezależnie od znaku liczb.
 
 ### Liczby rzeczywiste
-11 i 5/16 = 11.3125
+
+    11 i 5/16 = 11.3125
 
 Liczba 11 w postaci binarnej to 1011.
-5/16 jako ułamek binarny to 0.0101 (1 * (1/2)^3 + 0 * (1/2)^4 + 1 * (1/2)^5)
+
+5/16 jako ułamek binarny to 0.0101 ponieważ 
+
+     1 * (1/2)^3 + 
+     0 * (1/2)^4 + 
+     1 * (1/2)^5)
+
+    0.3125 * 2 = 0.625 -> 0
+    0.625  * 2 = 1.25  -> 1
+    0.25   * 2 = 0.5   -> 0
+    0.5    * 2 = 1     -> 1
 
 Liczba 11 i 5/16 w postaci binarnej to: 1011.0101
 
@@ -250,26 +296,29 @@ Potrzebujemy 8 bitów na zapisanie tej liczby. Można zapisać ją w rejestrze j
 Aby przekształcić liczbę dziesiętną 10.75 na liczbę binarną, należy przekształcić osobno jej część całkowitą i część ułamkową.
 
 1. Konwersja części całkowitej:
-   Liczba całkowita: 10
-   Postępujemy według metody dzielenia przez 2:
-   10 / 2 = 5, reszta: 0
-   5 / 2 = 2, reszta: 1
-   2 / 2 = 1, reszta: 0
-   1 / 2 = 0, reszta: 1
+   
+        Liczba całkowita: 10
+        Postępujemy według metody dzielenia przez 2:
 
-   Czytamy reszty od dołu do góry: 1010
+        10 / 2 = 5, reszta: 0
+        5 / 2 = 2, reszta: 1
+        2 / 2 = 1, reszta: 0
+        1 / 2 = 0, reszta: 1
+
+        Czytamy reszty od dołu do góry: 1010
 
 2. Konwersja części ułamkowej:
-   Liczba ułamkowa: 0.75
-   Postępujemy według metody mnożenia przez 2:
-   0.75 * 2 = 1.5 (zapisujemy cyfrę 1)
-   0.5 * 2 = 1.0 (zapisujemy cyfrę 1)
    
-   Czytamy cyfry od lewej do prawej: 11
+        Liczba ułamkowa: 0.75
+        Postępujemy według metody mnożenia przez 2:
+        0.75 * 2 = 1.5 (zapisujemy cyfrę 1)
+        0.5 * 2 = 1.0 (zapisujemy cyfrę 1)
+
+        Czytam od góry do dołu: 11
 
 Teraz, aby uzyskać postać binarną liczby 10.75, łączymy część całkowitą (1010) i część ułamkową (11) za pomocą przecinka binarnego: 1010.11
 
-Stąd wynika, że liczba dziesiętna 10.75 jest równa liczbie binarnej 1010.11.
+Stąd wynika, że liczba dziesiętna 10.75 jest równa liczbie binarnej 1010.11
 
 > Uwaga
 > Podczas konwersji liczby ułamkowej dziesiętnej na liczbę binarną za pomocą metody mnożenia przez 2, należy zakończyć mnożenie w jednym z następujących przypadków:
@@ -285,37 +334,52 @@ Stąd wynika, że liczba dziesiętna 10.75 jest równa liczbie binarnej 1010.11.
 #### Przykłady
 
 1. Liczba dziesiętna 0.5:
-   0.5 * 2 = 1.0 (zapisujemy cyfrę 1)
-   Binarnie: 0.1
+
+        0.5 * 2 = 1.0 (zapisujemy cyfrę 1)
+        Binarnie: 0.1
 
 2. Liczba dziesiętna 0.25:
-   0.25 * 2 = 0.5 (zapisujemy cyfrę 0)
-   0.5 * 2 = 1.0 (zapisujemy cyfrę 1)
-   Binarnie: 0.01
+
+        0.25 * 2 = 0.5 (zapisujemy cyfrę 0)
+        0.5 * 2 = 1.0 (zapisujemy cyfrę 1)
+        Binarnie: 0.01
 
 3. Liczba dziesiętna 0.625:
-   0.625 * 2 = 1.25 (zapisujemy cyfrę 1)
-   0.25 * 2 = 0.5 (zapisujemy cyfrę 0)
-   0.5 * 2 = 1.0 (zapisujemy cyfrę 1)
-   Binarnie: 0.101
+
+        0.625 * 2 = 1.25 (zapisujemy cyfrę 1)
+        0.25 * 2 = 0.5 (zapisujemy cyfrę 0)
+        0.5 * 2 = 1.0 (zapisujemy cyfrę 1)
+        Binarnie: 0.101
 
 4. Liczba dziesiętna 0.375:
-   0.375 * 2 = 0.75 (zapisujemy cyfrę 0)
-   0.75 * 2 = 1.5 (zapisujemy cyfrę 1)
-   0.5 * 2 = 1.0 (zapisujemy cyfrę 1)
-   Binarnie: 0.011
 
-Warto zauważyć, że niektóre liczby ułamkowe w systemie dziesiętnym nie mają dokładnej reprezentacji w systemie binarnym. Na przykład:
+        0.375 * 2 = 0.75 (zapisujemy cyfrę 0)
+        0.75 * 2 = 1.5 (zapisujemy cyfrę 1)
+        0.5 * 2 = 1.0 (zapisujemy cyfrę 1)
+        Binarnie: 0.011
 
-5. Liczba dziesiętna 0.1:
-   0.1 * 2 = 0.2 (zapisujemy cyfrę 0)
-   0.2 * 2 = 0.4 (zapisujemy cyfrę 0)
-   0.4 * 2 = 0.8 (zapisujemy cyfrę 0)
-   0.8 * 2 = 1.6 (zapisujemy cyfrę 1)
-   0.6 * 2 = 1.2 (zapisujemy cyfrę 1)
-   0.2 * 2 = 0.4 (zapisujemy cyfrę 0)
-   ...
-   Binarnie: 0.0001100110011... (cyfry się powtarzają)
+5. Liczba dziesiętna 0.1977:
+
+        0.1977 * 2 = 0.3954 -> (0.0)
+        0.3954 * 2 = 0.7908 -> (0.00)
+        0.7908 * 2 = 1.5816 -> (0.001)
+        0.5816 * 2 = 1.1632 -> (0.0011)
+        0.1632 * 2 = 0.3264 -> (0.00110)
+        0.3264 * 2 = 0.6528 -> (0.001100)
+        0.6528 * 2 = 1.3056 -> (0.0011001)
+
+>Warto zauważyć, że niektóre liczby ułamkowe w systemie dziesiętnym nie mają dokładnej reprezentacji w systemie binarnym.
+
+6. Liczba dziesiętna 0.1:
+
+        0.1 * 2 = 0.2 (zapisujemy cyfrę 0)
+        0.2 * 2 = 0.4 (zapisujemy cyfrę 0)
+        0.4 * 2 = 0.8 (zapisujemy cyfrę 0)
+        0.8 * 2 = 1.6 (zapisujemy cyfrę 1)
+        0.6 * 2 = 1.2 (zapisujemy cyfrę 1)
+        0.2 * 2 = 0.4 (zapisujemy cyfrę 0)
+        ...
+        Binarnie: 0.0001100110011... (cyfry się powtarzają)
 
 W takich przypadkach reprezentacja binarna będzie nieskończoną liczbą cyfr po przecinku i musi zostać zaokrąglona, aby zmieścić się w określonym formacie, takim jak standard IEEE 754.
 
@@ -328,7 +392,10 @@ Reprezentacja liczby zmiennoprzecinkowej w standardzie IEEE 754 składa się z t
 2. Wykładnik (Exponent) - ciąg bitów reprezentujący wykładnik liczby, przesunięty o wartość stałą (bias). Dla formatu pojedynczej precyzji przesunięcie wynosi 127, a dla podwójnej precyzji wynosi 1023.
 3. Mantysa (Significand) - ciąg bitów reprezentujący wartość liczby znormalizowanej, ale bez pierwszego bitu (1), który jest zawsze niejawny (chyba że liczba jest denormalizowana).
 
-Tworzenie reprezentacji binarnej liczby zmiennoprzecinkowej w standardzie IEEE 754:
+
+![IEEE 754](images/IEEE754.png)
+
+Tworzenie reprezentacji binarnej liczby zmiennoprzecinkowej w standardzie IEEE-754:
 
 1. Określ znak liczby (0 dla dodatniej, 1 dla ujemnej).
 2. Zamienić część dziesiętną oraz ułamkową na postać binarną.
