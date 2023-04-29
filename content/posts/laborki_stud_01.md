@@ -1,7 +1,7 @@
 ---
-title: "Lab student 01"
+title: "Lab - whole"
 date: 2023-04-24T17:13:33+02:00
-draft: false
+draft: true
 ShowToc: true
 
 ---
@@ -40,11 +40,23 @@ Wykłady
 6. Oprogramowanie układu sterującego dla przykładowego zadania (np. sterowanie światłami na
 skrzyżowaniu, obsługą żądań przywołania windy itp.).
 
+Organizacja
+=====
+1. Jeśli ktoś jest zainteresowany, proponuję włączyć kamerę - na tej podstawie sprawdzam obecność
+2. Aktywność generuje plusy 
+3. Wyniki, rezultaty z ćwiczeń proszę wklejać na czat
+4. Zaliczenie przedmiotu - kolokwium lub projekt
+    1. Jeśli kolokwium to odbędzie się na przedostatnich zajęciach (zakres ściśle powiązany ze skryptem)
+    2. Jeśli projekt, to prezentacja na ostatnich zajęciach - najprawdopodobniej stworzenie symulatora, powiązanego z tematyką zajęć.
+5. Zajęcia mają formułę warsztatów
+    1. Trochę omawiamy temat
+    2. Przeklejamy przykładowe programy lub programujemy je
+6. W dowolnym momencie proszę pytać o cokolwiek co jest związane z tematyką zajęć
 
 Wstęp
 =====
 
-W programowaniu w językach wysokiego poziomu, takich jak np. C++, istnieje kilka problemów związanych z architekturą procesora i organizacją systemu komputerowego. Oto niektóre z nich:
+Kilka problemów związanych z architekturą procesora i organizacją systemu komputerowego:
 
 1. Reordering instrukcji: Procesory mogą zmieniać kolejność wykonywania instrukcji, aby zoptymalizować wydajność. Może to prowadzić do problemów związanych z synchronizacją wątków i niezdefiniowanym zachowaniem. Aby temu zapobiec, można użyć odpowiednich metod synchronizacji, takich jak muteksy, blokady czy bariery pamięci.
 
@@ -123,6 +135,14 @@ Konwersja liczby 13910 na zapis binarny:
     
     Liczba binarna: 11 0110 0101 0110
 
+**Ćwiczenie**
+
+Zamienić na liczbę w notacji binarnej za pomocą powyższej metody:
+- 19
+- 1977
+
+
+
 > Naturalny kod binarny to sposób zapisu liczb, w którym wartość liczby jest sumą iloczynów cyfr i wag pozycji, gdzie wagi pozycji są potęgami liczby 2.
 
 Liczba 1011 0101 z rozbiciem na wagi poszczególnych pozycji:
@@ -138,6 +158,9 @@ Liczba 1011 0101 z rozbiciem na wagi poszczególnych pozycji:
 
     128 + 32 + 16 + 4 + 1 = 181
 
+**Ćwiczenie**
+- 110111
+- 101001
 
 ### System szesnastkowy
 
@@ -162,6 +185,8 @@ Liczba szesnastkowa: B72D
 
 ### Przechowywanie danych w komputerach
 
+**Narysować pamięć**
+
 Dane w komputerze są przechowywane w postaci binarnej, czyli za pomocą bitów (0 i 1). System binarny został wybrany ze względu na prostotę realizacji elektronicznej (wysokie i niskie napięcie) oraz łatwość przetwarzania informacji.
 
 Rejestr to mały obszar pamięci w procesorze, używany do przechowywania wartości, które są obecnie przetwarzane. Słowo to ciąg bitów, który odpowiada długości rejestru lub jednostki przetwarzania danych.
@@ -171,48 +196,50 @@ Załóżmy, że mamy rejestr 8-bitowy. Aby zapisać wartość 139 (10001011) w r
 
 Ile bitów jest potrzebnych na zapisanie liczby 139, 255, 269, 513?
 
-    139: 8 bitów (10001011)
-    255: 8 bitów (11111111)
-    269: 9 bitów (100001101)
-    513: 10 bitów (1000000001)
+    139
+    255
+    269
+    513
 
-Liczba potrzebnych bitów do zapisania każdej z tych liczb zależy od ich wartości w postaci binarnej. Aby określić minimalną ilość bitów potrzebną do zapisania danej liczby, można zastosować funkcję logarytmu dwójkowego (lub log2), a następnie zaokrąglić wynik w górę do najbliższej liczby całkowitej.
 
-```python
-math.ceil( math.log2(269) )
-```
+### Co to jest rejestr?
 
 ### Nadmiar i niedomiar
 
+**Ćwiczenie**
+
+- Czy wynik operacji mieści się w 8-bitowym rejestrze? (nadmiar czy niedomiar)
+- Ile bitów potrzeba do reprezentacji wyniku?
+
 1. Dodawanie:
 
-        A = 127 (01111111)
-        B = 4 (00000100)
-        A + B = 131 (10000011)
+        A = 127
+        B = 4
+        A + B =
 
 2. Dodawanie:
 
-        A = 139 (10001011)
-        B = 147 (10010011)
-        A + B = 286 (1 00010010) 
-        efekt nadmiaru, wynik nie mieści się w 8-bitowym rejestrze.
-
-W drugim przypadku mamy do czynienia z nadmiarem, co oznacza, że wynik przekracza maksymalną wartość, która może być przechowywana w 8-bitowym rejestrze (255).
+        A = 139
+        B = 147
+        A + B =
 
 3. Odejmowanie:
 
-        A = 115 (01110011)
-        B = 5 (00000101)
-        C = A - B = 110 (01101110)
+        A = 115
+        B = 5
+        C = A - B =
 
 4. Odejmowanie:
 
-        A = 129 (10000001)
-        B = 167 (10100111)
-        C = A - B = -38 (11011010)
-        efekt niedomiaru, ponieważ wynik jest liczbą ujemną.
+        A = 129
+        B = 167
+        C = A - B =
 
 ### Liczby ujemne
+
+1. Z bitem znaku
+2. U2
+
 
 Aby zapisać liczbę -2 w 8-bitowym rejestrze, używamy kodu U2 (Uzupełnienie do 2):
 
@@ -271,6 +298,10 @@ Przykłady:
        Kod U2 dla liczby -7: 1111 1001
 
 > Kod U2 jest często stosowany w komputerach, ponieważ pozwala na wykonywanie operacji dodawania i odejmowania przy użyciu tego samego sprzętu, niezależnie od znaku liczb.
+
+**Ćwiczenie**
+1. -19
+2. -117
 
 ### Liczby rzeczywiste
 
@@ -334,40 +365,17 @@ Stąd wynika, że liczba dziesiętna 10.75 jest równa liczbie binarnej 1010.11
 > 
 > Należy pamiętać, że niektóre liczby ułamkowe dziesiętne mają nieskończoną reprezentację binarną, która nie wykazuje cyklicznego powtarzania się wzoru. W takich przypadkach, można zakończyć mnożenie, gdy > osiągnięta zostanie żądana precyzja, biorąc pod uwagę ograniczenia sprzętowe lub wymagania dotyczące zaokrąglenia.
 
-#### Przykłady
+#### Ćwiczenia
 
 1. Liczba dziesiętna 0.5:
-
-
-
 2. Liczba dziesiętna 0.25:
-
-
 3. Liczba dziesiętna 0.625:
-
-
-
 4. Liczba dziesiętna 0.375:
-
-
-
 5. Liczba dziesiętna 0.1977:
-
 
 >Warto zauważyć, że niektóre liczby ułamkowe w systemie dziesiętnym nie mają dokładnej reprezentacji w systemie binarnym.
 
 6. Liczba dziesiętna 0.1:
-
-        0.1 * 2 = 0.2 (zapisujemy cyfrę 0)
-        0.2 * 2 = 0.4 (zapisujemy cyfrę 0)
-        0.4 * 2 = 0.8 (zapisujemy cyfrę 0)
-        0.8 * 2 = 1.6 (zapisujemy cyfrę 1)
-        0.6 * 2 = 1.2 (zapisujemy cyfrę 1)
-        0.2 * 2 = 0.4 (zapisujemy cyfrę 0)
-        ...
-        Binarnie: 0.0001100110011... (cyfry się powtarzają)
-
-W takich przypadkach reprezentacja binarna będzie nieskończoną liczbą cyfr po przecinku i musi zostać zaokrąglona, aby zmieścić się w określonym formacie, takim jak standard IEEE-754.
 
 #### Notacja zmiennoprzecinkowa
 
@@ -495,88 +503,7 @@ Porównanie czasu wykonywania dodawania, odejmowania, mnożenia i dzielenia dla 
 
 **Lab_02:**
 
-```c++
-#include <iostream>
-#include <iomanip>
-#include <chrono>
-#include <random>
-#include <vector>
-#include <cmath>
 
-using namespace std;
-using namespace std::chrono;
-
-template <typename T,std::enable_if_t<std::is_integral<T>::value, bool> =true>
-T generateRandomNumber(T min, T max) {
-    static random_device rd;
-    static mt19937 gen(rd());
-    uniform_int_distribution<T> dist(min, max);
-    return dist(gen);
-}
-
-template <typename T,std::enable_if_t<std::is_floating_point<T>::value, bool> = true>
-T generateRandomNumber(T min, T max) {
-    static random_device rd;
-    static mt19937 gen(rd());
-    uniform_real_distribution<T> dist(min, max);
-    return dist(gen);
-}
-
-template <typename T>
-T complex_operation(T a, T b) {
-    T result = (a + b) * (a - b) / (a * b);// +std::sin(a) - std::cos(b);
-    return result;
-}
-
-template <typename T>
-void perform_operations(const std::string& data_type) {
-    const auto num_operations = 1000000;
-
-    std::vector<T> a(num_operations), b(num_operations);
-
-    for (int i = 0; i < num_operations; ++i) {
-        a[i] = static_cast<T>(generateRandomNumber<T>(1, 1000));
-        b[i] = static_cast<T>(generateRandomNumber<T>(1, 1000));
-    }
-
-    T result;
-    auto start = std::chrono::high_resolution_clock::now();
-    for (auto i = 0; i < num_operations; ++i) {
-        result = complex_operation(a[i], b[i]);
-    }
-
-    auto end = std::chrono::high_resolution_clock::now();
-    std::chrono::duration<double, std::milli> elapsed = end - start;
-
-    std::cout << "Time taken for " << data_type << ": " << elapsed.count() << " ms" << " " << result << std::endl;
-}
-
-int main() {
-
-    //simple_dummy();
-
-    perform_operations<int>("int");
-    perform_operations<float>("float");
-    perform_operations<double>("double");
-
-    return 0;
-}
-```
-
-
-Napisz kod w asemblerze x86, który porównuje czas wykonania operacji dodawania, odejmowania, mnożenia i dzielenia dla liczby stałoprzecinkowej (int) i zmiennoprzecinkowej (float, double). Program korzysta z polecenia RDTSC do mierzenia czasu wykonania operacji.
-
-**Lab_02_asm:**
-
-
-Aby skompilować i uruchomić program, można użyć narzędzi NASM i LD lub fasm
-
-```
-fastasm itd.
-```
-
-> Ref:
-> - [x64dbg](https://x64dbg.com/)
 
 ## Analiza wpływu precyzji zmiennoprzecinkowej na czas wykonywania operacji.
 
@@ -586,6 +513,10 @@ fastasm itd.
 
 **Lab_03:**
 
+
+Ten program w C++ analizuje wpływ precyzji zmiennoprzecinkowej na czas wykonania operacji. Wykonuje on podstawowe operacje matematyczne (`+`, `-`, `*`, `/`) na liczbach zmiennoprzecinkowych o różnych precyzjach (`float`, `double`, `long double`) i mierzy czas wykonania tych operacji za pomocą biblioteki `<chrono>`.
+
+Po skompilowaniu i uruchomieniu programu, na konsoli zostaną wyświetlone wyniki czasu wykonania operacji dla różnych precyzji. Należy przeanalizować wyniki i zastanowić się nad wpływem precyzji na czas wykonania operacji.
 
 ## Obliczanie czasu wykonywania operacji na macierzach stało- i zmiennoprzecinkowych.
 
@@ -612,10 +543,79 @@ Aby użyć instrukcji SIMD w C++, możemy wykorzystać bibliotekę `immintrin.h`
 
 Poniżej znajduje się przykład programu w C++, który wykonuje operacje dodawania na wektorach liczb stało- i zmiennoprzecinkowych, wykorzystując instrukcje SIMD. Porównuje czas wykonania operacji wektorowych z użyciem SIMD do czasu wykonania operacji bez SIMD.
 
-**Lab_05:**
+```cpp
+#include <iostream>
+#include <chrono>
+#include <vector>
+#include <immintrin.h>
+
+using namespace std;
+using namespace std::chrono;
+
+const int vector_size = 1000000;
+
+template <typename T>
+void add_vectors(const vector<T> &a, const vector<T> &b, vector<T> &result) {
+    for (size_t i = 0; i < a.size(); ++i) {
+        result[i] = a[i] + b[i];
+    }
+}
+
+void add_vectors_simd(const vector<float> &a, const vector<float> &b, vector<float> &result) {
+    size_t simd_length = a.size() / 8;
+
+    for (size_t i = 0; i < simd_length; ++i) {
+        __m256 vec_a = _mm256_loadu_ps(&a[i * 8]);
+        __m256 vec_b = _mm256_loadu_ps(&b[i * 8]);
+        __m256 vec_result = _mm256_add_ps(vec_a, vec_b);
+        _mm256_storeu_ps(&result[i * 8], vec_result);
+    }
+}
+
+template <typename T>
+void test_add_vectors(const string &type_name) {
+    vector<T> a(vector_size, static_cast<T>(1));
+    vector<T> b(vector_size, static_cast<T>(2));
+    vector<T> result(vector_size, static_cast<T>(0));
+
+    auto start_time = high_resolution_clock::now();
+    add_vectors(a, b, result);
+    auto end_time = high_resolution_clock::now();
+
+    auto duration = duration_cast<milliseconds>(end_time - start_time).count();
+    cout << "Czas wykonania dodawania wektorów bez SIMD dla " << type_name << ": " << duration << " ms" << endl;
+}
+
+void test_add_vectors_simd_float() {
+    vector<float> a(vector_size, 1.0f);
+    vector<float> b(vector_size, 2.0f);
+    vector<float> result(vector_size, 0.0f);
+
+    auto start_time = high_resolution_clock::now();
+    add_vectors_simd(a, b, result);
+    auto end_time = high_resolution_clock::now();
+
+    auto duration = duration_cast<milliseconds>(end_time - start_time).count();
+    cout << "Czas wykonania dodawania wektorów z użyciem SIMD dla float: " << duration << " ms" << endl;
+}
+
+int main() {
+    test_add_vectors<int>("int");
+    test_add_vectors<float>("float");
+    test_add_vectors<double>("double");
+
+    test_add_vectors_simd_float();
+
+    return 0;
+}
+```
+
+W tym przypadku, używamy instrukcji SIMD dla operacji dodawania wektorów zmiennoprzecinkowych (`float`). Program porównuje czas wykonania operacji wektorowych z użyciem SIMD do czasu wykonania operacji bez SIMD dla typów `int`, `float` i `double`. Po skompilowaniu i uruchomieniu programu, na konsoli zostaną wyświetlone wyniki czasu wykonania dodawania wektorów dla różnych typów danych, zarówno z użyciem SIMD, jak i bez.
+
+Wyniki mogą się różnić w zależności od sprzętu i kompilatora, ale zazwyczaj SIMD przyspiesza obliczenia wektorowe, gdyż pozwala na wykonywanie operacji na wielu elementach danych jednocześnie.
+
+W praktyce, wykorzystanie SIMD może prowadzić do znacznego przyspieszenia obliczeń wektorowych, szczególnie w zastosowaniach, takich jak grafika komputerowa, analiza danych czy przetwarzanie sygnałów. Jednak warto pamiętać, że nie wszystkie operacje mogą być przyspieszone przy użyciu SIMD, a także, że optymalizacja przy użyciu SIMD może zwiększyć złożoność kodu i utrudnić jego utrzymanie.
 
 
 > Ref:
 > - [Native code performance on modern CPUs](https://www.cppstories.com/2014/04/presentation-native-code-performance-on-modern-cpus/)
-
-

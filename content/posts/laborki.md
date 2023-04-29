@@ -1,5 +1,5 @@
 ---
-title: "Lab"
+title: "Lab - whole"
 date: 2023-04-24T17:13:33+02:00
 draft: true
 ShowToc: true
@@ -40,11 +40,23 @@ Wykłady
 6. Oprogramowanie układu sterującego dla przykładowego zadania (np. sterowanie światłami na
 skrzyżowaniu, obsługą żądań przywołania windy itp.).
 
+Organizacja
+=====
+1. Jeśli ktoś jest zainteresowany, proponuję włączyć kamerę - na tej podstawie sprawdzam obecność
+2. Aktywność generuje plusy 
+3. Wyniki, rezultaty z ćwiczeń proszę wklejać na czat
+4. Zaliczenie przedmiotu - kolokwium lub projekt
+    1. Jeśli kolokwium to odbędzie się na przedostatnich zajęciach (zakres ściśle powiązany ze skryptem)
+    2. Jeśli projekt, to prezentacja na ostatnich zajęciach - najprawdopodobniej stworzenie symulatora, powiązanego z tematyką zajęć.
+5. Zajęcia mają formułę warsztatów
+    1. Trochę omawiamy temat
+    2. Przeklejamy przykładowe programy lub programujemy je
+6. W dowolnym momencie proszę pytać o cokolwiek co jest związane z tematyką zajęć
 
 Wstęp
 =====
 
-W programowaniu w językach wysokiego poziomu, takich jak np. C++, istnieje kilka problemów związanych z architekturą procesora i organizacją systemu komputerowego. Oto niektóre z nich:
+Kilka problemów związanych z architekturą procesora i organizacją systemu komputerowego:
 
 1. Reordering instrukcji: Procesory mogą zmieniać kolejność wykonywania instrukcji, aby zoptymalizować wydajność. Może to prowadzić do problemów związanych z synchronizacją wątków i niezdefiniowanym zachowaniem. Aby temu zapobiec, można użyć odpowiednich metod synchronizacji, takich jak muteksy, blokady czy bariery pamięci.
 
@@ -123,6 +135,14 @@ Konwersja liczby 13910 na zapis binarny:
     
     Liczba binarna: 11 0110 0101 0110
 
+**Ćwiczenie**
+
+Zamienić na liczbę w notacji binarnej za pomocą powyższej metody:
+- 19
+- 1977
+
+
+
 > Naturalny kod binarny to sposób zapisu liczb, w którym wartość liczby jest sumą iloczynów cyfr i wag pozycji, gdzie wagi pozycji są potęgami liczby 2.
 
 Liczba 1011 0101 z rozbiciem na wagi poszczególnych pozycji:
@@ -162,6 +182,8 @@ Liczba szesnastkowa: B72D
 
 ### Przechowywanie danych w komputerach
 
+**Narysować pamięć**
+
 Dane w komputerze są przechowywane w postaci binarnej, czyli za pomocą bitów (0 i 1). System binarny został wybrany ze względu na prostotę realizacji elektronicznej (wysokie i niskie napięcie) oraz łatwość przetwarzania informacji.
 
 Rejestr to mały obszar pamięci w procesorze, używany do przechowywania wartości, które są obecnie przetwarzane. Słowo to ciąg bitów, który odpowiada długości rejestru lub jednostki przetwarzania danych.
@@ -182,7 +204,14 @@ Liczba potrzebnych bitów do zapisania każdej z tych liczb zależy od ich warto
 math.ceil( math.log2(269) )
 ```
 
+### Co to jest rejestr?
+
 ### Nadmiar i niedomiar
+
+**Ćwiczenie**
+
+- Czy wynik operacji mieści się w 8-bitowym rejestrze? (nadmiar czy niedomiar)
+- Ile bitów potrzeba do reprezentacji wyniku?
 
 1. Dodawanie:
 
@@ -213,6 +242,10 @@ W drugim przypadku mamy do czynienia z nadmiarem, co oznacza, że wynik przekrac
         efekt niedomiaru, ponieważ wynik jest liczbą ujemną.
 
 ### Liczby ujemne
+
+1. Z bitem znaku
+2. U2
+
 
 Aby zapisać liczbę -2 w 8-bitowym rejestrze, używamy kodu U2 (Uzupełnienie do 2):
 
@@ -1026,6 +1059,7 @@ Dla każdego z tych rozkazów analiza cyklu rozkazowego obejmuje omówienie posz
 
 ## Python:
 
+**Lab_06:**
 ``` python
 class SimpleProcessor:
     def __init__(self, memory, instructions):
@@ -1041,17 +1075,22 @@ class SimpleProcessor:
 
     def decode(self, instruction):
         opcode, operands = instruction[0], instruction[1:]
+        
         return opcode, operands
 
     def execute(self, opcode, operands):
         if opcode == "LOAD":
             self.registers[operands[0]] = self.memory[operands[1]]
+            #print(f"LOAD R{operands[0]}, M{operands[1]}")
         elif opcode == "STORE":
-            self.memory[operands[1]] = self.registers[operands[0]]
+            self.memory[operands[0]] = self.registers[operands[1]]
+            #print(f"STORE M{operands[0]}, R{operands[1]}")
         elif opcode == "ADD":
             self.registers[operands[0]] += self.registers[operands[1]]
+            #print(f"ADD R{operands[0]}, R{operands[1]}")
         elif opcode == "SUB":
             self.registers[operands[0]] -= self.registers[operands[1]]
+            #print(f"SUB R{operands[0]}, R{operands[1]}")
         else:
             raise ValueError(f"Nieznany rozkaz: {opcode}")
 
@@ -1067,13 +1106,20 @@ instructions = [
     ("LOAD", 0, 0),
     ("LOAD", 1, 1),
     ("ADD", 0, 1),
-    ("STORE", 0, 2)
+    ("STORE", 0, 0),
+
+    ("LOAD", 0, 2),
+    ("LOAD", 1, 3),
+    ("ADD", 0, 1),
+    ("STORE", 1, 0)    
 ]
+
+print("Pamięć:", memory)
 
 processor = SimpleProcessor(memory, instructions)
 processor.run()
 
-print("Rejestry:", processor.registers)
+#print("Rejestry:", processor.registers)
 print("Pamięć:", processor.memory)
 ```
 
@@ -1081,86 +1127,94 @@ print("Pamięć:", processor.memory)
 
 ``` C++
 #include <iostream>
-#include <string>
 #include <vector>
+#include <string>
+#include <stdexcept>
+
+
+enum class Operation
+{
+    LOAD,
+    STORE,
+    ADD,
+    SUB
+};
 
 class SimpleProcessor {
 public:
-    SimpleProcessor(const std::vector<int>& memory, const std::vector<std::vector<std::string>>& instructions)
-        : memory(memory), instructions(instructions), registers(3, 0), PC(0) {}
+    SimpleProcessor(std::vector<int> memory, std::vector<std::pair<Operation, std::pair<int, int>>> instructions)
+        : memory(std::move(memory)),
+          instructions(std::move(instructions)),
+    registers(3, 0), PC(0) {}
 
-    void run() {
-        while (PC < instructions.size()) {
-            auto instruction = fetch();
-            auto [opcode, operands] = decode(instruction);
-            execute(opcode, operands);
-        }
-    }
-
-    void printState() {
-        std::cout << "Rejestry: ";
-        for (const auto& reg : registers) {
-            std::cout << reg << " ";
-        }
-        std::cout << std::endl;
-
-        std::cout << "Pamięć: ";
-        for (const auto& mem : memory) {
-            std::cout << mem << " ";
-        }
-        std::cout << std::endl;
-    }
-
-private:
-    std::vector<std::string> fetch() {
+    std::pair<Operation, std::pair<int, int>> fetch() {
         auto instruction = instructions[PC];
         PC++;
         return instruction;
     }
 
-    std::pair<std::string, std::vector<int>> decode(const std::vector<std::string>& instruction) {
-        std::string opcode = instruction[0];
-        std::vector<int> operands;
-        for (size_t i = 1; i < instruction.size(); ++i) {
-            operands.push_back(std::stoi(instruction[i]));
-        }
-        return {opcode, operands};
-    }
-
-    void execute(const std::string& opcode, const std::vector<int>& operands) {
-        if (opcode == "LOAD") {
-            registers[operands[0]] = memory[operands[1]];
-        } else if (opcode == "STORE") {
-            memory[operands[1]] = registers[operands[0]];
-        } else if (opcode == "ADD") {
-            registers[operands[0]] += registers[operands[1]];
-        } else if (opcode == "SUB") {
-            registers[operands[0]] -= registers[operands[1]];
+    void execute(Operation opcode, std::pair<int, int> operands) {
+        if (opcode == Operation::LOAD) {
+            registers[operands.first] = memory[operands.second];
+        } else if (opcode == Operation::STORE) {
+            memory[operands.first] = registers[operands.second];
+        } else if (opcode == Operation::ADD) {
+            registers[operands.first] += registers[operands.second];
+        } else if (opcode == Operation::SUB) {
+            registers[operands.first] -= registers[operands.second];
         } else {
-            std::cerr << "Nieznany rozkaz: " << opcode << std::endl;
-            exit(1);
+            throw std::runtime_error("Nieznany rozkaz: " + std::to_string(static_cast<int>(opcode)));
         }
     }
 
+    void run() {
+        while (PC < instructions.size()) {
+            const auto instruction = fetch();
+            execute(instruction.first, instruction.second);
+        }
+    }
+
+    [[nodiscard]] std::vector<int> getMemory() const {
+        return memory;
+    }
+
+private:
     std::vector<int> memory;
-    std::vector<std::vector<std::string>> instructions;
+    std::vector<std::pair<Operation, std::pair<int, int>>> instructions;
     std::vector<int> registers;
     size_t PC;
 };
 
 int main() {
-    std::vector<int> memory = {10, 20, 30, 40, 50};
-    std::vector<std::vector<std::string>> instructions = {
-        {"LOAD", "0", "0"},
-        {"LOAD", "1", "1"},
-        {"ADD", "0", "1"},
-        {"STORE", "0", "2"}
+    const std::vector<int> memory = {10, 20, 30, 40, 50};
+    const std::vector<std::pair<Operation, std::pair<int, int>>> instructions = {
+        {Operation::LOAD, {0, 0}},
+        {Operation::LOAD, {1, 1}},
+        {Operation::ADD, {0, 1}},
+        {Operation::STORE, {0, 0}},
+
+        {Operation::LOAD, {0, 2}},
+        {Operation::LOAD, {1, 3}},
+        {Operation::ADD, {0, 1}},
+        {Operation::STORE, {1, 0}}
     };
+
+    std::cout << "Pamiec:";
+    for (const auto& val : memory) {
+        std::cout << " " << val;
+    }
+    std::cout << std::endl;
 
     SimpleProcessor processor(memory, instructions);
     processor.run();
 
-    processor.printState();
+    const auto resultMemory = processor.getMemory();
+    std::cout << "Pamiec:";
+    for (const auto& val : resultMemory) {
+        std::cout << " " << val;
+    }
+    std::cout << std::endl;
+
     return 0;
 }
 ```
@@ -1220,9 +1274,14 @@ Istnieją trzy główne rodzaje hazardów:
    2. Opóźnianie rozgałęzienia (branch delay slot): Procesor pozwala na wykonanie jednego lub kilku rozkazów po instrukcji rozgałęzienia, zanim rzeczywista zmiana przepływu sterowania zostanie wprowadzona. Kompilator może umieścić niezależne rozkazy w tych opóźnionych miejscach, aby zmniejszyć straty wydajności spowodowane hazardami kontroli.
    3. Wykonanie spekulatywne (speculative execution): Procesor wykonuje obie ścieżki po rozgałęzieniu warunkowym, jednocześnie śledząc poprawność wyników. Gdy warunek rozgałęzienia zostanie ostatecznie wyznaczony, procesor odrzuca wyniki niewłaściwej ścieżki i kontynuuje wykonanie poprawnej ścieżki.
 
-   Interesująca podatność związana z SE (side-channel) - [Spectre](https://en.wikipedia.org/wiki/Spectre_(security_vulnerability))
+> Ref:
+> Interesująca podatność związana z SE (side-channel) - [Spectre - wiki](https://en.wikipedia.org/wiki/Spectre_(security_vulnerability))
+> [Spectre Attacks: Exploiting Speculative Execution](https://spectreattack.com/spectre.pdf)
+> [Meltdown Security Vulnerability](https://github.com/IAIK/meltdown)
+> [Meltdown Proof-of-Concept](https://www.geeksforgeeks.org/meltdown-security-vulnerability/)
 
 Podatność Spectre dotyczy złośliwego wykorzystania spekulatywnego wykonania instrukcji przez procesor w celu uzyskania dostępu do poufnych informacji.
+
 
 ```c
 #include <stdio.h>
@@ -1385,6 +1444,7 @@ W praktyce, zaawansowane mikroarchitektury procesorów stosują różne techniki
 
 Zakładając, że mamy prosty procesor z potokiem rozkazowego o 5 etapach (IF - pobieranie rozkazu, ID - dekodowanie, EX - wykonanie, MEM - dostęp do pamięci, WB - zapis wyniku), przedstawiam prosty symulator potoku rozkazowego uwzględniający hazardy danych.
 
+**Lab_07**
 ``` C++	
 #include <iostream>
 #include <vector>
@@ -1492,6 +1552,7 @@ Zakładamy, że procesor obsługuje jedynie trzy rozkazy: dodawanie, odejmowanie
 
 #### wersja C++
 
+**Lab_08**
 ``` C++
 #include <iostream>
 #include <vector>
@@ -1608,6 +1669,7 @@ Symulator wykonuje sekwencję rozkazów na prostym procesorze z potokiem rozkazo
 
 #### wersja Python
 
+**Lab_08**
 ``` python
 class SimpleProcessor:
     def __init__(self):
@@ -1711,6 +1773,7 @@ Dekodowanie instrukcji pozwala na łatwe odczytanie danych niezbędnych do wykon
 
 ### Wersja z branch prediction:
 
+**Lab_09**
 ``` python
 class SimpleProcessor:
     def __init__(self):
@@ -1810,6 +1873,7 @@ Uwaga: Warto zauważyć, że efekty takie jak reordering instrukcji są zależne
 
 Oto prosty program w C++, który ilustruje reordering instrukcji na procesorze x86:
 
+**Lab_10**
 ```cpp
 #include <atomic>
 #include <iostream>
@@ -1889,6 +1953,7 @@ Wady:
 
 Przykład w C++:
 
+**Lab_11**
 ```cpp
 #include <iostream>
 
@@ -1915,6 +1980,7 @@ Wady:
 
 Przykład w C++:
 
+**Lab_12**
 ```cpp
 #include <iostream>
 #include <thread>
@@ -2007,6 +2073,7 @@ Procesor z technologią Hyper-threading
 
 Symulacja działania procesora z HT
 
+**Lab_13**
 ```cpp
 #include <iostream>
 #include <thread>
@@ -2151,6 +2218,7 @@ Level 1 data cache - 48 kB, 12 way, 64 sets, 64 B line size, latency 5, per core
 
 Celem tego ćwiczenia jest napisanie prostego programu w języku C, który alokuje blok pamięci, zapisuje wartości do tego bloku i odczytuje wartości z tego bloku.
 
+**Lab_14**
 ```c
 #include <stdio.h>
 #include <stdlib.h>
@@ -2177,6 +2245,7 @@ int main() {
 
 W poniższym programie w C++ przetestujemy dwa różne sposoby dostępu do pamięci: sekwencyjny i losowy. Porównamy czas wykonania obu podejść, które mogą wpływać na wykorzystanie pamięci cache.
 
+**Lab_15**
 ```cpp
 #include <iostream>
 #include <chrono>
@@ -2239,6 +2308,7 @@ Poniżej znajduje się prosty symulator procesora z pamięcią cache w Pythonie,
 > Ref:
 > - [Memory part 2: CPU caches](https://lwn.net/Articles/252125/)
 
+**Lab_16**
 ```python
 import random
 import time
@@ -2312,6 +2382,7 @@ Zmiana parametrów symulatora (rozmiar pamięci, rozmiar cache, liczba iteracji)
 
 Symulator pamięci podręcznej (cache) typu direct-mapped
 
+**Lab_17**
 ```cpp
 #include <iostream>
 #include <vector>
@@ -2418,7 +2489,7 @@ int main() {
 
 **Nieco ciekawsza implementacja**
 
-
+**Lab_18**
 ```cpp
 #include <iostream>
 #include <vector>
@@ -2575,6 +2646,7 @@ int main() {
 
 Celem tego ćwiczenia jest napisanie prostego programu w języku C, który używa przerwań do odmierzania czasu. W tym celu można skorzystać z biblioteki `signal.h`.
 
+**Lab_19**
 ```c
 #include <stdio.h>
 #include <signal.h>
@@ -2602,6 +2674,7 @@ int main() {
 
 W systemie Windows obsługa przerwań może być realizowana za pomocą różnych mechanizmów. Jeden z nich to obsługa sygnałów za pomocą funkcji `SetConsoleCtrlHandler`. Oto przykład programu w języku C, który obsługuje sygnał `CTRL+C`:
 
+**Lab_20**
 ```c
 #include <stdio.h>
 #include <windows.h>
