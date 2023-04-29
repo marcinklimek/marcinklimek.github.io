@@ -1,5 +1,5 @@
 ---
-title: "Lab"
+title: "Lab student 01"
 date: 2023-04-24T17:13:33+02:00
 draft: false
 ShowToc: true
@@ -495,6 +495,73 @@ Porównanie czasu wykonywania dodawania, odejmowania, mnożenia i dzielenia dla 
 
 **Lab_02:**
 
+```c++
+#include <iostream>
+#include <iomanip>
+#include <chrono>
+#include <random>
+#include <vector>
+#include <cmath>
+
+using namespace std;
+using namespace std::chrono;
+
+template <typename T,std::enable_if_t<std::is_integral<T>::value, bool> =true>
+T generateRandomNumber(T min, T max) {
+    static random_device rd;
+    static mt19937 gen(rd());
+    uniform_int_distribution<T> dist(min, max);
+    return dist(gen);
+}
+
+template <typename T,std::enable_if_t<std::is_floating_point<T>::value, bool> = true>
+T generateRandomNumber(T min, T max) {
+    static random_device rd;
+    static mt19937 gen(rd());
+    uniform_real_distribution<T> dist(min, max);
+    return dist(gen);
+}
+
+template <typename T>
+T complex_operation(T a, T b) {
+    T result = (a + b) * (a - b) / (a * b);// +std::sin(a) - std::cos(b);
+    return result;
+}
+
+template <typename T>
+void perform_operations(const std::string& data_type) {
+    const auto num_operations = 1000000;
+
+    std::vector<T> a(num_operations), b(num_operations);
+
+    for (int i = 0; i < num_operations; ++i) {
+        a[i] = static_cast<T>(generateRandomNumber<T>(1, 1000));
+        b[i] = static_cast<T>(generateRandomNumber<T>(1, 1000));
+    }
+
+    T result;
+    auto start = std::chrono::high_resolution_clock::now();
+    for (auto i = 0; i < num_operations; ++i) {
+        result = complex_operation(a[i], b[i]);
+    }
+
+    auto end = std::chrono::high_resolution_clock::now();
+    std::chrono::duration<double, std::milli> elapsed = end - start;
+
+    std::cout << "Time taken for " << data_type << ": " << elapsed.count() << " ms" << " " << result << std::endl;
+}
+
+int main() {
+
+    //simple_dummy();
+
+    perform_operations<int>("int");
+    perform_operations<float>("float");
+    perform_operations<double>("double");
+
+    return 0;
+}
+```
 
 
 Napisz kod w asemblerze x86, który porównuje czas wykonania operacji dodawania, odejmowania, mnożenia i dzielenia dla liczby stałoprzecinkowej (int) i zmiennoprzecinkowej (float, double). Program korzysta z polecenia RDTSC do mierzenia czasu wykonania operacji.
