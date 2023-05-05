@@ -59,7 +59,7 @@ params:
     author: Theme PaperMod
     author: ["Marcin"] # multiple authors
 
-    defaultTheme: auto
+    defaultTheme: light
     # disableThemeToggle: true
     ShowShareButtons: false
     ShowReadingTime: false
@@ -147,8 +147,10 @@ markup:
     renderer:
       unsafe: true
   highlight:
-    style: dracula
-    lineNos: false
+    codeFences: true
+    style: github
+    guessSyntax: true
+    lineNos: true
     noClasses: false
 
 privacy:

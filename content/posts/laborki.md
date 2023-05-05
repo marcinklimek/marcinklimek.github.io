@@ -12,6 +12,8 @@ ShowToc: true
 body { min-width: 80% !important; }
 </style>
 ```
+
+https://www.geeksforgeeks.org/computer-organization-and-architecture-tutorials/
 -->
 
 Treści programowe
@@ -305,6 +307,11 @@ Przykłady:
 
 > Kod U2 jest często stosowany w komputerach, ponieważ pozwala na wykonywanie operacji dodawania i odejmowania przy użyciu tego samego sprzętu, niezależnie od znaku liczb.
 
+**Ćwiczenie**
+
+1. -7
+2. -117
+
 ### Liczby rzeczywiste
 
     11 i 5/16 = 11.3125
@@ -539,22 +546,24 @@ Warto zauważyć, że w przypadku GPU, jednostki FPU mogą być wykorzystywane d
 Porównanie czasu wykonywania dodawania, odejmowania, mnożenia i dzielenia dla liczby stałoprzecinkowej (int) i zmiennoprzecinkowej (float, double).
 
 1. Utwórz program, który generuje losowe liczby int oraz float (lub double) i wykonuje podstawowe operacje matematyczne.
-2. Zmierz czas wykonania każdej operacji za pomocą biblioteki <chrono>.
-3. Wyświetl wyniki w formie tabeli, porównując czas wykonania operacji dla liczby stało- i zmiennoprzecinkowej.
-
+2. Zmierz czas wykonania każdej operacji dla różnych precyzji.
+3. Porównaj wyniki i zastanów się nad wpływem precyzji na czas wykonania operacji.
 
 **Lab_02:**
+
 ```cpp
 #include <iostream>
 #include <iomanip>
 #include <chrono>
 #include <random>
+#include <vector>
 
 using namespace std;
 using namespace std::chrono;
 
 template <typename T,std::enable_if_t<std::is_integral<T>::value, bool> =true>
-T generateRandomNumber(T min, T max) {
+T generateRandomNumber(T min, T max)
+{
     static random_device rd;
     static mt19937 gen(rd());
     uniform_int_distribution<T> dist(min, max);
@@ -562,7 +571,8 @@ T generateRandomNumber(T min, T max) {
 }
 
 template <typename T,std::enable_if_t<std::is_floating_point<T>::value, bool> = true>
-T generateRandomNumber(T min, T max) {
+T generateRandomNumber(T min, T max)
+{
     static random_device rd;
     static mt19937 gen(rd());
     uniform_real_distribution<T> dist(min, max);
@@ -570,231 +580,50 @@ T generateRandomNumber(T min, T max) {
 }
 
 
-// Główna funkcja
-int main() {
-    const int iterations = 1000000;
-
-    // Generowanie losowych liczb
-    int int1 = generateRandomNumber<int>(1, 1000);
-    int int2 = generateRandomNumber<int>(1, 1000);
-    float float1 = generateRandomNumber<float>(1.0, 1000.0);
-    float float2 = generateRandomNumber<float>(1.0, 1000.0);
-    double double1 = generateRandomNumber<double>(1.0, 1000.0);
-    double double2 = generateRandomNumber<double>(1.0, 1000.0);
-
-    // Pomiar czasu dla operacji na liczbach stałoprzecinkowych (int)
-    auto int_start = high_resolution_clock::now();
-    for (int i = 0; i < iterations; i++) {
-        int a = int1 + int2;
-        int b = int1 - int2;
-        int c = int1 * int2;
-        int d = int1 / int2;
-    }
-    auto int_end = high_resolution_clock::now();
-    auto int_duration = duration_cast<nanoseconds>(int_end - int_start).count();
-
-    // Pomiar czasu dla operacji na liczbach zmiennoprzecinkowych (float)
-    auto float_start = high_resolution_clock::now();
-    for (int i = 0; i < iterations; i++) {
-        float a = float1 + float2;
-        float b = float1 - float2;
-        float c = float1 * float2;
-        float d = float1 / float2;
-    }
-    auto float_end = high_resolution_clock::now();
-    auto float_duration = duration_cast<nanoseconds>(float_end - float_start).count();
-
-    // Pomiar czasu dla operacji na liczbach zmiennoprzecinkowych (double)
-    auto double_start = high_resolution_clock::now();
-    for (int i = 0; i < iterations; i++) {
-        double a = double1 + double2;
-        double b = double1 - double2;
-        double c = double1 * double2;
-        double d = double1 / double2;
-    }
-    auto double_end = high_resolution_clock::now();
-    auto double_duration = duration_cast<nanoseconds>(double_end - double_start).count();
-
-    // Wyświetlanie wyników
-    cout << "Porównanie czasu wykonania operacji matematycznych (w nanosekundach) dla liczby stało- i zmiennoprzecinkowej" << endl;
-    cout << setw(10) << "Typ" << setw(15) << "Czas" << endl;
-    cout << setw(10) << "int" << setw(15) << int_duration << endl;
-    cout << setw(10) << "float" << setw(15) << float_duration << endl;
-    cout << setw(10) << "double" << setw(15) << double_duration << endl;
-
-    return 0;
+template <typename T>
+T complex_operation(T a, T b)
+{
+    T result = (a + b) * (a - b) / (a * b); // +std::sin(a) - std::cos(b);
+    return result;
 }
-```
-
-
-Poniżej znajduje się przykład programu napisanego w asemblerze x86, który porównuje czas wykonania operacji dodawania, odejmowania, mnożenia i dzielenia dla liczby stałoprzecinkowej (int) i zmiennoprzecinkowej (float, double). Program korzysta z polecenia RDTSC do mierzenia czasu wykonania operacji.
-
-```nasm
-format PE GUI 4.0
-entry start
-
-include 'win32w.inc'
-
-section '.text' code readable executable
-
-start:
-
-    ; Licznik petli dla liczby staloprzecinkowej (int)
-    mov ecx, [iterations]
-
-    ; Pobranie czasu startowego
-    rdtsc
-    mov edi, eax
-
-int_loop:
-
-    mov eax, [int_a]
-    mov ebx, [int_b]
-
-    ; Dodawanie
-    add eax, ebx
-
-    ; Odejmowanie
-    sub eax, ebx
-
-    ; Mnozenie
-    imul eax, ebx
-
-    ; Dzielenie
-    xor edx, edx
-    idiv ebx
-
-    ; Nastepna iteracja
-    loop int_loop
-
-    ; Pobranie czasu koncowego
-    rdtsc
-    sub eax, edi
-    mov [int_duration], eax
-
-    ; Licznik petli dla liczby zmiennoprzecinkowej (float)
-    mov ecx, [iterations]
-
-    ; Pobranie czasu startowego
-    rdtsc
-    mov edi, eax
-
-float_loop:
-    ; Wczytanie liczb zmiennoprzecinkowych do rejestrów
-    fld [float_a]
-    fld [float_b]
-
-    ; Dodawanie
-    faddp st1, st0
-
-    ; Odejmowanie
-    fsubp st1, st0
-
-    ; Mnozenie
-    fmulp st1, st0
-
-    ; Dzielenie
-    fdivp st1, st0
-
-    ; Nastepna iteracja
-    loop float_loop
-
-    ; Pobranie czasu koncowego
-    rdtsc
-    sub eax, edi
-    mov [float_duration], eax
-
-    ; Zakonczenie programu
-    invoke ExitProcess, 0
-
-section '.data' data readable writeable
-
-  iterations dd 1000000
-
-  ; Stale dla liczb staloprzecinkowych
-  int_a dd 123
-  int_b dd 456
-
-  ; Stale dla liczb zmiennoprzecinkowych
-  float_a dd 123.456f
-  float_b dd 456.789f
-
-  ; Rezerwacja miejsca na zmienne
-  int_duration dd ?
-  float_duration dd ?
-
-section '.idata' import data readable writeable
-
-  library kernel32,'KERNEL32.DLL',\
-  user32,'USER32.DLL'
-
-  include 'api\kernel32.inc'
-  include 'api\user32.inc'
-```
-
-Aby skompilować i uruchomić program, można użyć narzędzi NASM i LD lub fasm
-
-```
-fastasm itd.
-```
-
-Należy pamiętać, że ten program nie wypisuje wyników na ekran, ale przechowuje je w zarezerwowanych zmiennych `int_duration` i `float_duration`. Aby wyświetlić wyniki, można dodać kod odpowiedzialny za wypisanie wartości na ekran, korzystając z systemu wywołań (syscalls) lub użyć debuggera, aby przejrzeć wartości tych zmiennych
-
-> Ref:
-> - [x64dbg](https://x64dbg.com/)
-
-## Analiza wpływu precyzji zmiennoprzecinkowej na czas wykonywania operacji.
-
-1. Utwórz program, który wykonuje operacje matematyczne na liczbach zmiennoprzecinkowych o różnych precyzjach (float, double, long double).
-2. Zmierz czas wykonania każdej operacji dla różnych precyzji.
-3. Porównaj wyniki i zastanów się nad wpływem precyzji na czas wykonania operacji.
-
-**Lab_03:**
-
-```cpp
-#include <iostream>
-#include <chrono>
-#include <cmath>
-
-using namespace std;
-using namespace std::chrono;
-
-const int iterations = 1000000;
 
 template <typename T>
-void perform_math_operations(const string &type_name) {
-    T a = static_cast<T>(123.456);
-    T b = static_cast<T>(456.789);
-    T result;
+void perform_operations(const std::string& data_type)
+{
+    const auto num_operations = 10LL;
 
-    auto start_time = high_resolution_clock::now();
+    std::vector<T> a(num_operations), b(num_operations);
 
-    for (int i = 0; i < iterations; ++i) {
-        result = a + b;
-        result = a - b;
-        result = a * b;
-        result = a / b;
+    for (int i = 0; i < num_operations; ++i) 
+    {
+        a[i] = static_cast<T>(generateRandomNumber<T>(1, 1000));
+        b[i] = static_cast<T>(generateRandomNumber<T>(1, 1000));
     }
 
-    auto end_time = high_resolution_clock::now();
-    auto duration = duration_cast<microseconds>(end_time - start_time).count();
+    T result = 0;
+    auto start = high_resolution_clock::now();
+    for (auto i = 0; i < num_operations; ++i) 
+        result += complex_operation(a[i], b[i]);
+    
 
-    cout << "Czas wykonania operacji dla typu " << type_name << ": " << duration << " mikrosekund" << endl;
+    const auto end = high_resolution_clock::now();
+    const duration<double, std::milli> elapsed = end - start;
+
+    std::cout << "Time taken for " << data_type << ": " << elapsed.count() << " ms" << " " << result << std::endl;
 }
 
-int main() {
-    perform_math_operations<float>("float");
-    perform_math_operations<double>("double");
-    perform_math_operations<long double>("long double");
 
-    cout << "Wyniki mogą się różnić w zależności od sprzętu i kompilatora." << endl;
-    cout << "Analizuj różnice między precyzjami i zastanów się nad wpływem precyzji na czas wykonania operacji." << endl;
+int main()
+{
+    perform_operations<int>("int");
+    perform_operations<float>("float");
+    perform_operations<double>("double");
 
     return 0;
 }
 ```
 
-Ten program w C++ analizuje wpływ precyzji zmiennoprzecinkowej na czas wykonania operacji. Wykonuje on podstawowe operacje matematyczne (`+`, `-`, `*`, `/`) na liczbach zmiennoprzecinkowych o różnych precyzjach (`float`, `double`, `long double`) i mierzy czas wykonania tych operacji za pomocą biblioteki `<chrono>`.
+Ten program w C++ analizuje wpływ precyzji zmiennoprzecinkowej na czas wykonania operacji. Wykonuje on podstawowe operacje matematyczne (`+`, `-`, `*`, `/`) na liczbach `całkowitych`oraz zmiennoprzecinkowych o różnych precyzjach (`float`, `double`) i mierzy czas wykonania tych operacji za pomocą biblioteki `<chrono>`.
 
 Po skompilowaniu i uruchomieniu programu, na konsoli zostaną wyświetlone wyniki czasu wykonania operacji dla różnych precyzji. Należy przeanalizować wyniki i zastanowić się nad wpływem precyzji na czas wykonania operacji.
 
@@ -968,8 +797,857 @@ W praktyce, wykorzystanie SIMD może prowadzić do znacznego przyspieszenia obli
 > - [Native code performance on modern CPUs](https://www.cppstories.com/2014/04/presentation-native-code-performance-on-modern-cpus/)
 
 
+# Porównawczy kod w asemblerze
 
-# Analiza cyklu rozkazowego:
+Poniżej znajduje się przykład programu napisanego w asemblerze x86, który porównuje czas wykonania operacji dodawania, odejmowania, mnożenia i dzielenia dla liczby stałoprzecinkowej (int) i zmiennoprzecinkowej (float, double). Program korzysta z polecenia RDTSC do mierzenia czasu wykonania operacji.
+
+```nasm
+format PE GUI 4.0
+entry start
+
+include 'win32w.inc'
+
+section '.text' code readable executable
+
+start:
+
+    ; Licznik petli dla liczby staloprzecinkowej (int)
+    mov ecx, [iterations]
+
+    ; Pobranie czasu startowego
+    rdtsc
+    mov edi, eax
+
+int_loop:
+
+    mov eax, [int_a]
+    mov ebx, [int_b]
+
+    ; Dodawanie
+    add eax, ebx
+
+    ; Odejmowanie
+    sub eax, ebx
+
+    ; Mnozenie
+    imul eax, ebx
+
+    ; Dzielenie
+    xor edx, edx
+    idiv ebx
+
+    ; Nastepna iteracja
+    loop int_loop
+
+    ; Pobranie czasu koncowego
+    rdtsc
+    sub eax, edi
+    mov [int_duration], eax
+
+    ; Licznik petli dla liczby zmiennoprzecinkowej (float)
+    mov ecx, [iterations]
+
+    ; Pobranie czasu startowego
+    rdtsc
+    mov edi, eax
+
+float_loop:
+    ; Wczytanie liczb zmiennoprzecinkowych do rejestrów
+    fld [float_a]
+    fld [float_b]
+
+    ; Dodawanie
+    faddp st1, st0
+
+    ; Odejmowanie
+    fsubp st1, st0
+
+    ; Mnozenie
+    fmulp st1, st0
+
+    ; Dzielenie
+    fdivp st1, st0
+
+    ; Nastepna iteracja
+    loop float_loop
+
+    ; Pobranie czasu koncowego
+    rdtsc
+    sub eax, edi
+    mov [float_duration], eax
+
+    ; Zakonczenie programu
+    invoke ExitProcess, 0
+
+section '.data' data readable writeable
+
+  iterations dd 1000000
+
+  ; Stale dla liczb staloprzecinkowych
+  int_a dd 123
+  int_b dd 456
+
+  ; Stale dla liczb zmiennoprzecinkowych
+  float_a dd 123.456f
+  float_b dd 456.789f
+
+  ; Rezerwacja miejsca na zmienne
+  int_duration dd ?
+  float_duration dd ?
+
+section '.idata' import data readable writeable
+
+  library kernel32,'KERNEL32.DLL',\
+  user32,'USER32.DLL'
+
+  include 'api\kernel32.inc'
+  include 'api\user32.inc'
+```
+
+Aby skompilować i uruchomić program, można użyć narzędzi NASM i LD lub fasm
+
+Należy pamiętać, że ten program nie wypisuje wyników na ekran, ale przechowuje je w zarezerwowanych zmiennych `int_duration` i `float_duration`. Aby wyświetlić wyniki, można dodać kod odpowiedzialny za wypisanie wartości na ekran, korzystając z systemu wywołań (syscalls) lub użyć debuggera, aby przejrzeć wartości tych zmiennych
+
+> Ref:
+> - [x64dbg](https://x64dbg.com/)
+
+# Architektura von Neumana
+
+Architektura komputerów Von-Neumanna, zaproponowana przez Johna von Neumanna, opiera się na koncepcji przechowywania programów w pamięci komputera. Wcześniej, maszyny liczące były projektowane tak, aby wykonywać jedno konkretne zadanie i nie można było ich przeprogramować. Architektura von Neumanna wprowadziła założenie, że programy i dane mogą być przechowywane w tej samej pamięci, co umożliwiło rozwój maszyn uniwersalnych, które mogą wykonywać różne zadania.
+
+![Architektura von Neumana](images/basic_structure.png)
+
+Podstawowe elementy architektury von Neumanna obejmują:
+
+1. Pamięć: Służy do przechowywania danych i programów. Pamięć może być podzielona na dwie części: pamięć operacyjną (RAM) i pamięć trwałą (np. dysk twardy).
+
+2. Procesor: Składa się z jednostki arytmetyczno-logicznej (ALU) oraz jednostki sterującej. ALU wykonuje operacje arytmetyczne i logiczne na danych, podczas gdy jednostka sterująca zarządza sekwencją operacji, odczytuje instrukcje z pamięci i decyduje, jakie operacje mają zostać wykonane.
+
+3. Wejście/wyjście (I/O): Odpowiada za komunikację z urządzeniami zewnętrznymi, takimi jak klawiatura, mysz, monitor, drukarka itp.
+
+4. System komunikacji: Składa się z szyny danych, szyny adresowej i szyny kontrolnej, które łączą poszczególne elementy komputera i umożliwiają wymianę informacji między nimi.
+
+Architektura komputerów Von-Neumanna jest podstawą dla większości współczesnych komputerów i urządzeń, takich jak komputery osobiste, laptopy, serwery czy smartfony. Wraz z postępem technologicznym i rozwojem układów scalonych oraz mikroprocesorów, architektura von Neumanna została udoskonalona i przekształcona, ale jej podstawowe zasady wciąż pozostają aktualne.
+
+
+ISA (Instruction set architecture) i posiada trzy podstawowe jednostki:  
+
+1. Centralna Jednostka Przetwarzająca (CPU) 
+    1. Control Unit(CU)
+    2. Jednostka arytmetyczna i logiczna (ALU)
+    3. Rejestry
+2. Jednostka pamięci głównej 
+3. Urządzenie wejścia/wyjścia 
+
+## Przykładowa symulacja architektury
+
+```c#
+using System;
+
+class ControlUnit
+{
+    public int ProgramCounter { get; set; }
+    public int MemoryAddressRegister { get; set; }
+    public int MemoryDataRegister { get; set; }
+    public int CurrentInstructionRegister { get; set; }
+    public int InstructionBufferRegister { get; set; }
+
+    public ControlUnit()
+    {
+        ProgramCounter = 0;
+        MemoryAddressRegister = 0;
+        MemoryDataRegister = 0;
+        CurrentInstructionRegister = 0;
+        InstructionBufferRegister = 0;
+    }
+
+    public void FetchInstruction()
+    {
+    }
+
+    public void ExecuteInstruction()
+    {
+    }
+}
+
+class ALU
+{
+    public int Accumulator { get; set; }
+
+    public ALU()
+    {
+        Accumulator = 0;
+    }
+
+    public void Add(int a, int b)
+    {
+    }
+
+    public void Subtract(int a, int b)
+    {
+    }
+
+    public void Compare(int a, int b)
+    {
+    }
+
+    public void PerformLogicOperation(int a, int b, string operation)
+    {
+    }
+
+    public void ShiftBits(int value, string direction, int amount)
+    {
+    }
+}
+
+class CPU
+{
+    public ControlUnit ControlUnit { get; set; }
+    public ALU Alu { get; set; }
+
+    public CPU()
+    {
+        ControlUnit = new ControlUnit();
+        Alu = new ALU();
+    }
+
+    public void Run()
+    {
+    }
+}
+
+class MainMemory
+{
+    public int[] Memory { get; set; }
+
+    public MainMemory(int size)
+    {
+        Memory = new int[size];
+    }
+
+    public void Read(int address)
+    {
+    }
+
+    public void Write(int address, int value)
+    {
+    }
+}
+
+class IODevice
+{
+    public void InputData()
+    {
+    }
+
+    public void OutputData(int data)
+    {
+    }
+}
+
+class Computer
+{
+    public CPU Cpu { get; set; }
+    public MainMemory Memory { get; set; }
+    public IODevice IoDevice { get; set; }
+
+    public Computer(int memorySize)
+    {
+        Cpu = new CPU();
+        Memory = new MainMemory(memorySize);
+        IoDevice = new IODevice();
+    }
+
+    public void LoadProgram(int[] program)
+    {
+    }
+
+    public void Run()
+    {
+    }
+}
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        Computer computer = new Computer(memorySize: 1024);
+        // Load a program into the computer
+        // computer.LoadProgram(program);
+        computer.Run();
+    }
+}
+```
+
+**Przykład Lab_31.py**
+
+
+## Instrukcje symulatora
+
+Procesor posiada tylko jeden rejestr, akumulator A. Możliwe jest adresowanie bezpośrednie i pośrednie. Załóżmy, że akumulator jest 32bitowy.
+
+- HLT  - Zatrzymanie pracy
+- LDA <> - Załadowanie do **A** danych z adresu 
+- STA  - Wpisanie pod zadany adres w argumencie, wartości z rejestru A
+- LDI  - Załadowanie do **A** danych z adresu wskzanego pod podanym adresem 
+- INP  - Załadowanie danych do A z urządzenia we/wy
+- OUT  - Wysłanie wartości A na wyjście
+- ADD  - Dodanie wartości z pamięci wskazanej przez argument do **A**
+- SUB  - Odjęcie od **A** wartości z pamięci wskazanej przez argument
+- CMP  - Porównanie **A** z wartoścą pamięci wskazanej przez argument, wynik w **A** 0 jesli równe, 1 jeśli różne
+- MOV  - Wpisanie do **A** bezpośredniej wartości
+- INC  - Zwiększenie **A** o jeden
+- DEC  - Zmniejszenie **A** o jeden
+- JMP  - Skok bezwarunkowy
+- JZ   - Skok jeśli **A** jest równe zero
+
+Składnia assemblera:
+
+:etykieta - etykieta, wskazująca na miejsce w pamięci 
+
+@etykieta - poinformowanie kompilator, aby zamienił wskazanie na adres etykiety w pamięci
+
+
+Przykłady:
+
+Wypisanie liczby 10 na wyjście
+
+```
+    MOV 10
+    OUT
+
+    HLT
+
+```
+
+Dodawanie
+
+```
+    MOV 10
+    STA @value 
+
+    MOV 15
+    ADD @value
+
+    OUT
+
+    HLT
+
+:value
+    0
+```
+
+Adresowanie bezpośrednie
+
+```
+    LDA @location
+    OUT
+
+    HLT
+
+:value
+    42
+```
+
+Adresowanie pośrednie
+
+```
+    LDI @location
+    OUT
+
+    MOV 42
+    STA @value
+    LDI @location
+    OUT
+    
+    HLT
+
+:location
+    @value
+:value
+    37
+```
+
+Pętla
+
+```
+    MOV 10
+:loop
+    OUT
+    DEC
+    JZ @exit
+    JMP @loop
+
+:exit
+    OUT
+    HLT
+```
+
+**Ćwiczenia**
+
+dodac dwie liczby znajdujące się w pamięci
+
+```
+:value
+    3
+    141
+
+
+
+```
+- wypisac liczby znajdujące się w pamięci az napotkamy 0:
+```
+:value
+    3
+    141
+    5
+    92
+    65
+    35
+    89
+    79
+    0
+```
+
+- zsumować liczby znajdujące się w pamięci, zakończyć jak napotkamy 0:
+```
+:value
+    1
+    2
+    3
+    4
+    5
+    6
+    7
+    8
+    0
+```
+
+- wypisac na wyjście kolejne wartości ciągu fibonacciego, kilka pierwszych. Dla uproszczenia można dwie początkowe zapisać od razu w kodzie, np.:
+```
+    :fib1
+    0
+    
+    :fib2
+    1
+```
+
+
+## Symulator
+
+```c#
+var ioDevice = new IODevice();
+var computer = new Computer(256, ioDevice);
+
+var compiler = new Compiler();
+var compiledProgram = compiler.Compile(sourceCode_dump);
+
+computer.LoadProgram(compiledProgram);
+computer.Run();
+
+enum OpCode
+{
+    HLT = 0x00,
+    LDA = 0x01,
+    STA = 0x02,
+    LDI = 0x03,
+    INP = 0x04,
+    OUT = 0x05,
+    ADD = 0x06,
+    SUB = 0x07,
+    CMP = 0x08,
+    MOV = 0x09,
+    INC = 0x0a,
+    DEC = 0x0b,
+    JMP = 0x0c,
+    JZ  = 0x0d,
+    MEM = 0x0e,
+
+    DB  = 0x0
+}
+
+class ControlUnit
+{
+    private bool _debug;
+
+    private int ProgramCounter { get; set; }
+    private int MemoryAddressRegister { get; set; }
+    private int MemoryDataRegister { get; set; }
+    private int CurrentInstructionRegister { get; set; }
+
+
+    public ControlUnit(bool debug = false)
+    {
+        _debug = debug;
+
+        ProgramCounter = 0;
+        MemoryAddressRegister = 0;
+        MemoryDataRegister = 0;
+        CurrentInstructionRegister = 0;
+    }
+
+    public void FetchInstruction(MainMemory memory)
+    {
+        MemoryAddressRegister = ProgramCounter;
+        MemoryDataRegister = memory.Read(MemoryAddressRegister);
+        CurrentInstructionRegister = MemoryDataRegister;
+        ProgramCounter += 1;
+    }
+
+    public void PrintInstruction(OpCode opcode, CPU cpu, MainMemory memory, IODevice ioDevice)
+    {
+        if (!_debug)
+            return;
+
+        Console.WriteLine($"#{ProgramCounter:X3} A:{cpu.ALU.Accumulator:X3} ({cpu.ALU.Accumulator:D3}) -> {opcode.ToString()} {MemoryAddressRegister:X3} {MemoryDataRegister:X3}");
+    }
+
+    public bool ExecuteInstruction(CPU cpu, MainMemory memory, IODevice ioDevice)
+    {
+        var instruction = (OpCode)CurrentInstructionRegister;
+        
+        PrintInstruction(instruction, cpu, memory, ioDevice);
+
+        switch (instruction)
+        {
+            case OpCode.HLT:
+                Console.WriteLine($"HALT encountered at address {ProgramCounter:X2}");
+                return false;
+            case OpCode.LDA:
+                MemoryAddressRegister = memory.Read(ProgramCounter);
+                MemoryDataRegister = memory.Read(MemoryAddressRegister);
+                cpu.ALU.Accumulator = MemoryDataRegister;
+                
+                ProgramCounter += 1;
+                break;
+            case OpCode.LDI:
+                MemoryAddressRegister = memory.Read(ProgramCounter);
+                MemoryAddressRegister = memory.Read(MemoryAddressRegister);
+                MemoryDataRegister = memory.Read(MemoryAddressRegister);
+                cpu.ALU.Accumulator = MemoryDataRegister;
+                
+                ProgramCounter += 1;
+                break;
+            case OpCode.STA:
+                MemoryAddressRegister = memory.Read(ProgramCounter);
+                MemoryDataRegister = cpu.ALU.Accumulator;
+                memory.Write(MemoryAddressRegister, MemoryDataRegister);
+
+                ProgramCounter += 1;
+                break;
+            case OpCode.INP:
+                cpu.ALU.Accumulator = ioDevice.InputData();
+                break;
+            case OpCode.OUT:
+                ioDevice.OutputData(cpu.ALU.Accumulator);
+                break;
+            case OpCode.MEM:
+                MemoryAddressRegister = memory.Read(ProgramCounter);
+                for (var i = 0; i < cpu.ALU.Accumulator; i++)
+                {
+                    var data = memory.Read(MemoryAddressRegister + i);
+                    ioDevice.OutputData(data);
+                }
+
+                ProgramCounter++;
+                break;
+            case OpCode.ADD:
+                MemoryAddressRegister = memory.Read(ProgramCounter);
+                MemoryDataRegister = memory.Read(MemoryAddressRegister);
+                cpu.ALU.Add(MemoryDataRegister);
+
+                ProgramCounter += 1;
+                break;
+            case OpCode.SUB:
+                MemoryAddressRegister = memory.Read(ProgramCounter);
+                MemoryDataRegister = memory.Read(MemoryAddressRegister);
+                cpu.ALU.Subtract(MemoryDataRegister);
+                
+                ProgramCounter += 1;
+                break;
+            case OpCode.CMP:
+                MemoryAddressRegister = memory.Read(ProgramCounter);
+                MemoryDataRegister = memory.Read(MemoryAddressRegister);
+                cpu.ALU.Compare(MemoryDataRegister);
+                
+                ProgramCounter += 1;
+                break;
+            case OpCode.MOV:
+                var value = memory.Read(ProgramCounter);
+                cpu.ALU.Accumulator = value;
+                PrintInstruction(instruction, cpu, memory, ioDevice);
+                
+                ProgramCounter += 1;
+                break;
+            case OpCode.INC:
+                cpu.ALU.Accumulator += 1;
+                break;
+            case OpCode.DEC:
+                cpu.ALU.Accumulator -= 1;
+                break;
+            case OpCode.JMP:
+                var targetAddress = memory.Read(ProgramCounter);
+                
+                ProgramCounter = targetAddress;
+                break;
+            case OpCode.JZ:
+                targetAddress = memory.Read(ProgramCounter);
+                if (cpu.ALU.Accumulator == 0)
+                    ProgramCounter = targetAddress;
+                else
+                    ProgramCounter += 1;
+
+                break;
+            default:
+                Console.WriteLine($"Unsupported instruction: {instruction} -> HALT");
+                return false;
+        }
+
+        return true;
+    }
+}
+
+class ALU
+{
+    public int Accumulator { get; set; }
+
+    public ALU()
+    {
+        Accumulator = 0;
+    }
+
+    public void Add(int b)
+    {
+        Accumulator += b;
+    }
+
+    public void Subtract(int b)
+    {
+        Accumulator -= b;
+    }
+
+    public void Compare(int b)
+    {
+        Accumulator = (Accumulator - b) == 0 ? 0 : 1;
+    }
+}
+
+class CPU
+{
+    public ControlUnit ControlUnit { get; }
+    public ALU ALU { get; }
+
+    public CPU()
+    {
+        ControlUnit = new ControlUnit(true);
+        ALU = new ALU();
+    }
+
+    public void Run(MainMemory memory, IODevice ioDevice)
+    {
+        var running = true;
+        while (running)
+        {
+            ControlUnit.FetchInstruction(memory);
+            running = ControlUnit.ExecuteInstruction(this, memory, ioDevice);
+        }
+    }
+}
+
+class MainMemory
+{
+    public int[] Memory { get; }
+
+    public MainMemory(int size)
+    {
+        Memory = new int[size];
+    }
+
+    public int Read(int address)
+    {
+        return Memory[address];
+    }
+
+    public void Write(int address, int value)
+    {
+        Memory[address] = value;
+    }
+}
+
+class IODevice
+{
+    public int InputData()
+    {
+        return 42;
+    }
+
+    public void OutputData(int data)
+    {
+        Console.WriteLine($"Output: {data}");
+    }
+}
+
+class Computer
+{
+    public CPU Cpu { get; }
+    public MainMemory Memory { get; }
+    public IODevice IoDevice { get; }
+    public Dictionary<string, int> Labels { get; }
+    public int Offset { get; set; }
+
+    public Computer(int memorySize, IODevice ioDevice)
+    {
+        Cpu = new CPU();
+        Memory = new MainMemory(memorySize);
+        IoDevice = ioDevice;
+        Labels = new Dictionary<string, int>();
+        Offset = 0;
+    }
+
+    public void LoadProgram(List<int> program)
+    {
+        for (var i = 0; i < program.Count; i++)
+            Memory.Write(i, program[i]);
+
+        Console.WriteLine("Program loaded into memory");
+    }
+
+    public void Run()
+    {
+        Console.WriteLine("Running program...");
+        Cpu.Run(Memory, IoDevice);
+    }
+}
+
+class Compiler
+{
+    private readonly Dictionary<string, int> _labels;
+
+    private static readonly Regex LabelRegex = new Regex(@"\s*:\s*(\w+)");
+
+
+    public Compiler()
+    {
+        _labels = new Dictionary<string, int>();
+    }
+
+    private static string RemoveComment(string line)
+    {
+        var commentIndex = line.IndexOf('#');
+
+        return commentIndex != -1 ? line.Substring(0, commentIndex).Trim() : line.Trim();
+    }
+
+    private int ParseOperand(string token)
+    {
+        int operand;
+
+        if (token.StartsWith("@"))
+        {
+            var label = token.Substring(1, token.Length - 1);
+            if (_labels.ContainsKey(label))
+                operand = _labels[label];
+            else
+                throw new NotSupportedException($"Label not found: {token}");
+        }
+        else
+            try
+            {
+                operand = int.Parse(token);
+            }
+            catch
+            {
+                throw new NotSupportedException($"Unknown token: {token}");
+            }
+
+        return operand;
+    }
+
+    public List<int> Compile(string sourceCode)
+    {
+        var compiledProgram = new List<int>();
+        var lines = sourceCode.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
+
+        // First pass - process labels
+        var offset = 0;
+        var index = 0;
+        foreach (var line in lines)
+        {
+            var trimmedLine = RemoveComment(line);
+            if (trimmedLine.Length == 0)
+                continue;
+
+            var match = LabelRegex.Match(trimmedLine);
+
+            if (match.Success)
+            {
+                _labels.Add(match.Groups[1].Value, index - offset);
+                offset++;
+            }
+
+            var tokens = trimmedLine.Split(' ', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+            index += tokens.Length;
+
+        }
+
+        // Second pass - compile instructions
+        foreach (var line in lines)
+        {
+            var trimmedLine = RemoveComment(line);
+            if (trimmedLine.Length == 0)
+                continue;
+
+            if (trimmedLine.StartsWith(':')) 
+                continue;
+
+            var operand = 0;
+            var tokens = trimmedLine.Split(' ', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+
+            if (Enum.TryParse(tokens[0].ToUpper(), out OpCode opCode))
+            {
+                compiledProgram.Add((int)opCode);
+
+                if (tokens.Length <= 1) 
+                    continue;
+
+                operand = ParseOperand(tokens[1]);
+                compiledProgram.Add(operand);
+            }
+            else
+            {
+                // try to convert to a number
+                operand = ParseOperand(tokens[0]);
+                compiledProgram.Add(operand);
+            }
+        }
+
+        DumpByteCode(compiledProgram);
+
+        return compiledProgram;
+    }
+
+    private static void DumpByteCode(List<int> compiledProgram)
+    {
+        Console.WriteLine("Compiled byte-code:");
+
+        var separator = "\n";
+        for (var index = 0; index < compiledProgram.Count; index++)
+        {
+            Console.Write($"{index:X2}|");
+            separator += "--|";
+        }
+
+        Console.WriteLine(separator);
+
+        foreach (var op in compiledProgram)
+            Console.Write($"{op:X2}|");
+
+        Console.WriteLine("\n");
+    }
+}
+```
+
+# Analiza cyklu rozkazowego
 
 ## Zdefiniowanie cyklu rozkazowego i jego faz (pobieranie, dekodowanie, wykonanie, dostęp do pamięci i zapis wyniku).
 
@@ -996,7 +1674,7 @@ Rozważmy prosty przykład dodawania dwóch liczb, przechowywanych w rejestrach 
 5. Zapis wyniku: Wynik dodawania, przechowywany w rejestrze tymczasow
 
 
-## Zaproponuj zestaw rozkazów, jakie są poszczególne etapy cyklu rozkazowego dla każdego z nich.
+## Etapy cyklu rozkazowego.
 
 Przyjmijmy prosty zestaw rozkazów oparty na hipotetycznym procesorze z ograniczoną architekturą. Rozkazy:
 
@@ -1057,73 +1735,8 @@ Dla każdego z tych rozkazów analiza cyklu rozkazowego obejmuje omówienie posz
 
 ## Prosty symulator cyklu rozkazowego dla prostego procesora
 
-## Python:
 
 **Lab_06:**
-``` python
-class SimpleProcessor:
-    def __init__(self, memory, instructions):
-        self.memory = memory
-        self.instructions = instructions
-        self.registers = [0, 0, 0]
-        self.PC = 0
-
-    def fetch(self):
-        instruction = self.instructions[self.PC]
-        self.PC += 1
-        return instruction
-
-    def decode(self, instruction):
-        opcode, operands = instruction[0], instruction[1:]
-        
-        return opcode, operands
-
-    def execute(self, opcode, operands):
-        if opcode == "LOAD":
-            self.registers[operands[0]] = self.memory[operands[1]]
-            #print(f"LOAD R{operands[0]}, M{operands[1]}")
-        elif opcode == "STORE":
-            self.memory[operands[0]] = self.registers[operands[1]]
-            #print(f"STORE M{operands[0]}, R{operands[1]}")
-        elif opcode == "ADD":
-            self.registers[operands[0]] += self.registers[operands[1]]
-            #print(f"ADD R{operands[0]}, R{operands[1]}")
-        elif opcode == "SUB":
-            self.registers[operands[0]] -= self.registers[operands[1]]
-            #print(f"SUB R{operands[0]}, R{operands[1]}")
-        else:
-            raise ValueError(f"Nieznany rozkaz: {opcode}")
-
-    def run(self):
-        while self.PC < len(self.instructions):
-            instruction = self.fetch()
-            opcode, operands = self.decode(instruction)
-            self.execute(opcode, operands)
-
-# Przykład użycia symulatora
-memory = [10, 20, 30, 40, 50]
-instructions = [
-    ("LOAD", 0, 0),
-    ("LOAD", 1, 1),
-    ("ADD", 0, 1),
-    ("STORE", 0, 0),
-
-    ("LOAD", 0, 2),
-    ("LOAD", 1, 3),
-    ("ADD", 0, 1),
-    ("STORE", 1, 0)    
-]
-
-print("Pamięć:", memory)
-
-processor = SimpleProcessor(memory, instructions)
-processor.run()
-
-#print("Rejestry:", processor.registers)
-print("Pamięć:", processor.memory)
-```
-
-## C++
 
 ``` C++
 #include <iostream>
@@ -1147,13 +1760,15 @@ public:
           instructions(std::move(instructions)),
     registers(3, 0), PC(0) {}
 
-    std::pair<Operation, std::pair<int, int>> fetch() {
+    std::pair<Operation, std::pair<int, int>> fetch() 
+    {
         auto instruction = instructions[PC];
         PC++;
         return instruction;
     }
 
-    void execute(Operation opcode, std::pair<int, int> operands) {
+    void execute(Operation opcode, std::pair<int, int> operands) 
+    {
         if (opcode == Operation::LOAD) {
             registers[operands.first] = memory[operands.second];
         } else if (opcode == Operation::STORE) {
@@ -1442,7 +2057,7 @@ W praktyce, zaawansowane mikroarchitektury procesorów stosują różne techniki
 
 ### Pierwszy
 
-Zakładając, że mamy prosty procesor z potokiem rozkazowego o 5 etapach (IF - pobieranie rozkazu, ID - dekodowanie, EX - wykonanie, MEM - dostęp do pamięci, WB - zapis wyniku), przedstawiam prosty symulator potoku rozkazowego uwzględniający hazardy danych.
+Zakładając, że mamy prosty procesor z potokiem rozkazowego o 5 etapach (IF - pobieranie rozkazu, ID - dekodowanie, EX - wykonanie, MEM - dostęp do pamięci, WB - zapis wyniku), poniżej mamy przykład symulatora potoku rozkazowego uwzględniającego hazardy danych.
 
 **Lab_07**
 ``` C++	
@@ -2258,40 +2873,45 @@ using namespace std::chrono;
 const int array_size = 1000000;
 const int num_iterations = 10;
 
-void access_memory_sequentially(vector<int> &data) {
-    for (int i = 0; i < array_size; ++i) {
+void access_memory_sequentially(vector<int> &data) 
+{
+    for (int i = 0; i < array_size; ++i) 
         data[i]++;
-    }
 }
 
-void access_memory_randomly(vector<int> &data) {
+void access_memory_randomly(vector<int> &data) 
+{
     default_random_engine generator;
     uniform_int_distribution<int> distribution(0, array_size - 1);
 
-    for (int i = 0; i < array_size; ++i) {
+    for (int i = 0; i < array_size; ++i) 
+    {
         int random_index = distribution(generator);
         data[random_index]++;
     }
 }
 
-void test_memory_access(const string &access_type, void (*access_func)(vector<int> &)) {
+void test_memory_access(const string &access_type, void (*access_func)(vector<int> &)) 
+{
     vector<int> data(array_size, 0);
 
     auto start_time = high_resolution_clock::now();
 
-    for (int i = 0; i < num_iterations; ++i) {
+    for (int i = 0; i < num_iterations; ++i) 
         access_func(data);
-    }
 
     auto end_time = high_resolution_clock::now();
     auto duration = duration_cast<milliseconds>(end_time - start_time).count();
-    cout << "Czas wykonania dostępu do pamięci (" << access_type << "): " << duration << " ms" << endl;
+    cout << "Czas wykonania (" << access_type << "): " << duration << " ms" << endl;
 }
 
-int main() {
-    test_memory_access("sekwencyjny", access_memory_sequentially);
-    test_memory_access("losowy", access_memory_randomly);
-
+int main() 
+{
+    for (int i = 0; i < 100; ++i)
+    {
+        //test_memory_access("sekwencyjny", access_memory_sequentially);
+        //test_memory_access("losowy", access_memory_randomly);
+    }
     return 0;
 }
 ```
@@ -2308,68 +2928,6 @@ Poniżej znajduje się prosty symulator procesora z pamięcią cache w Pythonie,
 > Ref:
 > - [Memory part 2: CPU caches](https://lwn.net/Articles/252125/)
 
-**Lab_16**
-```python
-import random
-import time
-
-class Cache:
-    def __init__(self, size):
-        self.size = size
-        self.cache = [None] * size
-
-    def read(self, address):
-        if address in self.cache:
-            return True
-        else:
-            index = address % self.size
-            self.cache[index] = address
-            return False
-
-class Processor:
-    def __init__(self, cache_size):
-        self.cache = Cache(cache_size)
-
-    def access_memory_sequentially(self, data):
-        cache_hits = 0
-        for address in data:
-            if self.cache.read(address):
-                cache_hits += 1
-        return cache_hits
-
-    def access_memory_randomly(self, data):
-        cache_hits = 0
-        for _ in data:
-            random_address = random.choice(data)
-            if self.cache.read(random_address):
-                cache_hits += 1
-        return cache_hits
-
-def main():
-    memory_size = 1000
-    cache_size = 100
-    num_iterations = 1000
-
-    data = list(range(memory_size))
-
-    processor = Processor(cache_size)
-
-    start_time = time.time()
-    cache_hits_sequential = processor.access_memory_sequentially(data * num_iterations)
-    end_time = time.time()
-    duration_sequential = end_time - start_time
-
-    start_time = time.time()
-    cache_hits_random = processor.access_memory_randomly(data * num_iterations)
-    end_time = time.time()
-    duration_random = end_time - start_time
-
-    print(f"Sekwencyjny dostęp do pamięci: czas {duration_sequential:.2f}s, trafienia cache {cache_hits_sequential}")
-    print(f"Losowy dostęp do pamięci: czas {duration_random:.2f}s, trafienia cache {cache_hits_random}")
-
-if __name__ == "__main__":
-    main()
-```
 
 W symulatorze mamy prostą pamięć cache, która przechowuje wartości z pamięci. Procesor korzysta z cache podczas sekwencyjnego i losowego dostępu do pamięci. Symulator mierzy czas dostępu do pamięci oraz liczbę trafień cache dla obu podejść.
 
@@ -2377,8 +2935,6 @@ Uruchomienie tego symulatora pokaże, że sekwencyjny dostęp do pamięci jest s
 
 Zmiana parametrów symulatora (rozmiar pamięci, rozmiar cache, liczba iteracji) w celu zrozumienia, jak wpływają na wyniki.
 
-
-**Bardziej zaawansowana wersja symulatora** 
 
 Symulator pamięci podręcznej (cache) typu direct-mapped
 
@@ -2487,7 +3043,7 @@ int main() {
 ```
 
 
-**Nieco ciekawsza implementacja**
+**Prefetch**
 
 **Lab_18**
 ```cpp
@@ -2496,108 +3052,119 @@ int main() {
 #include <cstdlib>
 #include <ctime>
 #include <deque>
+#include <random>
 
-class CacheEntry {
+class CacheEntry
+{
 public:
-    int tag;
+    uint64_t tag;
     bool valid;
     CacheEntry() : tag(-1), valid(false) {}
 };
 
-class Cache {
-private:
-    int cacheSize;
-    int blockSize;
-    int numCacheLines;
-    int mainMemoryAccessTime;
+class Cache
+{
+    uint64_t cacheSize;
+    uint64_t blockSize;
+    uint64_t numCacheLines;
+    uint64_t mainMemoryAccessTime;
+
     std::vector<CacheEntry> cacheEntries;
-    std::deque<CacheEntry> prefetchBuffer;
-    int prefetchDistance;
-    int cacheHit;
-    int cacheMiss;
 
-    void prefetch(int address) {
-        for (int i = 1; i <= prefetchDistance; i++) {
-            int nextAddress = address + i * blockSize;
-            int tag = nextAddress / blockSize / numCacheLines;
-            CacheEntry entry;
-            entry.tag = tag;
-            entry.valid = true;
-            prefetchBuffer.push_back(entry);
-        }
-    }
+    uint64_t prefetchDistance;
+    uint64_t cacheHit;
+    uint64_t cacheMiss;
+    uint64_t cachePrefetch;
 
-    bool checkPrefetchBuffer(int tag) {
-        for (auto it = prefetchBuffer.begin(); it != prefetchBuffer.end(); it++) {
-            if (it->valid && it->tag == tag) {
-                prefetchBuffer.erase(it);
-                return true;
+    void prefetch(uint64_t address)
+    {
+        for (uint64_t i = 1; i <= prefetchDistance; i++)
+        {
+            uint64_t nextAddress = address + i * blockSize;
+            uint64_t index = (nextAddress / blockSize) % numCacheLines;
+            uint64_t tag = nextAddress / blockSize / numCacheLines;
+
+            if (cacheEntries[index].valid && cacheEntries[index].tag == tag)
+            {
+                cacheHit++;
+            }
+            else
+            {
+                cacheEntries[index].tag = tag;
+                cacheEntries[index].valid = true;
+
+                cachePrefetch++;
             }
         }
-        return false;
     }
 
 public:
-    Cache(int cacheSize, int blockSize, int mainMemoryAccessTime, int prefetchDistance)
+    Cache(uint64_t cacheSize, uint64_t blockSize, uint64_t mainMemoryAccessTime, uint64_t prefetchDistance)
         : cacheSize(cacheSize),
           blockSize(blockSize),
           mainMemoryAccessTime(mainMemoryAccessTime),
-          prefetchDistance(prefetchDistance) {
+          prefetchDistance(prefetchDistance)
+    {
         numCacheLines = cacheSize / blockSize;
         cacheEntries.resize(numCacheLines);
         cacheHit = 0;
         cacheMiss = 0;
+        cachePrefetch = 0;
     }
 
-    bool access(int address, bool prefetchEnabled = false) {
-        int index = (address / blockSize) % numCacheLines;
-        int tag = address / blockSize / numCacheLines;
+    bool access(uint64_t address, bool prefetchEnabled = false)
+    {
+        uint64_t index = (address / blockSize) % numCacheLines;
+        uint64_t tag = address / blockSize / numCacheLines;
 
-        if (prefetchEnabled && checkPrefetchBuffer(tag)) {
-            cacheHit++;
-            return true; // Cache hit from prefetch buffer
-        }
 
-        if (cacheEntries[index].valid && cacheEntries[index].tag == tag) {
+        if (cacheEntries[index].valid && cacheEntries[index].tag == tag) 
+        {
             cacheHit++;
             return true; // Cache hit
-        } else {
-            cacheMiss++;
-            cacheEntries[index].tag = tag;
-            cacheEntries[index].valid = true;
-
-            if (prefetchEnabled) {
-                prefetch(address);
-            }
-
-            return false; // Cache miss
         }
+
+        cacheMiss++;
+        cacheEntries[index].tag = tag;
+        cacheEntries[index].valid = true;
+
+        if (prefetchEnabled) 
+        {
+            prefetch(address);
+        }
+
+        return false; // Cache miss
+        
     }
 
-    void printStats() {
+    void printStats() const
+    {
         std::cout << "Cache hits: " << cacheHit << std::endl;
         std::cout << "Cache misses: " << cacheMiss << std::endl;
-        std::cout << "Hit ratio: " << (double)cacheHit / (cacheHit + cacheMiss) << std::endl;
+        std::cout << "Cache prefetches: " << cachePrefetch << std::endl;
+        std::cout << "Hit ratio: " << static_cast<double>(cacheHit) / static_cast<double>(cacheHit + cacheMiss) << std::endl;
         std::cout << "Average access time: "
-                  << (cacheHit + cacheMiss * mainMemoryAccessTime) / (double)(cacheHit + cacheMiss)
-                  << " cycles" << std::endl;
+            << static_cast<double>(cacheHit + (cacheMiss + cachePrefetch) * mainMemoryAccessTime) / static_cast<double>(cacheHit + cacheMiss + cachePrefetch)
+            << " cycles" << std::endl << std::endl;
     }
 };
 
-int main() {
-	srand(time(NULL));
+int main()
+{
+    uint64_t cacheSize = 32LL * 1024LL * 1024LL;          // 1KB cache
+    uint64_t blockSize = 32;            // 32B block size
+    uint64_t mainMemoryAccessTime = 50; // 50 cycles
+    uint64_t prefetchDistance = 8;      // prefetch distance of 4 blocks
 
-    int cacheSize = 1024;          // 1KB cache
-    int blockSize = 32;            // 32B block size
-    int mainMemoryAccessTime = 50; // 50 cycles
-    int prefetchDistance = 4;      // prefetch distance of 4 blocks
+    uint64_t numAccesses = 10000;
+    uint64_t memorySize = 4096LL * 1024LL * 1024LL; // 4KB main memory
+
+    std::default_random_engine generator;
+    std::uniform_int_distribution<uint64_t> distribution(0, memorySize - 1);
+
     Cache cache(cacheSize, blockSize, mainMemoryAccessTime, prefetchDistance);
-
-    int numAccesses = 10000;
-    int memorySize = 4096; // 4KB main memory
-
     // Sequential access without prefetching
-    for (int i = 0; i < numAccesses; i++) {
+    for (uint64_t i = 0; i < numAccesses; i++) {
         cache.access(i % memorySize);
     }
 
@@ -2608,7 +3175,7 @@ int main() {
     cache = Cache(cacheSize, blockSize, mainMemoryAccessTime, prefetchDistance);
 
     // Sequential access with prefetching
-    for (int i = 0; i < numAccesses; i++) {
+    for (uint64_t i = 0; i < numAccesses; i++) {
         cache.access(i % memorySize, true);
     }
 
@@ -2619,8 +3186,8 @@ int main() {
     cache = Cache(cacheSize, blockSize, mainMemoryAccessTime, prefetchDistance);
 
     // Random access without prefetching
-    for (int i = 0; i < numAccesses; i++) {
-        cache.access(rand() % memorySize);
+    for (uint64_t i = 0; i < numAccesses; i++) {
+        cache.access(distribution(generator) % memorySize);
     }
 
     std::cout << "Random access without prefetching:" << std::endl;
@@ -2630,8 +3197,8 @@ int main() {
     cache = Cache(cacheSize, blockSize, mainMemoryAccessTime, prefetchDistance);
 
     // Random access with prefetching
-    for (int i = 0; i < numAccesses; i++) {
-        cache.access(rand() % memorySize, true);
+    for (uint64_t i = 0; i < numAccesses; i++) {
+        cache.access(distribution(generator) % memorySize, true);
     }
 
     std::cout << "Random access with prefetching:" << std::endl;
@@ -2639,6 +3206,7 @@ int main() {
 
     return 0;
 }
+
 ```
 
 
@@ -2650,7 +3218,11 @@ Celem tego ćwiczenia jest napisanie prostego programu w języku C, który używ
 ```c
 #include <stdio.h>
 #include <signal.h>
+#ifndef    _MSC_VER
 #include <unistd.h>
+#endif
+
+// linux: gcc lab_19.cpp -o lab_19
 
 void timer_handler(int signum) {
     static int counter = 0;
@@ -2658,6 +3230,8 @@ void timer_handler(int signum) {
 }
 
 int main() {
+
+    #ifndef    _MSC_VER
     struct sigaction sa;
     sa.sa_handler = &timer_handler;
     sigaction(SIGALRM, &sa, NULL);
@@ -2667,39 +3241,45 @@ int main() {
     while (1) {
         pause(); // Czekanie na przerwanie
     }
+    #endif
 
     return 0;
 }
+
 ```
 
-W systemie Windows obsługa przerwań może być realizowana za pomocą różnych mechanizmów. Jeden z nich to obsługa sygnałów za pomocą funkcji `SetConsoleCtrlHandler`. Oto przykład programu w języku C, który obsługuje sygnał `CTRL+C`:
+W systemie Windows obsługa przerwań może być realizowana za pomocą różnych mechanizmów. Jeden z nich to obsługa sygnałów za pomocą funkcji `SetConsoleCtrlHandler`. Oto przykład programu, który obsługuje sygnał `CTRL+C`:
 
 **Lab_20**
 ```c
 #include <stdio.h>
 #include <windows.h>
 
-BOOL WINAPI ConsoleCtrlHandler(DWORD signal) {
+BOOL WINAPI ConsoleCtrlHandler(DWORD signal)
+{
     if (signal == CTRL_C_EVENT) {
         printf("Przerwanie CTRL+C!\n");
         return TRUE;
     }
+
     return FALSE;
 }
 
-int main() {
-    if (!SetConsoleCtrlHandler(ConsoleCtrlHandler, TRUE)) {
-        fprintf(stderr, "Nie można zarejestrować procedury obsługi sygnału.\n");
+int main()
+{
+    if (!SetConsoleCtrlHandler(ConsoleCtrlHandler, TRUE)) 
+    {
+        fprintf(stderr, "Nie mozna zarejestrowac procedury obslugi.\n");
         return EXIT_FAILURE;
     }
 
-    printf("Naciśnij CTRL+C, aby wywołać przerwanie.\n");
+    printf("Nacisnij CTRL+C, aby wywolac przerwanie.\n");
 
-    while (1) {
+    while(true) 
+    {
+        printf(".");
         Sleep(1000); // Czekanie na przerwanie
     }
-
-    return 0;
 }
 ```
 
