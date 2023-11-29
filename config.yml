@@ -31,9 +31,9 @@ languages:
                 - name: Archive
                   url: archives
                   weight: 5                
-                - name: Cinder
-                  url: /cc
-                  weight: 5                      
+                - name: Projects
+                  url: /projects
+                  weight: 5
                 - name: About
                   url: about
                   weight: 9

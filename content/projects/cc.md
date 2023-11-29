@@ -1,7 +1,7 @@
 ---
 title: Cinder Climb
 author: Marcin Klimek
-type: cc
+type: page
 date: 2018-06-04T09:32:22+00:00
 ShowToc: false
 ---
