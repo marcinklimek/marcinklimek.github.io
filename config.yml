@@ -28,11 +28,14 @@ languages:
           series: series
         menu:
             main:
-                - name: About
-                  url: about/
-                  weight: 1
                 - name: Projects
-                  url: /projects
+                  url: /projects                
+                  weight: 1                
+                - name: Student
+                  url: /student
+                  weight: 1
+                - name: About
+                  url: about/                  
                   weight: 2
                 - name: Posts
                   url: archives
