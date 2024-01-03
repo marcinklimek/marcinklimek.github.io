@@ -1,5 +1,5 @@
 ---
-title: "Systemy Operacyjne - Pomoc"
+title: Pomoc
 date: 2023-11-30T22:59:12+01:00
 draft: false
 ShowToc: true
@@ -7,7 +7,14 @@ ShowToc: true
 
 # Help
 
+
+
 ## Sudoers add to
+
+```
+su -
+usermod -aG sudo username
+```
 
 1. **Log in as root**: You need to have root access to edit the sudoers file. If you're not already logged in as root, you can switch to the root user by typing `su -` and entering the root password.
 
@@ -285,25 +292,6 @@ Kubernetes znacząco wpłynął na sposób, w jaki organizacje wdrażają i zarz
 
 # Wybrane polecenia systemu
 
-## Finger
-
-Polecenie `finger` służy do wyświetlania informacji o użytkownikach w systemach Unix i Unix-podobnych. Dostarcza informacji takich jak login użytkownika, nazwa, biuro, numer telefonu, adres e-mail oraz czas ostatniego logowania. Może również pokazać, czy użytkownik jest aktualnie zalogowany i od jakiego czasu, jak również zawartość pliku `.plan` użytkownika, który często zawiera informacje o jego aktualnych zajęciach lub planach.
-
-Co do dostępności `finger` w Debianie 12 (nazwanym "Bookworm" w momencie pisania tego tekstu), trzeba pamiętać, że różne dystrybucje Linuxa mogą lub nie zawierać `finger` w swoich standardowych repozytoriach. Jednakże, `finger` jest często dostępny w większości dystrybucji i można go zainstalować z repozytorium, jeśli nie jest zainstalowany domyślnie.
-
-Aby sprawdzić, czy `finger` jest dostępny w Twojej dystrybucji Debiana oraz zainstalować go, możesz użyć następujących poleceń:
-
-1. Sprawdź, czy `finger` jest dostępny:
-   ```bash
-   apt-cache search ^finger
-   ```
-
-2. Jeśli jest dostępny, zainstaluj go za pomocą:
-   ```bash
-   sudo apt-get install finger
-   ```
-
-Warto zauważyć, że z powodu zagrożeń bezpieczeństwa związanych z ujawnianiem informacji o użytkownikach, wiele systemów i administratorów rezygnuje z korzystania z `finger`. Należy więc używać go z rozwagą, zwłaszcza w środowiskach produkcyjnych.
 
 
 ## wiadomości wysyłane za pomocą polecenia `write`
@@ -341,6 +329,132 @@ apt list --installed
 apt install mc htop tmux net-ttols neofetch iptraf etckeeper lynis fail2ban glances
 
 # Skrypty
+
+
+## Edytor nano
+### Edycja ilosci tabów 
+
+Aby zmienić ilość znaków, jaką reprezentuje tabulacja (tab) w edytorze `nano`, możesz użyć opcji konfiguracyjnych w pliku konfiguracyjnym `nano` lub bezpośrednio w linii poleceń. Oto sposoby, jak to zrobić:
+
+#### 1. Użycie Opcji w Linii Poleceń
+
+Możesz uruchomić `nano` z opcją `-T`, aby ustawić szerokość tabulacji. Na przykład, aby ustawić szerokość tabulacji na 4 znaki, użyj:
+
+```bash
+nano -T4 plik.txt
+```
+
+#### 2. Edycja Pliku Konfiguracyjnego Nano
+
+Możesz również ustawić tę opcję w pliku konfiguracyjnym `nano`, którym zazwyczaj jest `~/.nanorc` (lub globalny plik konfiguracyjny w `/etc/nanorc`, zależnie od systemu i uprawnień).
+
+1. Otwórz plik `~/.nanorc` w edytorze `nano`:
+
+   ```bash
+   nano ~/.nanorc
+   ```
+
+2. Dodaj linię konfiguracyjną określającą szerokość tabulacji. Na przykład, aby ustawić szerokość tabulacji na 4 znaki, dodaj:
+
+   ```
+   set tabsize 4
+   ```
+
+3. Zapisz i zamknij plik (`Ctrl+O`, `Enter`, `Ctrl+X`).
+
+Po zmodyfikowaniu ustawień w pliku `~/.nanorc`, każde nowe uruchomienie `nano` będzie używać tych ustawień, chyba że zostaną nadpisane przez opcje w linii poleceń.
+
+#### Ważne Uwagi
+
+- Upewnij się, że masz uprawnienia do edycji pliku `~/.nanorc`. Jeśli plik nie istnieje, możesz go stworzyć.
+- Zmiany w pliku `~/.nanorc` wpłyną tylko na użytkownika, który dokonał tych zmian, podczas gdy edycja `/etc/nanorc` wpłynie na wszystkich użytkowników systemu.
+- Opcje linii poleceń mają pierwszeństwo przed ustawieniami w pliku konfiguracyjnym.
+
+
+### Copy/Paste
+
+W edytorze `nano`, kopiowanie i wklejanie bloku tekstu wymaga kilku kroków, ponieważ `nano` nie posiada standardowej funkcjonalności schowka tak jak wiele graficznych edytorów. Oto, jak to zrobić:
+
+### Krok po Kroku
+
+1. **Zaznaczanie Tekstu**:
+   - Przejdź do początku tekstu, który chcesz skopiować.
+   - Naciśnij `Alt` + `A` (lub `^` + `^` w niektórych konfiguracjach) aby rozpocząć zaznaczanie tekstu. Zobaczysz, że na dole ekranu pojawi się informacja 'Mark Set'.
+   - Przesuń kursor, aby zaznaczyć pożądany blok tekstu.
+
+2. **Kopiowanie Tekstu**:
+   - Po zaznaczeniu tekstu naciśnij `Alt` + `^` (czyli `Alt` + `6`). To skopiuje zaznaczony tekst do "bufora wycinka" w nano.
+
+3. **Przechodzenie do Miejsca Docelowego**:
+   - Przenieś kursor do miejsca, gdzie chcesz wkleić skopiowany tekst.
+
+4. **Wklejanie Tekstu**:
+   - Wklej skopiowany tekst, naciskając `Ctrl` + `U`.
+
+### Dodatkowe Informacje
+
+- W nano nie ma klasycznego schowka, jak w systemach okienkowych. Zamiast tego, nano używa "bufora wycinka" do przechowywania tekstu.
+- Jeśli chcesz przenieść tekst (a nie skopiować), po zaznaczeniu tekstu, zamiast kopiować, po prostu użyj `Ctrl` + `K` do wycięcia tekstu, a następnie `Ctrl` + `U` do wklejenia w nowym miejscu.
+- `nano` ma ograniczone możliwości w porównaniu do bardziej zaawansowanych edytorów, więc niektóre operacje mogą być mniej intuicyjne niż w edytorach takich jak Vim czy Emacs.
+
+Te kroki powinny pozwolić na skuteczne kopiowanie i wklejanie tekstu w edytorze `nano`.
+
+## Skąd wziął się skrót RC
+
+Skrót "RC" w nazwach plików konfiguracyjnych, takich jak `.bashrc` w systemach Unix i Linux, pochodzi od "run commands" (wykonywanie poleceń). Tradycja ta sięga początków systemów Unix.
+
+### Pochodzenie i Znaczenie:
+
+1. **Historia**: Skrót "RC" pojawił się w pierwszych wersjach systemu Unix. Został użyty w plikach, które system czytał przy starcie lub przy logowaniu się użytkownika, aby skonfigurować środowisko lub uruchomić określone programy.
+
+2. **Run Commands**: "RC" oznacza "run commands", co dosłownie tłumaczy się jako "wykonywanie poleceń". Pliki te zawierają zestaw poleceń, które są automatycznie wykonane przez shell lub aplikację w momencie jej uruchomienia.
+
+3. **Przykłady Użycia**:
+   - `.bashrc`: Jest to skrypt, który jest wykonywany przez każdą interaktywną, nie logującą się instancję bash (np. nowe okno terminala w systemach graficznych). Zawiera konfiguracje specyficzne dla użytkownika dla sesji bash, takie jak aliasy i zmienne środowiskowe.
+   - `.vimrc`: Plik konfiguracyjny dla edytora Vim, zawierający ustawienia, skróty klawiszowe, wtyczki itp.
+
+### Użycie w Innych Kontekstach:
+
+Skrót "RC" został również zaadaptowany przez inne systemy i aplikacje, zachowując podobne znaczenie. W kontekście oprogramowania, plik "RC" często odnosi się do pliku, który zawiera instrukcje konfiguracyjne, które są "uruchamiane" lub przetwarzane, gdy aplikacja się startuje.
+
+Podsumowując, "RC" w nazwach plików konfiguracyjnych w systemie Unix i Linux odnosi się do plików zawierających zestaw poleceń, które są automatycznie wykonywane w określonych sytuacjach, co pozwala na dostosowanie zachowania systemu lub aplikacji do potrzeb użytkownika.
+
+
+## Exitcode
+
+W skryptach Bash, kod wyjścia (exit code) ostatnio wykonanego polecenia jest przechowywany w zmiennej `$?`. Aby sprawdzić ten kod wyjścia, wykonaj polecenie, a następnie odwołaj się do zmiennej `$?`. Oto przykład:
+
+```bash
+#!/bin/bash
+
+# wykonanie jakiegoś polecenia
+ls /nieistniejacy_katalog
+
+# sprawdzenie kodu wyjścia
+exitcode=$?
+
+# sprawdzenie, czy polecenie zakończyło się sukcesem
+if [ $exitcode -eq 0 ]; then
+    echo "Polecenie zakończone sukcesem."
+else
+    echo "Polecenie zakończone błędem. Kod wyjścia: $exitcode"
+fi
+```
+
+W tym przykładzie:
+
+1. Uruchomione zostaje polecenie `ls /nieistniejacy_katalog`.
+2. Zmienna `$?` przechowuje kod wyjścia tego polecenia.
+3. Wartość `$?` jest przypisywana do zmiennej `exitcode`.
+4. Skrypt sprawdza, czy `exitcode` jest równy 0 (co oznacza sukces), a jeśli nie - informuje o błędzie i wyświetla kod wyjścia.
+
+Uwaga:
+
+- Kod wyjścia 0 zazwyczaj oznacza, że polecenie zostało wykonane pomyślnie, natomiast każda inna wartość wskazuje na jakiś błąd.
+- Zmienna `$?` powinna być sprawdzana bezpośrednio po wykonaniu polecenia, ponieważ każde kolejne polecenie nadpisze jej wartość swoim własnym kodem wyjścia.
+- Różne polecenia mogą zwracać różne kody błędów, więc warto sprawdzić dokumentację danego polecenia, aby zrozumieć, co oznaczają różne kody wyjścia.
+
+
 
 ## ELF (Executable and Linkable Format)
 
@@ -411,3 +525,286 @@ Proces identyfikacji i uruchamiania plików wykonywalnych lub skryptów z sheban
 Warto zauważyć, że proces ten różni się od ładowania zwykłych plików wykonywalnych (takich jak ELF), gdzie kernel bezpośrednio zajmuje się ładowaniem pliku do pamięci i uruchamianiem go, bez konieczności przekazywania kontroli do zewnętrznego interpretera.
 
 Dodatkowo, w zależności od dystrybucji i konfiguracji systemu Linux, mogą być używane różne shelle oraz mechanizmy uruchamiania plików, ale opisany powyżej proces `execve()` i interpretacji shebangu jest dość uniwersalny w kontekście systemów Unixopodobnych.
+
+## Ekspansja wyrażen
+
+W powłoce Bash, różne typy cudzysłowów (`""` i `''`) mają różne zachowania w odniesieniu do interpretacji zawartych w nich ciągów znaków. Oto główne cechy obu typów:
+
+### 1. Podwójne Cudzysłowy `""`
+
+- **Ekspansja Zmiennych**: Wewnątrz podwójnych cudzysłowów, zmienne są rozwijane (expanded). Oznacza to, że wartość zmiennej zostanie wstawiona w miejsce jej nazwy. Na przykład, `$HOME` zostanie zastąpione rzeczywistą ścieżką katalogu domowego użytkownika.
+
+  ```bash
+  echo "Twój katalog domowy to: $HOME"
+  ```
+
+- **Ekspansja Poleceń**: Podwójne cudzysłowy pozwalają na ekspansję poleceń. Oznacza to, że polecenie umieszczone wewnątrz `$(...)` lub w starszej notacji `` `...` `` zostanie wykonane, a jego wynik zostanie wstawiony w miejsce ekspansji.
+
+  ```bash
+  echo "Aktualna data to: $(date)"
+  ```
+
+- **Ekspansja Wyrażeń Arytmetycznych**: Wyrażenia arytmetyczne umieszczone w `$((...))` są rozwijane i obliczane.
+
+  ```bash
+  echo "Dwa plus dwa to: $((2 + 2))"
+  ```
+
+- **Zachowanie Niektórych Znaków Specjalnych**: Znaki takie jak `\n` (nowa linia) są interpretowane i przetwarzane.
+
+### 2. Pojedyncze Cudzysłowy `' '`
+
+- **Brak Ekspansji Zmiennych i Poleceń**: Wewnątrz pojedynczych cudzysłowów, ekspansja zmiennych, poleceń i wyrażeń arytmetycznych nie zachodzi. Cały tekst jest traktowany dosłownie, jako stały ciąg znaków.
+
+  ```bash
+  echo 'Twój katalog domowy to: $HOME'
+  ```
+
+- **Dosłowna Interpretacja Zawartości**: Wszystko, co znajduje się w pojedynczych cudzysłowach, jest interpretowane dosłownie. Oznacza to, że specjalne znaki Bash, takie jak `*`, `&`, `#`, itp., nie są interpretowane jako specjalne i są traktowane jako zwykłe znaki.
+
+- **Brak Interpretacji Znaków Ucieczki**: Znaki ucieczki, takie jak `\n`, nie są interpretowane, ale są traktowane jako zwykłe znaki.
+
+### Podsumowanie
+
+Wybór między podwójnymi a pojedynczymi cudzysłowami zależy od potrzeby ekspansji i interpretacji zawartości ciągu. Jeśli potrzebujesz, aby zmienne, polecenia i wyrażenia arytmetyczne były rozwijane, użyj podwójnych cudzysłowów. Jeśli chcesz, aby tekst był traktowany dosłownie, bez żadnej ekspansji, użyj pojedynczych cudzysłowów.
+
+## składnia IF
+
+Składnia instrukcji `if` w Bashu jest kluczowym elementem tworzenia skryptów warunkowych. Oto podstawowa struktura:
+
+```bash
+if [ warunek ]; then
+    # komendy wykonywane, gdy warunek jest prawdziwy
+fi
+```
+
+### Elementy Składni:
+
+1. **`if`**: Rozpoczyna instrukcję warunkową.
+
+2. **`[ warunek ]`**: Testuje warunek. Nawiasy kwadratowe `[ ]` są aliasem dla polecenia `test`, które sprawdza, czy podany warunek jest prawdziwy. Wewnątrz nawiasów kwadratowych musi być przestrzeń między nawiasem a warunkiem.
+
+3. **`then`**: Jeśli warunek jest prawdziwy (zwraca kod wyjścia 0), to Bash wykonuje komendy po `then`.
+
+4. **`fi`**: Zamyka instrukcję `if`. To jest odwrócenie słowa `if`, co jest typowym sposobem oznaczania zakończenia bloków kodu w skryptach powłoki (podobnie jak `esac` dla `case`).
+
+5. **`;`**: Średnik jest używany do oddzielenia różnych poleceń w tej samej linii. Możesz zastąpić średnik przez nową linię. Na przykład, `then` może znajdować się w tej samej linii co warunek, jeśli zastosujesz `;`:
+
+   ```bash
+   if [ warunek ]; then
+       # komendy
+   fi
+   ```
+
+   lub w nowej linii bez średnika:
+
+   ```bash
+   if [ warunek ]
+   then
+       # komendy
+   fi
+   ```
+
+### Dlaczego używa się `[ ]` i `;`?
+
+- **`[ ]`**: Użycie nawiasów kwadratowych jest sposobem na wykorzystanie polecenia `test` w bardziej czytelnej formie. `[ warunek ]` jest równoznaczne z `test warunek`. Warunki wewnątrz nawiasów kwadratowych mogą obejmować porównania liczb, sprawdzanie ciągów znaków, czy też testowanie właściwości plików.
+
+- **`;`**: Średnik jest używany do oddzielenia różnych poleceń w Bashu. W przypadku instrukcji `if`, oddziela on warunek od słowa kluczowego `then`. Jest to konieczne, gdy oba te elementy znajdują się w tej samej linii.
+
+### Przykład:
+
+```bash
+if [ $liczba -eq 10 ]; then
+    echo "Liczba jest równa 10."
+fi
+```
+
+W tym przykładzie, jeśli zmienna `liczba` jest równa 10, skrypt wyświetli komunikat "Liczba jest równa 10."
+
+### Przykład Użycia Instrukcji `if` w Bash:
+
+```bash
+if [ $x -eq 5 ]; then
+    echo "x jest równe 5"
+elif [ $x -lt 5 ]; then
+    echo "x jest mniejsze niż 5"
+else
+    echo "x jest większe niż 5"
+fi
+```
+
+W tym przykładzie, instrukcja `if` sprawdza, czy zmienna `x` jest równa 5, mniejsza niż 5, czy większa. W zależności od warunku, wykonuje odpowiednią część kodu.
+
+Pamiętaj, że podręcznik `man` dla Bash zawiera bardzo szczegółowe i techniczne informacje, które mogą być przytłaczające dla początkujących użytkowników. Dla bardziej przystępnego wprowadzenia do instrukcji `if` i innych konstrukcji w Bashu, możesz rozważyć także korzystanie z różnych zasobów online i poradników.
+
+## Jak wykonać polecenie i zachować jego standardowe wyjście?
+
+W Bashu, aby wykonać polecenie i zachować jego standardowe wyjście (`stdout`) w zmiennej, używa się tzw. command substitution, czyli substytucji polecenia. Jest to mechanizm, który pozwala na przechwycenie wyjścia polecenia i przypisanie go do zmiennej. Oto dwa sposoby, jak możesz to zrobić:
+
+### 1. Użycie $(...)
+
+Najczęściej używaną i zalecaną składnią substytucji polecenia jest `$(...)`. Przykład:
+
+```bash
+wynik=$(polecenie)
+echo $wynik
+```
+
+W tym przypadku, `polecenie` zostanie wykonane, a jego standardowe wyjście zostanie przypisane do zmiennej `wynik`. Możesz potem użyć tej zmiennej do dalszych działań w skrypcie.
+
+### 2. Użycie `...`
+
+Starszą, ale nadal obsługiwaną składnią substytucji polecenia są backticks `` `...` ``. Przykład:
+
+```bash
+wynik=`polecenie`
+echo $wynik
+```
+
+Ta składnia działa tak samo jak `$(...)`, ale może być mniej czytelna, szczególnie w skomplikowanych skryptach lub gdy substytucje są zagnieżdżone.
+
+**Ważne Uwagi**:
+
+- Pamiętaj, aby nie dodawać spacji wokół znaku `=` podczas przypisywania wartości do zmiennej.
+- Jeśli polecenie zawiera elementy, które mogą być interpretowane przez powłokę, należy je umieścić w cudzysłowie wewnątrz substytucji polecenia.
+- W przypadku poleceń generujących wielolinijkowe wyjście, wszystkie linie zostaną zapisane w zmiennej, a możesz je później przetworzyć według potrzeb.
+
+Substytucja polecenia jest bardzo przydatnym mechanizmem w skryptach Bash, pozwalającym na elastyczne manipulowanie i wykorzystywanie wyjścia różnych poleceń.
+
+# Lab 02
+
+## uname 
+
+## htop glances
+Informacja "Load" w programie `htop` odnosi się do tzw. wskaźników obciążenia systemu (ang. load averages). Są to trzy wartości, które pokazują średnie obciążenie systemu w ciągu ostatnich 1, 5 i 15 minut. Oto, jak można je interpretować:
+
+1. **Wartości "Load"**: Są to trzy liczby, np. `0.00 0.01 0.05`. Każda z nich reprezentuje średnią liczbę procesów oczekujących na wykonanie lub korzystających z procesora w danym okresie czasu. Pierwsza liczba dotyczy ostatniej minuty, druga – ostatnich 5 minut, a trzecia – ostatnich 15 minut.
+
+2. **Interpretacja wartości**:
+   - **Poniżej 1.00**: Oznacza to, że procesor nie jest w pełni wykorzystany i prawdopodobnie nie ma zatorów.
+   - **Równe 1.00**: Oznacza to, że procesor jest w pełni wykorzystywany, ale bez przeciążenia.
+   - **Powyżej 1.00**: Jeśli wartość przekracza liczbę rdzeni procesora, oznacza to, że system ma więcej pracy, niż może obsłużyć, co może prowadzić do opóźnień.
+
+3. **Znaczenie dla wydajności**:
+   - Niskie wartości "Load" zwykle wskazują na to, że system działa płynnie.
+   - Wysokie wartości, szczególnie jeśli są utrzymujące się przez dłuższy czas, mogą wskazywać na przeciążenie systemu, co może wymagać optymalizacji lub upgrade'u sprzętu.
+
+4. **Różnice między wartościami**:
+   - Jeśli wartość dla 1 minuty jest znacznie wyższa niż dla 15 minut, może to oznaczać krótkotrwałe przeciążenie.
+   - Jeśli wartość dla 15 minut jest wysoka, ale dla 1 minuty niska, może to oznaczać, że wcześniej wystąpiło przeciążenie, ale obecnie sytuacja jest stabilna.
+
+Warto pamiętać, że interpretacja tych wartości może się różnić w zależności od specyfiki systemu i liczby rdzeni procesora. Idealne wartości "Load" mogą być różne dla różnych systemów i zastosowań.
+
+## Finger chfn w who 
+
+Polecenie `finger` służy do wyświetlania informacji o użytkownikach w systemach Unix i Unix-podobnych. Dostarcza informacji takich jak login użytkownika, nazwa, biuro, numer telefonu, adres e-mail oraz czas ostatniego logowania. Może również pokazać, czy użytkownik jest aktualnie zalogowany i od jakiego czasu, jak również zawartość pliku `.plan` użytkownika, który często zawiera informacje o jego aktualnych zajęciach lub planach.
+
+Co do dostępności `finger` w Debianie 12 (nazwanym "Bookworm" w momencie pisania tego tekstu), trzeba pamiętać, że różne dystrybucje Linuxa mogą lub nie zawierać `finger` w swoich standardowych repozytoriach. Jednakże, `finger` jest często dostępny w większości dystrybucji i można go zainstalować z repozytorium, jeśli nie jest zainstalowany domyślnie.
+
+Aby sprawdzić, czy `finger` jest dostępny w Twojej dystrybucji Debiana oraz zainstalować go, możesz użyć następujących poleceń:
+
+1. Sprawdź, czy `finger` jest dostępny:
+   ```bash
+   apt-cache search ^finger
+   ```
+
+2. Jeśli jest dostępny, zainstaluj go za pomocą:
+   ```bash
+   sudo apt-get install finger
+   ```
+
+Warto zauważyć, że z powodu zagrożeń bezpieczeństwa związanych z ujawnianiem informacji o użytkownikach, wiele systemów i administratorów rezygnuje z korzystania z `finger`. Należy więc używać go z rozwagą, zwłaszcza w środowiskach produkcyjnych.
+
+## write mesg
+   
+```
+   mesg y
+   mesg n
+   
+   write marcin
+```
+
+druga sesja po ssh
+
+## ps ax
+
+PROCESS STATE CODES
+Here are the different values that the s, stat and state output
+specifiers (header "STAT" or "S") will display to describe the state of
+a process:
+
+```
+         D    uninterruptible sleep (usually IO)
+         I    Idle kernel thread
+         R    running or runnable (on run queue)
+         S    interruptible sleep (waiting for an event to complete)
+         T    stopped by job control signal
+         t    stopped by debugger during the tracing
+         W    paging (not valid since the 2.6.xx kernel)
+         X    dead (should never be seen)
+         Z    defunct ("zombie") process, terminated but not reaped by
+              its parent
+
+ For BSD formats and when the stat keyword is used, additional
+ characters may be displayed:
+
+         <    high-priority (not nice to other users)
+         N    low-priority (nice to other users)
+         L    has pages locked into memory (for real-time and custom IO)
+         s    is a session leader
+         l    is multi-threaded (using CLONE_THREAD, like NPTL pthreads
+              do)
+         +    is in the foreground process group
+```
+
+Polecenie `ps ax` w systemach Unix i Linux wyświetla informacje o aktualnie działających procesach. Jedna z kolumn, która się pojawia w wynikach tego polecenia, to "STAT" lub "STATS", która zawiera kody wskazujące na aktualny stan procesu. Oto niektóre z najczęściej spotykanych kodów w tej kolumnie:
+
+1. **R** - Running: Proces jest aktywny (działający lub gotowy do uruchomienia).
+2. **S** - Sleeping: Proces czeka na zdarzenie lub sygnał (często stan bezczynności).
+3. **D** - Uninterruptible Sleep: Proces jest w stanie "głębokiego snu" i nie może być przerwany (np. oczekujący na operacje wejścia/wyjścia).
+4. **T** - Stopped: Proces został zatrzymany, np. poprzez sygnał sterujący.
+5. **Z** - Zombie: Proces zakończył działanie, ale wciąż jest obecny w systemie, oczekując na to, by proces macierzysty odczytał jego kod wyjścia.
+
+Dodatkowo, mogą się pojawić inne znaki, które dostarczają więcej szczegółów:
+
+- **<** - Proces o wysokim priorytecie (nie fair-scheduled).
+- **N** - Proces o niskim priorytecie.
+- **L** - Proces ma zablokowane strony w pamięci (np. dla operacji wejścia/wyjścia).
+- **s** - Proces jest liderem sesji.
+- **l** - Proces jest wielowątkowy (multi-threaded).
+- **+** - Proces jest w grupie procesów pierwszoplanowych.
+
+Kody te mogą być połączone, by dostarczyć bardziej szczegółowych informacji na temat stanu procesu. Na przykład, "Ss" wskazywałby na proces, który jest w stanie snu (S), będąc jednocześnie liderem sesji (s). Interpretacja tych kodów może pomóc w zrozumieniu działania systemu oraz w diagnozowaniu problemów z wydajnością lub zachowaniem systemu.
+
+
+### Lider sesji
+
+Bycie "liderem sesji" w kontekście procesów systemowych odnosi się do roli, jaką dany proces pełni w zarządzaniu grupą powiązanych procesów w systemie operacyjnym typu Unix lub Linux. Oto kluczowe aspekty tej roli:
+
+1. **Definicja Sesji**:
+   - Sesja w systemie operacyjnym to zbiór procesów, które są grupowane razem na potrzeby zarządzania i kontroli. Zwykle sesja rozpoczyna się przy logowaniu użytkownika do systemu i kończy przy jego wylogowaniu.
+
+2. **Lider Sesji**:
+   - Lider sesji to proces, który rozpoczyna sesję. Jest to zazwyczaj powłoka logowania lub proces inicjujący interakcję użytkownika (np. proces getty w systemach Unix/Linux).
+   - Lider sesji posiada unikalny identyfikator sesji (Session ID), który jest przypisywany wszystkim procesom w ramach tej sesji.
+   - Jako lider, proces ma kontrolę nad innymi procesami w tej samej sesji, w tym nad ich tworzeniem i zarządzaniem.
+
+3. **Znaczenie w Kontroli Procesów**:
+   - Lider sesji często odgrywa kluczową rolę w zarządzaniu sygnałami i zakończeniem procesów w swojej sesji. Na przykład, gdy użytkownik wylogowuje się, proces lidera sesji otrzymuje sygnał, który może być następnie przekazywany do innych procesów w sesji.
+   - W niektórych przypadkach, gdy lider sesji kończy działanie, wszystkie powiązane procesy w sesji mogą zostać automatycznie zakończone.
+
+4. **Zombie i Sieroty**:
+   - Gdy lider sesji kończy działanie, pozostałe procesy w sesji, które nadal działają, stają się "sierotami". Te procesy sieroty są zwykle przydzielane nowemu liderowi sesji (często procesowi init).
+   - Procesy "zombie", które zakończyły działanie, ale wciąż czekają na odczytanie ich statusu wyjścia przez proces macierzysty, mogą również powstać, gdy lider sesji nie zarządza poprawnie zakończeniem procesów.
+
+Zrozumienie roli lidera sesji jest ważne przy diagnozowaniu i zarządzaniu zachowaniem procesów w systemie, szczególnie w kontekście zakończenia sesji użytkownika lub zarządzania procesami w tle.
+
+
+## kill
+
+
+## Skrypty z zadań
+
+### 8
+
+

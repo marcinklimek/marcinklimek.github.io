@@ -1,5 +1,5 @@
 ---
-title: "Systemy Operacyjne - Krótki wstęp"
+title: Krótki wstęp
 date: 2023-11-30T22:59:12+01:00
 draft: false
 ---
