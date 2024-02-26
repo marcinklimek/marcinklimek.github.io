@@ -1,7 +1,7 @@
 ---
-title: Krótki wstęp
-date: 2023-11-30T22:59:12+01:00
+title: Systemy Operacyjne - Krótki wstęp
 draft: false
+hideSummary: true
 ---
 
 # Wstęp

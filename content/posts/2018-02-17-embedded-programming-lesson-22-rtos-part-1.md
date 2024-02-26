@@ -7,7 +7,7 @@ url: /embedded-programming-lesson-22-rtos-part-1/
 categories:
   - link
 tags:
-  - '#rtos'
+  - rtos
   - c++
   - embedded
 

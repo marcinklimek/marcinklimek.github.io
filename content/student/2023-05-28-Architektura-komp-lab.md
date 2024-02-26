@@ -1,9 +1,8 @@
 ---
-title: "Architektura komputerów - lab"
-date: 2023-04-24T17:13:33+02:00
+title: "Architektura komputerów - Lab"
 draft: false
 ShowToc: true
-
+hideSummary: true
 ---
 
 <!---

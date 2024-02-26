@@ -1,8 +1,8 @@
 ---
-title: Pomoc
-date: 2023-11-30T22:59:12+01:00
+title: Systemy Operacyjne - Pomoc
 draft: false
 ShowToc: true
+hideSummary: true
 ---
 
 # Help

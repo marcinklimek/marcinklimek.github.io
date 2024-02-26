@@ -7,7 +7,7 @@ defaultContentLanguage: en
 
 enableInlineShortcodes: true
 enableRobotsTXT: true
-buildDrafts: false
+buildDrafts: true
 buildFuture: false
 buildExpired: false
 enableEmoji: true
@@ -33,21 +33,19 @@ languages:
                   weight: 1                
                 - name: Student
                   url: /student
-                  weight: 1
-                - name: About
-                  url: about/                  
                   weight: 2
                 - name: Posts
                   url: archives
                   weight: 3
+                - name: About
+                  url: about/                  
+                  weight: 4
                 - name: Search
                   url: search/
-                  weight: 4
-                # - name: Tags
-                #   url: tags/
-                #   weight: 5
+                  weight: 5
                 - name: Discord
-                  url: https://discord.gg/SGtgWjg7
+                  url: https://discord.gg/SGtgWjg7/
+                  weight: 6
                   params:
                     external: true
 outputs:
