@@ -805,6 +805,49 @@ Zrozumienie roli lidera sesji jest ważne przy diagnozowaniu i zarządzaniu zach
 
 ## Skrypty z zadań
 
-### 8
+### lab 5 6
+
+
+
+zqmH0ZJUQguQ52nlk2m1
+
+
+
+?m[abc0-4]*.{exe,txt,tar}*
+
+touch math0.exe smart.txt m3p.exe om3.tar6 abc04.txt smith4.txt ma0.exe.txt sma.txt-exe em3p.om3.t am1234.txt smi0-4.txt
+
+https://docs.python.org/3/library/os.html#os.getlogin
+
+import getpass
+
+getpass.getuser()
+
+os.getlogin()
+
+
+
+echo "MK, grp, 1234" > "zadanie-1/katalog-$dir/moje-dane/dane.txt"
+
+
+
+touch math0.exe smart.txt m3p.exe om3.tar6 abc04.txt smith4.txt ma0.exe.txt sma.txt-exe em3p.om3.t am1234.txt smi0-4.txt
+
+
+
+#!/usr/bin/awk -f
+
+/Zadanie/ {
+    print $0 > "named1.txt"
+}
+
+
+$ awk '/Zadanie/ {print $0 >"amed1.txt"}' zadanie.txt 
+
+
+#!/bin/env bash
+
+ls -al | awk "/$1/ {print \$0}"
+
 
 

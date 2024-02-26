@@ -20,4 +20,4 @@ goto concat
 set filename=%year%-%month%-%day%-!filename!.md
 
 hugo new -k post posts/!filename!
-subl "content\posts\!filename!"
+c:\workspace\tools\cmder\bin\subl.bat  "content\posts\!filename!"
