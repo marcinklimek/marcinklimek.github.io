@@ -88,8 +88,8 @@ params:
         buttons:
             - name: Archives
               url: archives
-            - name: Tags
-              url: tags
+            #- name: Tags
+            #  url: tags
 
     homeInfoParams:
         Title: "Welcome"
@@ -162,16 +162,13 @@ privacy:
     vimeo:
         disabled: false
         simple: true
-
     twitter:
         disabled: true
         enableDNT: true
         simple: true
-
     instagram:
         disabled: true
         simple: true
-
     youtube:
         disabled: false
         privacyEnhanced: true
