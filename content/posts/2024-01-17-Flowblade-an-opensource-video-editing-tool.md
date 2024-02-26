@@ -4,7 +4,7 @@ date: 2024-01-17T15:04:25+01:00
 draft: false
 ---
 
-(Flowblade)[https://jliljebl.github.io/flowblade/]
+[Flowblade](https://jliljebl.github.io/flowblade/)
 
 
 Flowblade is a dynamic and efficient video editing software designed for Linux users. It stands out for its emphasis on providing a fast, precise editing experience. The interface is characterized by its sleek, intuitive design, allowing both beginners and professionals to navigate with ease. Flowblade employs a film-style insert editing model, which is favored by many editors for its straightforward, non-linear approach to arranging clips.
