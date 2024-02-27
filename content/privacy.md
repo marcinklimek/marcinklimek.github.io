@@ -19,135 +19,55 @@ menu:
     url: /about/subpage2/
     weight: 10
 ---
-## [EN]
 
 ## Who am I?
 
-I am the owner of the website: https://klimek.link/. It is purely personal in nature. Mainly it&#8217;s a collection of links to something I&#8217;m interested in.
+Ah, welcome, welcome! Step right through the digital-looking glass of https://klimek.link/, a whimsical domain curated by yours truly, the esteemed (and perhaps a bit eccentric) digital explorer and grand curator of the internet's vast oddities and marvels. This isn't your run-of-the-mill web abode, oh no! It's a labyrinthine archive of my boundless fascinations, an eclectic trove of digital breadcrumbs leading to the most curious corners of the webiverse.
 
-## What personal information do I collect and why I don&#8217;t collect it?
+Now, you might be pondering, "What, pray tell, is the purpose of this online sanctuary?" Ah, my dear virtual voyagers, this website is not peddling wares or vying for the fleeting glances of the masses. No, it stands as a beacon of personal indulgence, a digital expression of my very soul! Imagine, if you will, a cabinet of curiosities, but instead of moth-eaten taxidermy and dusty gemstones, it's brimming with hyperlinks. Each click is a portal to realms untold, each link a testament to human creativity and, occasionally, the absurd.
 
-###  
-Comments
+Amongst these curated marvels, you'll find passions as varied as the colours of the rainbow: art that dazzles the eyes, technology that boggles the mind, science that unveils the universe's secrets, and literature that transports the soul. And then, there are the niche hobbies, the peculiar obsessions that I hold dear—esoteric realms that might tickle your fancy or leave you pondering, "What on earth was he thinking?"
 
-Visitors to the site are not able to leave a comment.
+But wait, there's more! Lest you think this website is merely a static collection of digital delights, let me disabuse you of that notion posthaste. Beyond the hyperlinks lies a cornucopia of personal musings and blog posts where I wax poetic on the whys and wherefores of my diverse interests. You might stumble upon snapshots from my adventures, creative writings from the depths of my imagination, or projects that have ensnared my attention and, subsequently, my time.
 
-### Media
+Consider https://klimek.link/ not just a website but a voyage across the digital seas, with me as your captain, navigating through the mists of the internet to chart a course to the treasures I've found. It's an invitation to peer over my shoulder, to delve into the archives of my digital odyssey, and perhaps, in the process, embark on a quest of your own.
 
-Visitors to the site are not allowed to upload any media.
+In sum, https://klimek.link/ is a personal manifesto, a declaration of love for the infinite possibilities that the internet affords us, lonely travellers. It's a patchwork quilt of my digital escapades, stitched together with links and lore, offered up to the world not in search of accolades but in the hope that you, dear visitor, might find a spark of curiosity, a moment of joy, or a new obsession to call your own. So, don your explorer's hat, and let the adventure begin!
 
-### Contact forms
+## The Privacy Scroll: A Tale of Whimsy and Woe in the Land of Non-Data Questing
 
-There are no contact forms.
+### Comments, or The Quest for the Enchanted Input
 
-### Cookies
+In the mystical realm of our website, a place teeming with jesters, knights, and perhaps the odd shrubbery, there lies a peculiar enchantment upon the art of commentary. Those brave souls seeking to inscribe their musings upon the tapestry of this digital Camelot must first embark upon a quest most curious. You see, in lieu of the mundane act of simply 'clicking to comment', one must instead summon forth the arcane energies of Extra Magical Power™. Aye, for here, the act of leaving one's mark amidst the scrolls of discussion requires not just any old sorcery but the mightiest of magics.
 
-I do not collect any information about visitors. Cookies are used to improve site navigation. You can disable them through your browser settings.
+This departure from the mundane into the realm of the fantastical is by no design a mere happenstance but a carefully orchestrated enchantment to add layers of mystery and allure to our kingdom. It beckons the intrepid explorer to delve deeper into the lore of our lands, to truly become one with the narrative, and in doing so, discover the power within to leave their mark in the annals of our history.
 
-### Embedded Content from Other Sites
+### Media, or The Forbidden Archives
 
-Articles on this site may contain embedded content (e.g. videos, images, articles, etc.). Embedded content from other sites behaves as if you were visiting the specific site directly.
+Venture forth into the saga of media uploads and behold a decree most prudent. Our dominion, rich in tales and treasures, guards its gates against the chaos of the unbidden content beast. The edict against the uploading of media artefacts stems not from a lack of chivalry but a fortress-like desire to protect the realm and its denizens from the dragons of copyright infringement, the trolls of offensiveness, and the spectres of misinformation.
 
-These sites may collect information about you, use cookies, attach additional third-party tracking systems, and monitor your interactions with the embedded material, including tracking your interactions with the embedded material if you have an account and are logged in to that site.
+In lieu of allowing the kingdom's coffers to be burdened by the weight of hosting countless scrolls and tapestries (for the bandwidth dragons are a greedy lot), we ensure that our realm remains swift, unburdened by the need to store these treasures. Instead, we foster a community where the exchange of ideas and the weaving of words create a tapestry more vibrant than any image or moving picture could convey.
 
-## Statistics 
+### Contact Forms, or The Parchment Void
 
-Basically, nothing is analyzed; it&#8217;s a waste of time.
+Ah, the saga of communication within our digital Camelot takes a twist most unconventional. In this land, the ancient and oft-maligned scroll of the Contact Form has been banished. "How then," you might ponder, "does one send missives to the keep?" Fear not, for our rejection of the parchment void is not a descent into madness but a bold stride into a realm where communication is unbound by the traditional chains.
 
-## To whom do I share data?
+We've foregone the silent whispers into the void in favour of more tangible connections, where your words are not lost to the ether but received with the warmth and regard they deserve. So, worry not about carrier pigeons or smoke signals; we are but an electronic missive or a herald's shout on social media away from the conversation.
 
-I don&#8217;t share statistics with anyone, because I don&#8217;t have them.
+### Cookies, or The Enchanted Crumbs
 
-## How long do I store your data?
+Gather round as I spin the tale of our kingdom's most diminutive and yet vital inhabitants: the enchanted crumbs known as Cookies. These tiny conjurers work in the shadows to smooth the path through our digital realm, ensuring your voyage is as seamless as a knight sliding down a bannister greased with the essence of jest.
 
-I do not keep them, because I do not collect them. So I do not have them.
+Should these mystical assistants not be to your liking, fear not! For you wield the power to banish them, to disable their enchantments and traverse our lands unaided, should you so choose. The choice, brave traveller, is entirely yours.
 
-## What rights do you have to your data?
+### Embedded Content, or The Portals to Other Realms
 
-If you have a user account (you don&#8217;t have one, because it&#8217;s not possible to create one) or have posted comments on this site (it&#8217;s not possible to post comments), you can request to receive a file with an exported set of your personal data in our possession, including all data provided by you. In our case, it will be an empty file, but you&#8217;re the one who asked for it.  You may also request that we delete all of your personal information in our possession. This does not apply to any data which I am obliged to retain for administrative, legal, or security reasons.
+Within the halls of our digital Camelot, we've opened portals to distant lands, bringing forth embedded treasures for your viewing pleasure. Beware, though, for these artefacts come with their own enchantments and watchers keen to learn of those who gaze upon them. Venture forth with joy, but let caution be your guide, lest you find yourself ensnared in their captivating spells.
 
-## Where do I send the data?
+### The Chronicles of Non-Data
 
-Visitor comments are not checked by an automated spam detection service because they cannot be left. In general, I do not send data anywhere.
+In the vastness of our kingdom, where tales abound, and laughter fills the air, the collection of data is a tale untold. What need do we have for such quests when the journey itself is our reward? We collect nought but memories, leaving no trace behind but the echoes of joy and wonder.
 
-## Your contact information
+### And So, The Tale Concludes
 
-I do not collect it.
-
-## Additional information
-
-### How do I protect your information?
-
-By not collecting visitor information.
-
-### What procedures do I have in place in the event of a data privacy breach?
-
-Since visitor data is not collected, a breach of privacy can only involve the site owner and such an event will probably be reported to the appropriate authorities. Assuming it makes sense at all.
-
-## [PL]
-
-## Polityka prywatności
-
-## Kim jestem?
-
-Jestem właścicielem strony: https://klimek.link/. Ma ona charakter czysto prywatny. Głownie to zbiór linków do czegoś, co mnie zainteresowało.
-
-## Jakie dane osobiste zbieram i dlaczego ich nie zbieram?
-
-### Komentarze
-
-Odwiedzający witrynę nie ma możliwości zostawienia komentarza.
-
-### Media
-
-Odwiedzający stronę nie mogą wgrywać jakichkolwiek mediów.
-
-### Formularze kontaktowe
-
-Brak formularzy kontaktowych.
-
-### Ciasteczka
-
-Nie gromadzę żadnych informacji o odwiedzających. Ciasteczka używane są do usprawnienia nawigacji po stronie. Można je wyłączyć za pomocą ustawień swojej przeglądarki.
-
-### Osadzone treści z innych witryn
-
-Artykuły na tej witrynie mogą zawierać osadzone treści (np. filmy, obrazki, artykuły itp.). Osadzone treści z innych witryn zachowują się analogicznie do tego, jakby użytkownik odwiedził bezpośrednio konkretną witrynę.
-
-Te witryny mogą zbierać informację o tobie, używać ciasteczek, dołączać dodatkowe, zewnętrzne systemy śledzenia i monitorować twoje interakcje z osadzonym materiałem, włączając w to śledzenie twoich interakcji z osadzonym materiałem jeśli posiadasz konto i jesteś zalogowany w tamtej witrynie.
-
-## Analiza statystyk
-
-W zasadzie to nic nie jest analizowane, szkoda na to czasu.
-
-## Z kim dzielę się danymi?
-
-Z nikim się nie dzielę statystykami, bo ich nie mam.
-
-## Jak długo przechowuję twoje dane?
-
-Nie przechowuję, bo ich nie gromadzę. Czyli ich nie mam.
-
-## Jakie masz prawa do swoich danych?
-
-Jeśli masz konto użytkownika(nie masz, bo nie da się go założyć) albo dodałeś komentarze w tej witrynie(nie da się wysłać komentarzy), możesz zażądać dostarczenia pliku z wyeksportowanym kompletem twoich danych osobistych będących w naszym posiadaniu, w tym całość tych dostarczonych przez ciebie. Możesz również zażądać usunięcia przez nas całości twoich danych osobistych w moim posiadaniu. Nie dotyczy to żadnych danych które jestem zobligowani zachować ze względów administracyjnych, prawnych albo bezpieczeństwa.
-
-## Gdzie przesyłam dane?
-
-Komentarze gości nie są sprawdzane za pomocą automatycznej usługi wykrywania spamu, bo ich nie można zostawić. Generalnie, nigdzie nie przesyłam danych.
-
-## Twoje dane kontaktowe
-
-Nie gromadzę.
-
-## Informacje dodatkowe
-
-### Jak chronę twoje dane?
-
-Nie gromadząc informacji o odwiedzających.
-
-### Jakie mam obowiązujące procedury w przypadku naruszenia prywatności danych?
-
-Skoro nie są zbierane dane osób odwiedzających, to naruszenie prywatości może dotyczyć tylko właściciela strony i takie zdarzenie pewnie zostanie zgłoszone do odpowiednich organów. Przy założeniu, że ma to wogóle sens.
-
-###  
+Thus ends our journey through the whimsy and wonders of our privacy practices, a realm where data is but a myth, and the only treasure is the joy of your visit. Venture forth with light hearts and laughter, for in this land, you are free to explore without burden or worry. Onward, brave adventurers, to the next chapter of your journey!
