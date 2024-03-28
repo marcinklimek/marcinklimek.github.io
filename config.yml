@@ -78,6 +78,11 @@ params:
     # comments: false
     images: ["papermod-cover.png"]
 
+    minify:
+        disableHTML: false
+        disableCSS: false
+        disableJS: false
+
     profileMode:
         enabled: false
         title: PaperMod

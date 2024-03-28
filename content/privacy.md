@@ -2,7 +2,7 @@
 title: Privacy Policy
 author: Marcin Klimek
 type: page
-date: 2018-05-24T23:36:48+00:00
+date: 2024-02-27T12:15:00+01:00
 menu:
   about:
     identifier: about-subpage
