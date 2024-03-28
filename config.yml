@@ -40,9 +40,6 @@ languages:
                 - name: About
                   url: about/                  
                   weight: 4
-                - name: Search
-                  url: search/
-                  weight: 5
                 - name: Discord
                   url: https://discord.gg/SGtgWjg7/
                   weight: 6
@@ -76,7 +73,7 @@ params:
     EnableInstantClick: true
     EnableImageZoom: true
     # comments: false
-    images: ["papermod-cover.png"]
+    images: ["cover-small.png"]
 
     minify:
         disableHTML: false
@@ -114,18 +111,18 @@ params:
     #    Text: "Suggest Changes" # edit text
     #    appendFilePath: true # to append file path to Edit link
 
-    # label:
-    #     text: "Home"
-    #     icon: icon.png
-    #     iconHeight: 35
+    label:
+         text: "Home"
+         icon: cover-small.png
+         iconHeight: 35
 
     # analytics:
     #     google:
     #         SiteVerificationTag: "XYZabc"
 
     assets:
-        disableHLJS: true
-    #     favicon: "<link / abs url>"
+        disableHLJS: false
+        favicon: "cover-small.png"
     #     favicon16x16: "<link / abs url>"
     #     favicon32x32: "<link / abs url>"
     #     apple_touch_icon: "<link / abs url>"
