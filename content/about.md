@@ -54,9 +54,8 @@ Under his rule, the city did not prosper; it withered, choked by the tendrils of
 
 
 <script>
-  // Function to generate the URL for an image given its index
   function getImageUrl(index) {
-    return `/gen/i_${index}.jpg`; // Adjust this line to match your image paths
+    return `/gen/i_${index}.jpg`;
   }
 
   // Fisher-Yates shuffle
@@ -66,31 +65,6 @@ Under his rule, the city did not prosper; it withered, choked by the tendrils of
       [array[i], array[j]] = [array[j], array[i]]; // Swap elements
     }
   }
-
-  function displayImages() {
-    const totalImages = 242;
-    const imagesNeeded = 9;
-    let imageIndexes = Array.from({length: totalImages}, (_, i) => i + 1);
-
-    shuffleArray(imageIndexes);
-    imageIndexes = imageIndexes.slice(0, imagesNeeded);
-
-    const gridContainer = document.getElementById('image-grid');
-    gridContainer.innerHTML = ''; // Clear existing images if any
-
-    imageIndexes.forEach(index => {
-      const cellElement = document.createElement('div');
-      cellElement.classList.add('image-cell');
-      cellElement.style.backgroundImage = `url(${getImageUrl(index)})`;
-      gridContainer.appendChild(cellElement);
-    });
-
-    imageIndexes.forEach((index, idx) => {
-        gridContainer.children[idx].classList.add('loaded');
-    });
-  }
-
-  displayImages();
 
   function crossfadeRandomImage() {
     const totalImages = 242; 
@@ -106,7 +80,33 @@ Under his rule, the city did not prosper; it withered, choked by the tendrils of
     cells[randomCellIndex].style.opacity = '1';
   }
 
-  setInterval(crossfadeRandomImage, Math.floor(Math.random() * 3000 + 600));
+  function displayImages() {
+    const totalImages = 242;
+    const imagesNeeded = 9;
+    let imageIndexes = Array.from({length: totalImages}, (_, i) => i + 1);
+
+    shuffleArray(imageIndexes);
+    imageIndexes = imageIndexes.slice(0, imagesNeeded);
+
+    const gridContainer = document.getElementById('image-grid');
+    gridContainer.innerHTML = '';
+
+    imageIndexes.forEach(index => {
+      const cellElement = document.createElement('div');
+      cellElement.classList.add('image-cell');
+      cellElement.style.backgroundImage = `url(${getImageUrl(index)})`;
+      gridContainer.appendChild(cellElement);
+    });
+
+    imageIndexes.forEach((index, idx) => {
+        gridContainer.children[idx].classList.add('loaded');
+    });
+
+    setInterval(crossfadeRandomImage, Math.floor(Math.random() * 1000)+1000);
+  }
+
+
+  displayImages();
 
 </script>
 {{< /rawhtml >}}
