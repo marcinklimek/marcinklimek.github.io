@@ -29,6 +29,10 @@
       {{/* partial "post_canonical.html" . */}}
     </div>
     {{- end }}
+
+    {{- if (.Param "ShowSocialIcons") }}
+      {{- partial "social_icons.html" (dict "icons" site.Params.socialIcons "svg" $.Site.Data.svg "MaskedEmail" site.Params.MaskedEmail "Email" site.Params.Email) -}}
+    {{- end }}
   </header>
   {{- $isHidden := .Params.cover.hidden | default site.Params.cover.hiddenInSingle | default site.Params.cover.hidden }}
   {{- partial "cover.html" (dict "cxt" . "IsHome" false "isHidden" $isHidden) }}
@@ -45,9 +49,9 @@
   {{- end }}
 
   <footer class="post-footer">
-    {{- if (.Param "socialLinks") }}
-    {{- partial "social_links.html" . }}
-    {{- end }}
+
+
+    
 
     {{- if (.Param "ShowPostNavLinks") }}
     {{- partial "post_nav_links.html" . }}

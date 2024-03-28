@@ -12,11 +12,8 @@ buildFuture: false
 buildExpired: false
 enableEmoji: true
 pygmentsUseClasses: true
-# googleAnalytics: UA-123-45
+    
 
-minify:
-    disableXML: true
-    minifyOutput: true
 
 languages:
     en:
@@ -68,6 +65,7 @@ params:
     ShowCodeCopyButtons: true
     ShowRssButtonInSectionTermList: true
     ShowToc: false
+    ShowSocialIcons: false
     TocOpen: true
     TocSide: "right"
     EnableInstantClick: true
@@ -75,16 +73,11 @@ params:
     # comments: false
     images: ["cover-small.png"]
 
-    minify:
-        disableHTML: false
-        disableCSS: false
-        disableJS: false
-
     profileMode:
         enabled: false
-        title: PaperMod
+        title: Side Effects
         imageUrl: "#"
-        imageTitle: my image
+        imageTitle: Side Effects
         # imageWidth: 120
         # imageHeight: 120
         buttons:
@@ -95,8 +88,13 @@ params:
 
     homeInfoParams:
         Title: "Welcome"
-        Content: >
-            A time of decay and despair lurked in the eldritch and unfathomable depths of the city's soul during the President's reign—a tenure masked as prosperity and joy. It was a grotesque charade where dolphins, those mocking emissaries of a darker, unknown abyss, swam the river not with grace but with sinister intent. The streets and squares, seemingly alive with celebrations, were but hollow echoes of joy, filled with the cacophony of a cursed existence. The citizens, deluded in their beliefs, worshipped their leader. Yet, this infallible figure was, in truth, a harbinger of doom, leading them not to security and contentment but into a labyrinth of unspoken horrors and failures, meticulously hidden from sight. Under his rule, the city did not prosper; it withered, choked by the tendrils of an unspeakable and malevolent truth.
+        Content: "<p>A time of decay and despair lurked in the eldritch and unfathomable depths of the city’s soul during the President’s reign—a tenure masked as prosperity and joy.
+</p>
+<p>It was a grotesque charade where dolphins, those mocking emissaries of a darker, unknown abyss, swam the river not with grace but with sinister intent. The streets and squares, seemingly alive with celebrations, were but hollow echoes of joy, filled with the cacophony of a cursed existence.
+</p>
+<p>The citizens, deluded in their beliefs, worshipped their leader. Yet, this infallible figure was, in truth, a harbinger of doom, leading them not to security and contentment but into a labyrinth of unspoken horrors and failures, meticulously hidden from sight.
+</p>
+<p>Under his rule, the city did not prosper; it withered, choked by the tendrils of an unspeakable and malevolent truth.</p>"
 
     socialIcons:
         - name: github
@@ -114,7 +112,7 @@ params:
     label:
          text: "Home"
          icon: cover-small.png
-         iconHeight: 35
+         iconHeight: 45
 
     # analytics:
     #     google:
@@ -141,6 +139,13 @@ params:
     #     threshold: 0.4
     #     minMatchCharLength: 0
     #     keys: ["title", "permalink", "summary", "content"]
+
+    minify:
+        disableXML: false
+        minifyOutput: true
+        disableHTML: false
+        disableCSS: false
+        disableJS: false
 
 markup:
   goldmark:

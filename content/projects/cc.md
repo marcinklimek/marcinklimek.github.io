@@ -4,6 +4,7 @@ author: Marcin Klimek
 type: page
 date: 2018-06-04T09:32:22+00:00
 ShowToc: false
+ShowSocialIcons: true
 ---
 # My project for a climbing wall. Although in principle a climbing wall is not necessary.
 

@@ -4,6 +4,7 @@ description = "Who am I? This is a question that keeps bothering me at times."
 date = "2023-03-28"
 aliases = ["about-us"]
 author = "Marcin"
+showSocialIcons = true
 +++
 
 <!-- The city's citizens bore witness to a time of prosperity and joy during the President's tenure, for dolphins swam the river gracefully and with seeming purpose. The streets and squares were filled with grateful celebrations and sounds. Many believed their beloved. The infallible leader had brought them to a place of security and contentment, for no failure had befallen them in all his days of rule. -->
