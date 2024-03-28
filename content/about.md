@@ -31,23 +31,19 @@ Under his rule, the city did not prosper; it withered, choked by the tendrils of
     margin: 0 auto;
     display: grid;
     grid-template-columns: repeat(3, 1fr); /* 4 columns */
-    gap: 10px;
+    gap: 60px;
   }
 
   .image-cell {
+    border: solid 3em;
     width: 100%;
     padding-top: 100%; /* Maintains the square aspect ratio */
-    background-size: cover; /* Cover the cell with the image */
+    background-size: cover; 
     background-repeat: no-repeat;
     background-position: center center;
-    position: relative; /* Needed for content inside the cell, if any */
-    opacity: 1; /* Start with the images fully transparent */
-    transition: opacity 1s ease, background-image 1s ease; /* Smooth transition for the fade-in and crossfade */
-  }
-
-  /* Added class for when the images are ready to be shown */
-  .image-cell.loaded {
-    opacity: 1;
+    position: relative; 
+    opacity: 1; 
+    transition: opacity 1s ease, background-image 1s ease; 
   }
 
 </style>
@@ -73,11 +69,17 @@ Under his rule, the city did not prosper; it withered, choked by the tendrils of
 
     const cells = document.querySelectorAll('.image-cell');
     const randomCellIndex = Math.floor(Math.random() * cells.length);
-    const newImageIndex = imageIndexes.find(index => !cells[randomCellIndex].style.backgroundImage.includes(`i_${index}.jpg`));
+    const newImageIndex = imageIndexes.find(index => !cells[randomCellIndex].style.backgroundImage.includes(getImageUrl(index)));
 
-    cells[randomCellIndex].style.opacity = '0';
-    cells[randomCellIndex].style.backgroundImage = `url(${getImageUrl(newImageIndex)})`;
-    cells[randomCellIndex].style.opacity = '1';
+    const newImage = new Image();
+    
+    newImage.onload = function() {
+        cells[randomCellIndex].style.opacity = '0';
+        cells[randomCellIndex].style.backgroundImage = `url(${newImage.src})`;
+        cells[randomCellIndex].style.opacity = '1'; 
+    };
+
+    newImage.src = getImageUrl(newImageIndex); 
   }
 
   function displayImages() {
@@ -96,10 +98,6 @@ Under his rule, the city did not prosper; it withered, choked by the tendrils of
       cellElement.classList.add('image-cell');
       cellElement.style.backgroundImage = `url(${getImageUrl(index)})`;
       gridContainer.appendChild(cellElement);
-    });
-
-    imageIndexes.forEach((index, idx) => {
-        gridContainer.children[idx].classList.add('loaded');
     });
 
     setInterval(crossfadeRandomImage, Math.floor(Math.random() * 1000)+1000);
