@@ -34,8 +34,11 @@ Under his rule, the city did not prosper; it withered, choked by the tendrils of
     gap: 60px;
   }
 
+  .image-cell-parent{
+    border: solid 2em;
+  }
+
   .image-cell {
-    border: solid 3em;
     width: 100%;
     padding-top: 100%; /* Maintains the square aspect ratio */
     background-size: cover; 
@@ -84,7 +87,7 @@ Under his rule, the city did not prosper; it withered, choked by the tendrils of
 
   function displayImages() {
     const totalImages = 242;
-    const imagesNeeded = 9;
+    const imagesNeeded = 6;
     let imageIndexes = Array.from({length: totalImages}, (_, i) => i + 1);
 
     shuffleArray(imageIndexes);
@@ -97,7 +100,11 @@ Under his rule, the city did not prosper; it withered, choked by the tendrils of
       const cellElement = document.createElement('div');
       cellElement.classList.add('image-cell');
       cellElement.style.backgroundImage = `url(${getImageUrl(index)})`;
-      gridContainer.appendChild(cellElement);
+
+      const cellParent = document.createElement('div');
+      cellParent.classList.add('image-cell-parent');
+      cellParent.appendChild(cellElement);
+      gridContainer.appendChild(cellParent);
     });
 
     setInterval(crossfadeRandomImage, Math.floor(Math.random() * 1000)+1000);
