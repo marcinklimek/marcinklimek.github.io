@@ -7,7 +7,8 @@ url: /zmiana-rozmiaru-partycji-gparted-i-ew-problemy/
 categories:
   - link
 format: link
-
+created: 2023-11-18T19:04
+updated: 2024-06-11T14:11
 ---
 Może się zarzyć, że przy próbie zmiany rozmiaru partycji dostaniemy komunikat:
 

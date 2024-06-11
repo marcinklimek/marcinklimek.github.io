@@ -7,7 +7,8 @@ url: /pulling-jpegs-out-of-thin-air/
 categories:
   - link
 format: link
-
+created: 2023-11-18T19:04
+updated: 2024-06-11T14:11
 ---
 This is an interesting demonstration of the capabilities of afl.
 

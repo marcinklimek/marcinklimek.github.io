@@ -6,7 +6,8 @@ date: 2018-01-08T12:17:20+00:00
 categories:
   - link
 format: link
-
+created: 2023-11-18T19:04
+updated: 2024-06-11T14:11
 ---
 Random ASCII: programming, tech topics, with a chance of unicyclingFinding a CPU Design Bug in the Xbox 36
 

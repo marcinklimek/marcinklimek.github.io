@@ -7,8 +7,8 @@ url: /tracking-reference-operator-c-component-extensions/
 categories:
   - link
 format: link
-
+created: 2023-11-18T19:04
+updated: 2024-06-11T15:01
 ---
-<p dir="ltr">
-  <a href="https://msdn.microsoft.com/en-us/library/8903062a.aspx"><a href="https://msdn.microsoft.com/en-us/library/8903062a.aspx" >https://msdn.microsoft.com/en-us/library/8903062a.aspx</a></a>
-</p>
+
+https://msdn.microsoft.com/en-us/library/8903062a.aspx

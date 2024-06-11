@@ -1,7 +1,9 @@
 ---
-title: "Water Surface Shader for 2D Pixel Art Games"
+title: Water Surface Shader for 2D Pixel Art Games
 date: 2024-02-26T16:42:16+01:00
 draft: false
+created: 2024-02-26T16:42
+updated: 2024-06-11T14:11
 ---
 
 [Water surface shader for 2D Pixel art games](https://injuly.in/blog/water-shader/index.html)

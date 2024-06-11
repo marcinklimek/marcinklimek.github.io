@@ -10,7 +10,8 @@ categories:
 tags:
   - computer vision
   - dsp
-
+created: 2023-11-18T19:04
+updated: 2024-06-11T14:11
 ---
 ### <a href="http://dajsiepoznac.pl" target="_blank" rel="attachment wp-att-363"><img decoding="async" loading="lazy" class="alignnone size-medium wp-image-363" src="https://klimek.link/blog/wp-content/uploads/2016/03/DSP2016-logo-RGB-color-1-300x70.png" alt="DSP2016 logo RGB color-1" width="300" height="70" srcset="https://klimek.link/blog/wp-content/uploads/2016/03/DSP2016-logo-RGB-color-1-300x70.png 300w, https://klimek.link/blog/wp-content/uploads/2016/03/DSP2016-logo-RGB-color-1.png 608w" sizes="(max-width: 300px) 100vw, 300px" /></a>
 

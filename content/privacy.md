@@ -7,10 +7,12 @@ menu:
   about:
     identifier: about-subpage
     parent: about
-    name: About 
+    name: About
     title: About
     url: /about/
     weight: 1
+created: 2023-11-18T19:04
+updated: 2024-06-11T14:21
 ---
 
 ## Who am I?
@@ -73,6 +75,6 @@ Not collecting visitor information.
 
 ### What procedures do I have in place in the event of a data privacy breach?
 
-Since visitor data is not collected, a breach of privacy can only involve the site owner and such an event will probably be reported to the appropriate authorities—assuming it makes sense at all.
+Since visitor data is not collected, a breach of privacy can only involve the site owner and such an event will probably be reported to the appropriate authorities — assuming it makes sense at all.
 
 

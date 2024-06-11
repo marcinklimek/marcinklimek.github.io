@@ -1,7 +1,9 @@
 ---
-title: "Gaussian Elimination"
+title: Gaussian Elimination
 date: 2024-02-26T16:33:54+01:00
 draft: false
+created: 2024-02-26T16:33
+updated: 2024-06-11T14:11
 ---
 
 

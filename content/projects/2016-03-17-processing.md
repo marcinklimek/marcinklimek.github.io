@@ -10,7 +10,8 @@ categories:
 tags:
   - computer vision
   - dsp
-
+created: 2023-11-18T19:04
+updated: 2024-06-11T14:11
 ---
 # <a href="http://marcinklimek.pl/blog/wp-content/uploads/2016/03/processing-org.jpg" rel="attachment wp-att-372"><img decoding="async" loading="lazy" class="wp-image-500 size-full alignnone" src="https://klimek.link/blog/wp-content/uploads/2016/03/processing-intro.jpg" alt="processing-intro" width="957" height="220" srcset="https://klimek.link/blog/wp-content/uploads/2016/03/processing-intro.jpg 957w, https://klimek.link/blog/wp-content/uploads/2016/03/processing-intro-300x69.jpg 300w, https://klimek.link/blog/wp-content/uploads/2016/03/processing-intro-768x177.jpg 768w" sizes="(max-width: 957px) 100vw, 957px" /></a>
 

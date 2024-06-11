@@ -1,3 +1,7 @@
+---
+created: 2023-11-29T14:22
+updated: 2024-06-11T14:11
+---
 	---
 title: "A Batch for a New Post in Hugo"
 date: 2023-11-29T14:22:30+01:00

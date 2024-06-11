@@ -12,20 +12,16 @@ tags:
   - cinder climb
   - computer vision
   - kinect
-
+created: 2023-11-18T19:04
+updated: 2024-06-11T14:35
 ---
-# My project for a climbing wall. Although in principle a climbing wall is not necessary.
+# My project for a climbing wall. 
 
-<!--more-->
+> Although in principle a climbing wall is not necessary.
 
-The first recorded tests took place on March 11, 2016. A straightforward and reasonably practical solution. You can read a little more about the beginning of my project steps here: <https://klimek.link/blog/processing-z-opencv/><figure class="wp-block-embed is-type-video is-provider-youtube wp-block-embed-youtube wp-embed-aspect-16-9 wp-has-aspect-ratio">
+The first recorded tests took place on March 11, 2016. A straightforward and reasonably practical solution. You can read a little more about the beginning of my project steps here: https://klimek.link/blog/processing-z-opencv/
 
-<div class="wp-block-embed__wrapper">
-</div><figcaption> March 11, 2016</figcaption></figure> 
+The latest version is  Open Frameworks based solution. Activities are written in embedded scripting language - Lua. 
 
-Latest version. OpenFrameworks based solution. Activities programmed in Lua. 
+You can find project development on GitHub: [cinderclimb-of](https://github.com/marcinklimek/cinderclimb-of)
 
-You can find project development on GitHub: <a rel="noreferrer noopener" href="https://github.com/marcinklimek/cinderclimb-of" target="_blank">https://github.com/marcinklimek/cinderclimb-of</a><figure class="wp-block-embed is-type-video is-provider-youtube wp-block-embed-youtube wp-embed-aspect-16-9 wp-has-aspect-ratio">
-
-<div class="wp-block-embed__wrapper">
-</div><figcaption>April 2, 2018</figcaption></figure>

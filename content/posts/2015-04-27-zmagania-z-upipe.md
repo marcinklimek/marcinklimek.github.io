@@ -7,7 +7,8 @@ url: /zmagania-z-upipe/
 categories:
   - link
 format: link
-
+created: 2023-11-18T19:04
+updated: 2024-06-11T14:11
 ---
 jesli dwa elementy nie chcą się spiąć, to trzeba sprawdzać w input\_set\_flow_def co mu nie pasuje.
 

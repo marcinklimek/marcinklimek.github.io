@@ -2,6 +2,8 @@
 title: "Understanding Spectre: A Explainer on the Speculative Execution Vulnerability"
 date: 2024-03-25T12:37:32+01:00
 draft: false
+created: 2024-03-25T12:37
+updated: 2024-06-11T14:11
 ---
 
 [Ben Visness, How does Spectre work?](https://bvisness.me/spectre/)

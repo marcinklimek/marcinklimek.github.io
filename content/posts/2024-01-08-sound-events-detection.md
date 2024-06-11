@@ -1,7 +1,9 @@
 ---
-title: "Sound Events Detection"
+title: Sound Events Detection
 date: 2024-01-08T11:19:57+01:00
 draft: false
+created: 2024-01-08T11:19
+updated: 2024-06-11T14:11
 ---
 
 Sound event detection involves analyzing ongoing acoustic signals to identify and symbolize the various sounds within an auditory environment. This technology has multiple applications, such as enabling context-specific search and retrieval in multimedia databases, discreet monitoring in healthcare settings, and use in surveillance systems.

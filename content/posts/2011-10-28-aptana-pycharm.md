@@ -1,5 +1,5 @@
 ---
-type: 
+type: posts
 title: Aptana, pyCharm
 author: Marcin Klimek
 date: 2011-10-28T12:32:47+00:00
@@ -7,7 +7,8 @@ url: /aptana-pycharm/
 categories:
   - link
 format: link
-type: posts
+created: 2023-11-18T19:04
+updated: 2024-06-11T14:11
 ---
 
 W przypadku Aptany i pyCharm, warto sprawdzić czy używamy przypadkiem nie używamy Open JDK.

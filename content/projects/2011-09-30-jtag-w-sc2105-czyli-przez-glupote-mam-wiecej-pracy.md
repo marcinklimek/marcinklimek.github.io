@@ -6,7 +6,8 @@ date: 2011-09-29T22:02:13+00:00
 url: /jtag-w-sc2105-czyli-przez-glupote-mam-wiecej-pracy/
 categories:
   - takie tam
-
+created: 2023-11-18T19:04
+updated: 2024-06-11T14:11
 ---
 Od pewnego czasu męczę się z pewnym urządzeniem i aktualnie moim problemem jest przejęcie kontroli nad procesorem. Teoretycznie można powiedzieć, że jtag załatwi sprawę. Problem jednak w tym, że urządzenie które próbuję przywrócić do życia jest wyjątkowo niepopularne. Nie dość, że brak dokumentacji serwisowej do samego urządzenia to znalezienie czegoś więcej o procesorze, niż ulotka, graniczy z cudem. Procesor to LSI Logic SC2105. Na razie wiem, że to SoC i ma w sobie rdzeń MIPS, więc jak dobiję się do jtaga, to wiem jak ustawić rejestry, żeby dało się go kontrolować. Na płycie głównej mam sporo różnych pinow, po testach chyba znalazłem te odpowiedzialne za JTAG. I teraz zaczyna się zabawa.
 

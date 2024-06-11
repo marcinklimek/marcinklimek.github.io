@@ -1,7 +1,9 @@
 ---
-title: "A History of the TTY"
+title: A History of the TTY
 date: 2024-02-26T16:39:18+01:00
 draft: false
+created: 2024-02-26T16:39
+updated: 2024-06-11T14:11
 ---
 
 

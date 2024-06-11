@@ -7,7 +7,8 @@ url: /maze-generator-13-bytes/
 categories:
   - link
 format: link
-
+created: 2023-11-18T19:04
+updated: 2024-06-11T14:11
 ---
 [Maze Generation In Thirteen&nbsp;Bytes][1]
 

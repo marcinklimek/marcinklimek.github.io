@@ -5,6 +5,8 @@ type: page
 date: 2018-06-04T09:32:22+00:00
 ShowToc: false
 ShowSocialIcons: true
+created: 2023-11-29T15:15
+updated: 2024-06-11T14:23
 ---
 ## Motivation
 
@@ -22,7 +24,7 @@ What I have now:
 
 ![it looks like this](https://github.com/marcinklimek/pchords/raw/master/docs/screen_01.jpg?raw=true)
 
-## Usefull links:
+## Useful links:
 
 * [pychord](https://github.com/yuma-m/pychord)
 * [mido](https://github.com/mido/mido)

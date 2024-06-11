@@ -7,9 +7,9 @@ url: /c-amp-open-specification/
 categories:
   - link
 format: link
-
+created: 2023-11-18T19:04
+updated: 2024-06-11T14:12
 ---
-&nbsp;
 
 [C++ AMP Open Specification &#8211; Somasegar&#8217;s WebLog &#8211; Site Home &#8211; MSDN Blogs][1].
 

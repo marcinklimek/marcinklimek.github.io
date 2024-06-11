@@ -7,6 +7,7 @@ url: /site-for-the-geometric-tools-source-code-for-real-time-computer-graphics-a
 categories:
   - link
 format: link
-
+created: 2023-11-18T19:04
+updated: 2024-06-11T14:11
 ---
 <http://www.geometrictools.com/>

@@ -7,7 +7,8 @@ url: /nvidia-cuda/
 categories:
   - link
 format: link
-
+created: 2023-11-18T19:04
+updated: 2024-06-11T14:11
 ---
 copy from:  
 http://samiux.blogspot.com/2011/05/howto-nvidia-cuda-toolkit-40-on-ubuntu.html

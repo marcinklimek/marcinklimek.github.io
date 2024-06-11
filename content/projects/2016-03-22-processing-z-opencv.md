@@ -10,7 +10,8 @@ ftf_open_type:
 categories:
   - cinder climb
   - dsp
-
+created: 2023-11-18T19:04
+updated: 2024-06-11T14:11
 ---
 Previously, I mentioned that I plan to use OpenCV. Therefore, I will focus on processing images from the camera using this library.
 

@@ -1,7 +1,9 @@
 ---
-title: "Flowblade an Opensource Video Editing Tool"
+title: Flowblade an Opensource Video Editing Tool
 date: 2024-01-17T15:04:25+01:00
 draft: false
+created: 2024-01-17T15:04
+updated: 2024-06-11T14:11
 ---
 
 [Flowblade](https://jliljebl.github.io/flowblade/)

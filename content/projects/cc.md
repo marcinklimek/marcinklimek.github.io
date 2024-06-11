@@ -5,6 +5,8 @@ type: page
 date: 2018-06-04T09:32:22+00:00
 ShowToc: false
 ShowSocialIcons: true
+created: 2023-11-18T19:04
+updated: 2024-06-11T14:11
 ---
 # My project for a climbing wall. Although in principle a climbing wall is not necessary.
 

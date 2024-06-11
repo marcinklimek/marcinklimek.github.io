@@ -1,7 +1,9 @@
 ---
-title: "RDP Windows 11 with Microsoft Account MFA"
+title: RDP Windows 11 with Microsoft Account MFA
 date: 2023-07-12T14:18:25+02:00
 draft: false
+created: 2023-11-18T19:04
+updated: 2024-06-11T14:11
 ---
 
 Based on the explanation on the site [nready.net](https://nready.net/remote-desktop-on-windows-11-with-microsoft-account-mfa)

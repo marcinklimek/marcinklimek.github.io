@@ -3,6 +3,8 @@ title: Systemy Operacyjne - Pomoc
 draft: false
 ShowToc: true
 hideSummary: true
+created: 2023-11-30T22:58
+updated: 2024-06-11T14:11
 ---
 
 # Help
