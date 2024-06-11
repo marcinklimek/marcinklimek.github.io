@@ -4,7 +4,8 @@ date: 2023-04-25T19:13:33+02:00
 draft: true
 ShowToc: false
 created: 2023-11-18T19:04
-updated: 2024-06-11T14:11
+updated: 2024-06-11T15:08
+hideSummary: true
 ---
 
 ### Rozpisać kolejne kroki konwersji na liczbę w notacji binarnej za pomocą metody z resztą:
