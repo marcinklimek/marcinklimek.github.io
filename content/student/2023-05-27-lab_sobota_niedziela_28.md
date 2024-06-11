@@ -4,7 +4,7 @@ date: 2023-04-25T18:13:33+02:00
 draft: true
 ShowToc: false
 created: 2023-11-18T19:04
-updated: 2024-06-11T15:08
+updated: 2024-06-11T15:27
 hideSummary: true
 ---
 
@@ -14,9 +14,11 @@ hideSummary: true
 
 Ćwiczenie:
 1. Proszę uruchomić pierwszy program
-```$lab_06_a.exe```
-2. Proszę opisać kolejne cykle rozkazowe, jakie wykonuje procesor.
-3. Należy zamieścić wynik działania programu w sprawozdaniu.
+
+	$lab_06_a.exe
+
+1. Proszę opisać kolejne cykle rozkazowe, jakie wykonuje procesor.
+2. Należy zamieścić wynik działania programu w sprawozdaniu.
 
 ```
 memory = [10, 6, 7, 2, 1, 0, 0]
