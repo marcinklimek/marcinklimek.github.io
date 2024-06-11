@@ -9,13 +9,13 @@ showSocialIcons = true
 
 <!-- The city's citizens bore witness to a time of prosperity and joy during the President's tenure, for dolphins swam the river gracefully and with seeming purpose. The streets and squares were filled with grateful celebrations and sounds. Many believed their beloved. The infallible leader had brought them to a place of security and contentment, for no failure had befallen them in all his days of rule. -->
 
-A time of decay and despair lurked in the eldritch and unfathomable depths of the city's soul during the President's reign—a tenure masked as prosperity and joy. 
+Beneath the reign of the President, a time of decadence and despondency festered within the arcane and unfathomable recesses of the city’s soul –a period that was disguised as one filled with prosperity and joy.
 
-It was a grotesque charade where dolphins, those mocking emissaries of a darker, unknown abyss, swam the river not with grace but with sinister intent. The streets and squares, seemingly alive with celebrations, were but hollow echoes of joy, filled with the cacophony of a cursed existence. 
+It was an absurd monstrosity in which dolphins, those mocking ambassadors of a darker, unknown abyss, swam not gracefully but malevolently. Joyless echoes resounded from streets and squares teeming with apparent celebrations and filled with the cacophony of a condemned life.
 
-The citizens, deluded in their beliefs, worshipped their leader. Yet, this infallible figure was, in truth, a harbinger of doom, leading them not to security and contentment but into a labyrinth of unspoken horrors and failures, meticulously hidden from sight. 
+They were deluded into thinking their leader could do no wrong. Yet in reality this invincible being foretold demise rather than providing safety and ease by leading them into a maze of unspoken terrors and defeats concealed with great care from public view.
 
-Under his rule, the city did not prosper; it withered, choked by the tendrils of an unspeakable and malevolent truth.
+The city did not prosper under his rule, instead, it died away like something strangled by some unspeakable malignancy.
 
 <!-- 
 ![about](images/about_happy.jpg)

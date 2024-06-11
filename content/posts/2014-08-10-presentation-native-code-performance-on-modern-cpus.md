@@ -10,7 +10,7 @@ format: link
 
 ---
 <div dir="ltr">
-  <a href="http://www.bfilipek.com/2014/04/presentation-native-code-performance-on.html">http://www.bfilipek.com/2014/04/presentation-native-code-performance-on.html</a><br clear="all" /></p> 
+  <a href="https://www.cppstories.com/2014/04/presentation-native-code-performance-on-modern-cpus/">https://www.cppstories.com/2014/04/presentation-native-code-performance-on-modern-cpus/</a><br clear="all" /></p> 
   
   <div>
   </div>
