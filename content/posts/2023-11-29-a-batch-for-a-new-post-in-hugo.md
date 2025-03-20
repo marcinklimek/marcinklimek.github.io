@@ -1,6 +1,7 @@
 ---
 created: 2023-11-29T14:22
 updated: 2024-06-11T14:11
+draft: false
 ---
 	---
 title: "A Batch for a New Post in Hugo"

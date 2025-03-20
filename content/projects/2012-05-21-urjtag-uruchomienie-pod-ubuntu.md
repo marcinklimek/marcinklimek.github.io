@@ -8,7 +8,7 @@ categories:
   - link
 format: link
 created: 2023-11-18T19:04
-updated: 2024-06-11T15:31
+updated: 2024-06-11T15:36
 draft: false
 ---
 Podłączenie do interfejsu jtag przy uzyciu BF30
@@ -47,10 +47,3 @@ chain.c(149) Part 0 without active instruction
 
 W rzeczywistości to jest MIPS i reszta standardowo
 
-&nbsp;
-
-&nbsp;
-
-&nbsp;
-
-&nbsp;

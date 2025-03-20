@@ -1,7 +1,7 @@
 ---
 title: Every Dunder Method
 date: 2024-04-03T14:07:29+02:00
-draft: true
+draft: false
 created: 2024-04-03T14:07
 updated: 2024-06-11T14:11
 ---
