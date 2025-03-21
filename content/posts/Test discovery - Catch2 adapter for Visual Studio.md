@@ -83,14 +83,14 @@ The **Test Adapter for Catch2** is available via the [Visual Studio Marketplace]
     2A-42704: Started Catch2Adapter exe test discovery...
     C2A-42704: Discover log:
     ValidateSourceName name: TestMyProcess
-    Source: C:\workspace\0.0_rigaku\RigakuBasicLibs\Bin\x64\Debug\TestMyProcess.exe
+    Source:TestMyProcess.exe
       XML Discovery:
     <?xml version="1.0" encoding="UTF-8"?>
     <MatchingTests>
       <TestCase>
-        <Name>SAXS 1DViewer capabilites</Name>
+        <Name>Viewer capabilites</Name>
         <ClassName/>
-        <Tags>[oneDviewer_saxs]</Tags>
+        <Tags>[viewer]</Tags>
      .
      .
      .
@@ -99,10 +99,10 @@ The **Test Adapter for Catch2** is available via the [Visual Studio Marketplace]
       Accumulated Testcase count: 4
     
     C2A-42704: Start adding test cases to discovery sink
-    C2A-42704:   SAXS 1DViewer capabilites
-    C2A-42704:   SAXS slit correction test 2.0
-    C2A-42704:   Particle-Pore size analysis modelling 2.0
-    C2A-42704:   Pore size analysis modelling
+    C2A-42704:   Viewer capabilites
+    C2A-42704:   correction test 2.0
+    C2A-42704:   modelling 2.0
+    C2A-42704:   modelling
     C2A-42704: Finished adding test cases to discovery sink
     C2A-42704: Finished Catch2Adapter exe test discovery.
     ```
